@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +17,11 @@
 <header class="site-header">
 
   <a href="/" class="brand">
-    <span class="brand-logo">A</span>
+    <img
+      class="brand-logo"
+      src="https://cdn.discordapp.com/emojis/1481802757005508700.png"
+      alt="The Aegis Institute logo"
+    >
 
     <span class="brand-text">
       <strong>THE AEGIS INSTITUTE</strong>
@@ -109,7 +114,7 @@
             type="submit"
             class="button button-primary"
           >
-            Prepare Enquiry
+            Send Enquiry
           </button>
 
         </form>
@@ -193,7 +198,49 @@
 </footer>
 
 
-<script src="/app.js"></script>
+<script>
+  const contactForm = document.getElementById("contactForm");
+  const contactStatus = document.getElementById("contactStatus");
+
+  contactForm.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    const name = document.getElementById("contactName").value.trim();
+    const email = document.getElementById("contactEmail").value.trim();
+    const message = document.getElementById("contactMessage").value.trim();
+
+    if (!name || !email || !message) {
+      contactStatus.textContent = "Please complete all fields.";
+      return;
+    }
+
+    const recipient = "technical@aegisinsitute.cc";
+
+    const subject = encodeURIComponent(
+      "New Enquiry — The Aegis Institute"
+    );
+
+    const body = encodeURIComponent(
+      "New enquiry received through The Aegis Institute website.\n\n" +
+      "Name: " + name + "\n" +
+      "Email: " + email + "\n\n" +
+      "Message:\n" +
+      message
+    );
+
+    const mailtoLink =
+      "mailto:" + recipient +
+      "?subject=" + subject +
+      "&body=" + body;
+
+    window.location.href = mailtoLink;
+
+    contactStatus.textContent =
+      "Opening your email application...";
+  });
+</script>
 
 </body>
 </html>
+```
