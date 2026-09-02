@@ -17,6 +17,7 @@
 <header class="site-header">
 
   <a href="/" class="brand">
+
     <img
       class="brand-logo"
       src="https://cdn.discordapp.com/emojis/1481802757005508700.png"
@@ -26,17 +27,24 @@
     <span class="brand-text">
       <strong>THE AEGIS INSTITUTE</strong>
     </span>
+
   </a>
 
+
   <nav class="main-nav">
+
     <a href="/">Home</a>
+
     <a href="/services.html">Services</a>
+
     <a href="/work.html">Our Work</a>
+
     <a href="/contact.html" class="active">Contact</a>
 
     <a href="/api/auth/discord" class="staff-login">
       Staff Login
     </a>
+
   </nav>
 
 </header>
@@ -70,61 +78,94 @@
 
     <div class="container contact-grid">
 
+
+      <!-- CONTACT FORM -->
+
       <div class="contact-form-card">
 
         <h2>
           Send an enquiry
         </h2>
 
+
         <form id="contactForm">
 
+
           <label>
+
             Name
+
             <input
               type="text"
               id="contactName"
+              name="name"
               placeholder="Your name"
+              maxlength="100"
+              autocomplete="name"
               required
             >
+
           </label>
 
 
           <label>
-            Email
+
+            Discord Username
+
             <input
-              type="email"
-              id="contactEmail"
-              placeholder="you@example.com"
+              type="text"
+              id="contactDiscord"
+              name="discord"
+              placeholder="e.g. username"
+              maxlength="100"
+              autocomplete="off"
               required
             >
+
           </label>
 
 
           <label>
+
             Message
+
             <textarea
               id="contactMessage"
+              name="message"
               placeholder="Tell us what you need help with..."
+              maxlength="2000"
               required
             ></textarea>
+
           </label>
 
 
           <button
             type="submit"
             class="button button-primary"
+            id="contactSubmit"
           >
             Send Enquiry
           </button>
 
+
         </form>
 
-        <p id="contactStatus" class="form-status"></p>
+
+        <p
+          id="contactStatus"
+          class="form-status"
+          aria-live="polite"
+        ></p>
+
 
       </div>
 
 
+      <!-- CONTACT INFORMATION -->
+
       <div class="contact-side">
+
 
         <article class="side-contact-card">
 
@@ -174,10 +215,12 @@
 
           <p>
             Have something else in mind?
-            Get in touch and we'll point you in the right direction.
+            Get in touch and we'll point you
+            in the right direction.
           </p>
 
         </article>
+
 
       </div>
 
@@ -191,55 +234,157 @@
 <footer class="site-footer">
 
   <div class="container footer-inner">
-    <span>© 2026 The Aegis Institute</span>
-    <span>Education · Consulting · Community</span>
+
+    <span>
+      © 2026 The Aegis Institute
+    </span>
+
+    <span>
+      Education · Consulting · Community
+    </span>
+
   </div>
 
 </footer>
 
 
 <script>
-  const contactForm = document.getElementById("contactForm");
-  const contactStatus = document.getElementById("contactStatus");
 
-  contactForm.addEventListener("submit", function(event) {
+  const contactForm =
+    document.getElementById("contactForm");
+
+  const contactStatus =
+    document.getElementById("contactStatus");
+
+  const contactSubmit =
+    document.getElementById("contactSubmit");
+
+
+  contactForm.addEventListener("submit", async function(event) {
 
     event.preventDefault();
 
-    const name = document.getElementById("contactName").value.trim();
-    const email = document.getElementById("contactEmail").value.trim();
-    const message = document.getElementById("contactMessage").value.trim();
 
-    if (!name || !email || !message) {
-      contactStatus.textContent = "Please complete all fields.";
+    const name =
+      document.getElementById("contactName").value.trim();
+
+    const discord =
+      document.getElementById("contactDiscord").value.trim();
+
+    const message =
+      document.getElementById("contactMessage").value.trim();
+
+
+    if (!name || !discord || !message) {
+
+      contactStatus.textContent =
+        "Please complete all fields.";
+
       return;
+
     }
 
-    const recipient = "technical@aegisinsitute.cc";
 
-    const subject = encodeURIComponent(
-      "New Enquiry — The Aegis Institute"
-    );
+    if (message.length > 2000) {
 
-    const body = encodeURIComponent(
-      "New enquiry received through The Aegis Institute website.\n\n" +
-      "Name: " + name + "\n" +
-      "Email: " + email + "\n\n" +
-      "Message:\n" +
-      message
-    );
+      contactStatus.textContent =
+        "Your message is too long.";
 
-    const mailtoLink =
-      "mailto:" + recipient +
-      "?subject=" + subject +
-      "&body=" + body;
+      return;
 
-    window.location.href = mailtoLink;
+    }
+
+
+    contactSubmit.disabled = true;
+
+    contactSubmit.textContent =
+      "Sending...";
 
     contactStatus.textContent =
-      "Opening your email application...";
+      "Sending your enquiry...";
+
+
+    try {
+
+
+      const response = await fetch("/api/contact", {
+
+        method: "POST",
+
+        headers: {
+
+          "Content-Type": "application/json"
+
+        },
+
+        body: JSON.stringify({
+
+          name: name,
+
+          discord: discord,
+
+          message: message
+
+        })
+
+      });
+
+
+      let data = {};
+
+      try {
+
+        data = await response.json();
+
+      } catch {
+
+        data = {};
+
+      }
+
+
+      if (!response.ok) {
+
+        throw new Error(
+          data.message ||
+          "Unable to send your enquiry."
+        );
+
+      }
+
+
+      contactStatus.textContent =
+        "Your enquiry has been sent successfully!";
+
+
+      contactForm.reset();
+
+
+    } catch (error) {
+
+      console.error(
+        "Contact form error:",
+        error
+      );
+
+
+      contactStatus.textContent =
+        error.message ||
+        "Something went wrong. Please try again later.";
+
+    }
+
+
+    contactSubmit.disabled = false;
+
+    contactSubmit.textContent =
+      "Send Enquiry";
+
+
   });
+
 </script>
+
 
 </body>
 </html>
