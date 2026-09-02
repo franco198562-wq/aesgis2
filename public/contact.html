@@ -66,7 +66,7 @@
 
       <p>
         Have a question, project idea, or training requirement?
-        Send a message and the Aegis team can help.
+        Our contact system is currently being prepared.
       </p>
 
     </div>
@@ -79,85 +79,35 @@
     <div class="container contact-grid">
 
 
-      <!-- CONTACT FORM -->
+      <!-- DEVELOPMENT NOTICE -->
 
       <div class="contact-form-card">
 
+        <span class="card-label">
+          CONTACT SYSTEM
+        </span>
+
         <h2>
-          Send an enquiry
+          Contact Under Development
         </h2>
 
+        <p>
+          Our online contact system is currently under development
+          and isn't available just yet.
+        </p>
 
-        <form id="contactForm">
+        <p>
+          We're working on making the system reliable and easy to
+          use. Please check back soon for updates.
+        </p>
 
+        <div style="margin-top: 28px;">
 
-          <label>
+          <span class="eyebrow">
+            COMING SOON
+          </span>
 
-            Name
-
-            <input
-              type="text"
-              id="contactName"
-              name="name"
-              placeholder="Your name"
-              maxlength="100"
-              autocomplete="name"
-              required
-            >
-
-          </label>
-
-
-          <label>
-
-            Discord Username
-
-            <input
-              type="text"
-              id="contactDiscord"
-              name="discord"
-              placeholder="e.g. username"
-              maxlength="100"
-              autocomplete="off"
-              required
-            >
-
-          </label>
-
-
-          <label>
-
-            Message
-
-            <textarea
-              id="contactMessage"
-              name="message"
-              placeholder="Tell us what you need help with..."
-              maxlength="2000"
-              required
-            ></textarea>
-
-          </label>
-
-
-          <button
-            type="submit"
-            class="button button-primary"
-            id="contactSubmit"
-          >
-            Send Enquiry
-          </button>
-
-
-        </form>
-
-
-        <p
-          id="contactStatus"
-          class="form-status"
-          aria-live="polite"
-        ></p>
-
+        </div>
 
       </div>
 
@@ -215,8 +165,8 @@
 
           <p>
             Have something else in mind?
-            Get in touch and we'll point you
-            in the right direction.
+            Get in touch once our contact system
+            is available.
           </p>
 
         </article>
@@ -246,144 +196,6 @@
   </div>
 
 </footer>
-
-
-<script>
-
-  const contactForm =
-    document.getElementById("contactForm");
-
-  const contactStatus =
-    document.getElementById("contactStatus");
-
-  const contactSubmit =
-    document.getElementById("contactSubmit");
-
-
-  contactForm.addEventListener("submit", async function(event) {
-
-    event.preventDefault();
-
-
-    const name =
-      document.getElementById("contactName").value.trim();
-
-    const discord =
-      document.getElementById("contactDiscord").value.trim();
-
-    const message =
-      document.getElementById("contactMessage").value.trim();
-
-
-    if (!name || !discord || !message) {
-
-      contactStatus.textContent =
-        "Please complete all fields.";
-
-      return;
-
-    }
-
-
-    if (message.length > 2000) {
-
-      contactStatus.textContent =
-        "Your message is too long.";
-
-      return;
-
-    }
-
-
-    contactSubmit.disabled = true;
-
-    contactSubmit.textContent =
-      "Sending...";
-
-    contactStatus.textContent =
-      "Sending your enquiry...";
-
-
-    try {
-
-
-      const response = await fetch("/api/contact", {
-
-        method: "POST",
-
-        headers: {
-
-          "Content-Type": "application/json"
-
-        },
-
-        body: JSON.stringify({
-
-          name: name,
-
-          discord: discord,
-
-          message: message
-
-        })
-
-      });
-
-
-      let data = {};
-
-      try {
-
-        data = await response.json();
-
-      } catch {
-
-        data = {};
-
-      }
-
-
-      if (!response.ok) {
-
-        throw new Error(
-          data.message ||
-          "Unable to send your enquiry."
-        );
-
-      }
-
-
-      contactStatus.textContent =
-        "Your enquiry has been sent successfully!";
-
-
-      contactForm.reset();
-
-
-    } catch (error) {
-
-      console.error(
-        "Contact form error:",
-        error
-      );
-
-
-      contactStatus.textContent =
-        error.message ||
-        "Something went wrong. Please try again later.";
-
-    }
-
-
-    contactSubmit.disabled = false;
-
-    contactSubmit.textContent =
-      "Send Enquiry";
-
-
-  });
-
-</script>
 
 
 </body>
