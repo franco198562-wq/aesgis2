@@ -1,29 +1,16 @@
 const DEFAULT_DATA = {
-
   hero: {
-    title:
-      "Training that sees the person behind every case.",
-
-    text:
-      "The Aegis Institute supports Discord communities and individuals through personalised consulting and structured education — built around your rules, your people, and your goals.",
-
-    cardTitle:
-      "Two branches. One standard of care.",
-
-    cardText:
-      "Consulting for communities that want clarity — education for staff and aspiring moderators who want to know where to start."
+    title: "Training that sees the person behind every case.",
+    text: "The Aegis Institute supports Discord communities and individuals through personalised consulting and structured education — built around your rules, your people, and your goals.",
+    cardTitle: "Two branches. One standard of care.",
+    cardText: "Consulting for communities that want clarity — education for staff and aspiring moderators who want to know where to start."
   },
 
   services: [
     {
       label: "SERVER OWNERS",
-
-      title:
-        "Outsourced staff training",
-
-      description:
-        "High-quality training, assessments and feedback aligned to your rules and procedures.",
-
+      title: "Outsourced staff training",
+      description: "High-quality training, assessments and feedback aligned to your rules and procedures.",
       bullets: [
         "Training, assessments & educator support",
         "Structured standards",
@@ -33,13 +20,8 @@ const DEFAULT_DATA = {
 
     {
       label: "PLAYERS",
-
-      title:
-        "Moderator & Advanced Fundamentals",
-
-      description:
-        "Preparation for aspiring moderators and supervisors who want to build practical skills.",
-
+      title: "Moderator & Advanced Fundamentals",
+      description: "Preparation for aspiring moderators and supervisors who want to build practical skills.",
       bullets: [
         "Moderator fundamentals",
         "Advanced fundamentals",
@@ -51,53 +33,33 @@ const DEFAULT_DATA = {
   work: [
     {
       label: "STAFF DEVELOPMENT",
-
-      title:
-        "Structured staff programmes",
-
-      description:
-        "Clear pathways for trainees, moderators, supervisors and leadership teams."
+      title: "Structured staff programmes",
+      description: "Clear pathways for trainees, moderators, supervisors and leadership teams."
     },
 
     {
       label: "STANDARDS",
-
-      title:
-        "Policies that people can actually use",
-
-      description:
-        "Practical policies, procedures and expectations written around the way your community operates."
+      title: "Policies that people can actually use",
+      description: "Practical policies, procedures and expectations written around the way your community operates."
     },
 
     {
       label: "CONSULTING",
-
-      title:
-        "An external perspective",
-
-      description:
-        "Honest feedback on systems, staff structures, training and community operations."
+      title: "An external perspective",
+      description: "Honest feedback on systems, staff structures, training and community operations."
     },
 
     {
       label: "EDUCATION",
-
-      title:
-        "Training built around scenarios",
-
-      description:
-        "Learn through examples and situations that staff can actually encounter."
+      title: "Training built around scenarios",
+      description: "Learn through examples and situations that staff can actually encounter."
     }
   ],
 
   contact: {
-    title:
-      "Let's talk about what your community needs.",
-
-    text:
-      "Have a question, project idea, or training requirement? Send a message and the Aegis team can help."
+    title: "Let's talk about what your community needs.",
+    text: "Have a question, project idea, or training requirement? Send a message and the Aegis team can help."
   }
-
 };
 
 
@@ -109,8 +71,7 @@ export default {
 
   async fetch(request, env) {
 
-    const url =
-      new URL(request.url);
+    const url = new URL(request.url);
 
 
     /* ------------------------------
@@ -118,20 +79,16 @@ export default {
     ------------------------------ */
 
     if (
-      url.pathname ===
-      "/api/auth/discord"
+      url.pathname === "/api/auth/discord"
     ) {
 
-      return startDiscordLogin(
-        env
-      );
+      return startDiscordLogin(env);
 
     }
 
 
     if (
-      url.pathname ===
-      "/api/auth/callback"
+      url.pathname === "/api/auth/callback"
     ) {
 
       return discordCallback(
@@ -143,8 +100,7 @@ export default {
 
 
     if (
-      url.pathname ===
-      "/api/auth/me"
+      url.pathname === "/api/auth/me"
     ) {
 
       return getMe(
@@ -156,8 +112,7 @@ export default {
 
 
     if (
-      url.pathname ===
-      "/api/auth/logout"
+      url.pathname === "/api/auth/logout"
     ) {
 
       return logout();
@@ -170,17 +125,14 @@ export default {
     ------------------------------ */
 
     if (
-      url.pathname ===
-      "/api/content"
+      url.pathname === "/api/content"
     ) {
 
       if (
         request.method === "GET"
       ) {
 
-        return getContent(
-          env
-        );
+        return getContent(env);
 
       }
 
@@ -218,6 +170,42 @@ export default {
 
 function startDiscordLogin(env) {
 
+  /*
+    Check that the important Discord
+    environment variables exist before
+    sending the user to Discord.
+  */
+
+  if (!env.DISCORD_CLIENT_ID) {
+
+    return new Response(
+      "Cloudflare is missing DISCORD_CLIENT_ID.",
+      {
+        status: 500,
+        headers: {
+          "Content-Type": "text/plain; charset=UTF-8"
+        }
+      }
+    );
+
+  }
+
+
+  if (!env.DISCORD_REDIRECT_URI) {
+
+    return new Response(
+      "Cloudflare is missing DISCORD_REDIRECT_URI.",
+      {
+        status: 500,
+        headers: {
+          "Content-Type": "text/plain; charset=UTF-8"
+        }
+      }
+    );
+
+  }
+
+
   const state =
     crypto.randomUUID();
 
@@ -237,26 +225,33 @@ function startDiscordLogin(env) {
       scope:
         "identify guilds.members.read",
 
-      state
+      state:
+        state
 
     });
+
+
+  const discordURL =
+    "https://discord.com/oauth2/authorize?" +
+    params.toString();
 
 
   return new Response(
     null,
     {
+
       status: 302,
 
       headers: {
 
         "Location":
-          "https://discord.com/oauth2/authorize?" +
-          params.toString(),
+          discordURL,
 
         "Set-Cookie":
           `aegis_oauth_state=${state}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=600`
 
       }
+
     }
   );
 
@@ -288,6 +283,45 @@ async function discordCallback(
     );
 
 
+  const discordError =
+    url.searchParams.get(
+      "error"
+    );
+
+
+  const discordErrorDescription =
+    url.searchParams.get(
+      "error_description"
+    );
+
+
+  /*
+    If Discord sends an OAuth error,
+    show the actual reason.
+  */
+
+  if (discordError) {
+
+    return new Response(
+      "Discord OAuth error: " +
+      discordError +
+      (
+        discordErrorDescription
+          ? "\n\n" + discordErrorDescription
+          : ""
+      ),
+      {
+        status: 400,
+        headers: {
+          "Content-Type":
+            "text/plain; charset=UTF-8"
+        }
+      }
+    );
+
+  }
+
+
   const cookies =
     request.headers.get(
       "Cookie"
@@ -301,6 +335,10 @@ async function discordCallback(
     );
 
 
+  /*
+    Verify OAuth state.
+  */
+
   if (
     !code ||
     !returnedState ||
@@ -311,7 +349,11 @@ async function discordCallback(
     return new Response(
       "Invalid OAuth state.",
       {
-        status: 400
+        status: 400,
+        headers: {
+          "Content-Type":
+            "text/plain; charset=UTF-8"
+        }
       }
     );
 
@@ -320,6 +362,11 @@ async function discordCallback(
 
   try {
 
+    /*
+      Exchange the Discord authorization
+      code for an access token.
+    */
+
     const accessToken =
       await exchangeCode(
         code,
@@ -327,11 +374,32 @@ async function discordCallback(
       );
 
 
+    /*
+      Get the current Discord user.
+    */
+
     const user =
       await discordGet(
         "https://discord.com/api/users/@me",
         accessToken
       );
+
+
+    /*
+      Get the current user's membership
+      in the configured Discord server.
+
+      This is the correct OAuth endpoint
+      for guilds.members.read.
+    */
+
+    if (!env.DISCORD_GUILD_ID) {
+
+      throw new Error(
+        "DISCORD_GUILD_ID is missing from Cloudflare."
+      );
+
+    }
 
 
     const member =
@@ -341,18 +409,38 @@ async function discordCallback(
       );
 
 
+    /*
+      Get the user's Discord roles.
+    */
+
     const roles =
       member.roles || [];
 
+
+    /*
+      Get the authorized role IDs from
+      Cloudflare environment variables.
+
+      Example:
+
+      123456789012345678,987654321098765432
+    */
 
     const allowedRoles =
       String(
         env.AUTHORIZED_ROLE_IDS || ""
       )
         .split(",")
-        .map(x => x.trim())
+        .map(
+          x => x.trim()
+        )
         .filter(Boolean);
 
+
+    /*
+      Check whether the user has at least
+      one authorized role.
+    */
 
     const authorized =
       roles.some(
@@ -363,6 +451,10 @@ async function discordCallback(
       );
 
 
+    /*
+      Create the website session.
+    */
+
     const payload = {
 
       userId:
@@ -372,7 +464,9 @@ async function discordCallback(
         user.global_name ||
         user.username,
 
-      authorized,
+      authorized:
+
+        authorized,
 
       exp:
         Date.now() +
@@ -387,6 +481,13 @@ async function discordCallback(
         env.SESSION_SECRET
       );
 
+
+    /*
+      Authorized users go to the editor.
+
+      Unauthorized users go back to
+      the public website.
+    */
 
     const destination =
       authorized
@@ -421,11 +522,23 @@ async function discordCallback(
 
   } catch (error) {
 
+    /*
+      Give a useful error instead of hiding
+      the actual Discord/Cloudflare problem.
+    */
+
     return new Response(
-      "Discord login failed: " +
-      error.message,
+      "Discord login failed:\n\n" +
+      (
+        error?.message ||
+        String(error)
+      ),
       {
-        status: 500
+        status: 500,
+        headers: {
+          "Content-Type":
+            "text/plain; charset=UTF-8"
+        }
       }
     );
 
@@ -443,6 +556,38 @@ async function exchangeCode(
   env
 ) {
 
+  if (!env.DISCORD_CLIENT_ID) {
+
+    throw new Error(
+      "DISCORD_CLIENT_ID is missing."
+    );
+
+  }
+
+
+  if (!env.DISCORD_CLIENT_SECRET) {
+
+    throw new Error(
+      "DISCORD_CLIENT_SECRET is missing."
+    );
+
+  }
+
+
+  if (!env.DISCORD_REDIRECT_URI) {
+
+    throw new Error(
+      "DISCORD_REDIRECT_URI is missing."
+    );
+
+  }
+
+
+  /*
+    Discord requires this request to use
+    application/x-www-form-urlencoded.
+  */
+
   const body =
     new URLSearchParams({
 
@@ -455,7 +600,8 @@ async function exchangeCode(
       grant_type:
         "authorization_code",
 
-      code,
+      code:
+        code,
 
       redirect_uri:
         env.DISCORD_REDIRECT_URI
@@ -471,11 +617,14 @@ async function exchangeCode(
         method: "POST",
 
         headers: {
+
           "Content-Type":
             "application/x-www-form-urlencoded"
+
         },
 
-        body
+        body:
+          body
 
       }
     );
@@ -483,8 +632,13 @@ async function exchangeCode(
 
   if (!response.ok) {
 
+    const errorText =
+      await response.text();
+
+
     throw new Error(
-      "Discord token exchange failed."
+      "Discord token exchange failed.\n\n" +
+      errorText
     );
 
   }
@@ -492,6 +646,15 @@ async function exchangeCode(
 
   const data =
     await response.json();
+
+
+  if (!data.access_token) {
+
+    throw new Error(
+      "Discord did not return an access token."
+    );
+
+  }
 
 
   return data.access_token;
@@ -514,8 +677,13 @@ async function discordGet(
       {
 
         headers: {
+
           Authorization:
-            `Bearer ${token}`
+            `Bearer ${token}`,
+
+          Accept:
+            "application/json"
+
         }
 
       }
@@ -524,8 +692,16 @@ async function discordGet(
 
   if (!response.ok) {
 
+    const errorText =
+      await response.text();
+
+
     throw new Error(
-      "Discord API request failed."
+      "Discord API request failed.\n\n" +
+      "URL: " +
+      url +
+      "\n\nDiscord response:\n" +
+      errorText
     );
 
   }
@@ -557,8 +733,13 @@ async function getMe(
   if (!token) {
 
     return json({
-      authenticated: false,
-      authorized: false
+
+      authenticated:
+        false,
+
+      authorized:
+        false
+
     });
 
   }
@@ -574,8 +755,13 @@ async function getMe(
   if (!payload) {
 
     return json({
-      authenticated: false,
-      authorized: false
+
+      authenticated:
+        false,
+
+      authorized:
+        false
+
     });
 
   }
@@ -583,7 +769,8 @@ async function getMe(
 
   return json({
 
-    authenticated: true,
+    authenticated:
+      true,
 
     authorized:
       !!payload.authorized,
@@ -606,6 +793,12 @@ async function getMe(
 async function getContent(
   env
 ) {
+
+  /*
+    If D1 isn't configured yet,
+    the website still works using
+    the default content.
+  */
 
   if (!env.DB) {
 
@@ -661,6 +854,11 @@ async function saveContent(
   env
 ) {
 
+  /*
+    Make sure the user is logged in
+    and has an authorized Discord role.
+  */
+
   const session =
     await getSession(
       request,
@@ -684,6 +882,10 @@ async function saveContent(
   }
 
 
+  /*
+    Make sure D1 exists.
+  */
+
   if (!env.DB) {
 
     return json(
@@ -697,9 +899,29 @@ async function saveContent(
   }
 
 
-  const data =
-    await request.json();
+  let data;
 
+  try {
+
+    data =
+      await request.json();
+
+  } catch {
+
+    return json(
+      {
+        error:
+          "Invalid JSON content."
+      },
+      400
+    );
+
+  }
+
+
+  /*
+    Save the content into D1.
+  */
 
   await env.DB
     .prepare(
@@ -720,7 +942,10 @@ async function saveContent(
 
 
   return json({
-    ok: true
+
+    ok:
+      true
+
   });
 
 }
@@ -744,8 +969,18 @@ async function getSession(
     );
 
 
-  if (!token)
+  if (!token) {
+
     return null;
+
+  }
+
+
+  if (!env.SESSION_SECRET) {
+
+    return null;
+
+  }
 
 
   return verifySession(
@@ -756,10 +991,23 @@ async function getSession(
 }
 
 
+/* ==================================
+   SIGN SESSION
+================================== */
+
 async function signSession(
   payload,
   secret
 ) {
+
+  if (!secret) {
+
+    throw new Error(
+      "SESSION_SECRET is missing."
+    );
+
+  }
+
 
   const encoded =
     base64url(
@@ -780,20 +1028,28 @@ async function signSession(
       ),
 
       {
-        name: "HMAC",
-        hash: "SHA-256"
+        name:
+          "HMAC",
+
+        hash:
+          "SHA-256"
+
       },
 
       false,
 
-      ["sign"]
+      [
+        "sign"
+      ]
     );
 
 
   const signature =
     await crypto.subtle.sign(
       "HMAC",
+
       key,
+
       new TextEncoder().encode(
         encoded
       )
@@ -813,6 +1069,10 @@ async function signSession(
 }
 
 
+/* ==================================
+   VERIFY SESSION
+================================== */
+
 async function verifySession(
   token,
   secret
@@ -820,16 +1080,29 @@ async function verifySession(
 
   try {
 
+    if (!secret) {
+
+      return null;
+
+    }
+
+
     const parts =
       token.split(".");
 
 
-    if (parts.length !== 2)
+    if (
+      parts.length !== 2
+    ) {
+
       return null;
+
+    }
 
 
     const payloadPart =
       parts[0];
+
 
     const signaturePart =
       parts[1];
@@ -844,13 +1117,19 @@ async function verifySession(
         ),
 
         {
-          name: "HMAC",
-          hash: "SHA-256"
+          name:
+            "HMAC",
+
+          hash:
+            "SHA-256"
+
         },
 
         false,
 
-        ["verify"]
+        [
+          "verify"
+        ]
       );
 
 
@@ -870,8 +1149,11 @@ async function verifySession(
       );
 
 
-    if (!valid)
+    if (!valid) {
+
       return null;
+
+    }
 
 
     const payload =
@@ -883,6 +1165,10 @@ async function verifySession(
         )
       );
 
+
+    /*
+      Check session expiration.
+    */
 
     if (
       !payload.exp ||
@@ -913,9 +1199,13 @@ function logout() {
 
   return new Response(
     JSON.stringify({
-      ok: true
+      ok:
+        true
     }),
     {
+
+      status:
+        200,
 
       headers: {
 
@@ -945,7 +1235,9 @@ function getCookie(
   const found =
     cookieString
       .split(";")
-      .map(x => x.trim())
+      .map(
+        x => x.trim()
+      )
       .find(
         x =>
           x.startsWith(
@@ -963,30 +1255,52 @@ function getCookie(
 }
 
 
+/* ==================================
+   BASE64URL ENCODE
+================================== */
+
 function base64url(
   bytes
 ) {
 
-  let binary = "";
+  let binary =
+    "";
+
 
   for (
     const byte of bytes
   ) {
 
-    binary += String.fromCharCode(
-      byte
-    );
+    binary +=
+      String.fromCharCode(
+        byte
+      );
 
   }
 
 
-  return btoa(binary)
-    .replace(/\+/g, "-")
-    .replace(/\//g, "_")
-    .replace(/=+$/g, "");
+  return btoa(
+    binary
+  )
+    .replace(
+      /\+/g,
+      "-"
+    )
+    .replace(
+      /\//g,
+      "_"
+    )
+    .replace(
+      /=+$/,
+      ""
+    );
 
 }
 
+
+/* ==================================
+   BASE64URL DECODE
+================================== */
 
 function fromBase64url(
   value
@@ -994,8 +1308,14 @@ function fromBase64url(
 
   const base64 =
     value
-      .replace(/-/g, "+")
-      .replace(/_/g, "/")
+      .replace(
+        /-/g,
+        "+"
+      )
+      .replace(
+        /_/g,
+        "/"
+      )
       .padEnd(
         Math.ceil(
           value.length / 4
@@ -1005,7 +1325,9 @@ function fromBase64url(
 
 
   const binary =
-    atob(base64);
+    atob(
+      base64
+    );
 
 
   const bytes =
@@ -1021,7 +1343,9 @@ function fromBase64url(
   ) {
 
     bytes[i] =
-      binary.charCodeAt(i);
+      binary.charCodeAt(
+        i
+      );
 
   }
 
@@ -1031,20 +1355,30 @@ function fromBase64url(
 }
 
 
+/* ==================================
+   JSON RESPONSE
+================================== */
+
 function json(
   data,
   status = 200
 ) {
 
   return new Response(
-    JSON.stringify(data),
+    JSON.stringify(
+      data
+    ),
     {
 
-      status,
+      status:
+
+        status,
 
       headers: {
+
         "Content-Type":
-          "application/json"
+          "application/json; charset=UTF-8"
+
       }
 
     }
