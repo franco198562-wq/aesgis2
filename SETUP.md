@@ -1,6 +1,7 @@
 # Aegis Institute — Cloudflare Workers Build
 
 This version is built for **Cloudflare Workers Builds**, not Cloudflare Pages.
+
 It keeps the same public portal, Discord login, authorised-role editor, and D1 storage.
 
 ## Project structure
@@ -13,7 +14,7 @@ It keeps the same public portal, Discord login, authorised-role editor, and D1 s
 - `wrangler.toml` — Workers configuration
 - `schema.sql` — D1 table
 
-Cloudflare Workers supports a Worker script and static assets together. This project uses `public/` as the static-assets directory and runs the Worker first only for `/api/*`. See the current Cloudflare Workers static-assets documentation for this configuration. 
+Cloudflare Workers supports a Worker script and static assets together. This project uses `public/` as the static-assets directory and runs the Worker first only for `/api/*`. See the current Cloudflare Workers static-assets documentation for this configuration.
 
 ## 1. Put the files in your existing repository
 
@@ -106,7 +107,9 @@ Check these in order:
 ## Security
 
 The Discord client secret is only used server-side by `worker.js`.
+
 The editor API checks the signed session server-side before accepting changes.
+
 The OAuth state cookie is validated to protect the login callback.
 
 If an API/build token was exposed in a screen recording or chat, rotate/revoke that token before continuing.
