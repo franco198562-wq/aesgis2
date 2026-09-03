@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
   <meta charset="UTF-8">
 
   <meta
@@ -9,343 +8,619 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>Staff Login — The Aegis Institute</title>
+  <title>Staff Login | The Aegis Institute</title>
 
   <link
     rel="stylesheet"
     href="/portal.css"
   >
-
 </head>
 
-<body class="portal-body">
+<body class="login-page">
 
-  <div class="login-page">
+  <main class="login-container">
 
-    <div class="login-card">
+    <!-- ======================================================
+         LEFT SIDE
+         ====================================================== -->
 
-      <div class="login-logo">
+    <section class="login-brand">
+
+      <div class="brand-mark">
         A
       </div>
 
-      <div class="login-brand">
-        THE AEGIS INSTITUTE
-      </div>
-
-      <div class="login-kicker">
-        STAFF PORTAL
-      </div>
-
       <h1>
-        Sign in.
+        The Aegis Institute
       </h1>
 
-      <p class="login-description">
-        Use your administrator password or staff access code to continue.
+      <p>
+        Secure access to the Aegis staff and administration
+        portal.
+      </p>
+
+    </section>
+
+
+    <!-- ======================================================
+         RIGHT SIDE
+         ====================================================== -->
+
+    <section class="login-form-area">
+
+      <h2>
+        Portal Login
+      </h2>
+
+      <p>
+        Choose the login method provided to you.
       </p>
 
 
-      <!-- MAIN ADMIN -->
-
-      <div class="login-section">
-
-        <div class="login-section-title">
-          Administrator
-        </div>
-
-        <form id="adminLoginForm">
-
-          <label for="adminPassword">
-            Administrator Password
-          </label>
-
-          <input
-            id="adminPassword"
-            type="password"
-            placeholder="Enter administrator password"
-            autocomplete="current-password"
-            required
-          >
-
-          <button
-            type="submit"
-            class="primary-button full-width"
-          >
-            Administrator Login
-          </button>
-
-        </form>
-
-      </div>
-
-
-      <div class="login-divider">
-        <span>OR</span>
-      </div>
-
-
-      <!-- STAFF -->
-
-      <div class="login-section">
-
-        <div class="login-section-title">
-          Staff Member
-        </div>
-
-        <form id="staffLoginForm">
-
-          <label for="staffCode">
-            Staff Access Code
-          </label>
-
-          <input
-            id="staffCode"
-            type="text"
-            placeholder="AEGIS-XXXX-XXXX"
-            autocomplete="off"
-            autocapitalize="characters"
-            required
-          >
-
-          <button
-            type="submit"
-            class="secondary-button full-width"
-          >
-            Staff Login
-          </button>
-
-        </form>
-
-      </div>
-
+      <!-- ====================================================
+           ERROR / SUCCESS MESSAGE
+           ==================================================== -->
 
       <div
         id="loginMessage"
-        class="login-message"
+        class="alert hidden"
       ></div>
 
 
-      <a
-        href="/"
-        class="back-link"
+      <!-- ====================================================
+           LOGIN OPTIONS
+           ==================================================== -->
+
+      <div class="login-options">
+
+
+        <!-- ==================================================
+             MAIN ADMIN
+             ================================================== -->
+
+        <div class="login-option">
+
+          <h3>
+            Administrator
+          </h3>
+
+          <p>
+            Main administrator access. This provides access
+            to the website editor, staff accounts, documents
+            and portal management.
+          </p>
+
+
+          <form id="adminLoginForm">
+
+            <div class="form-group">
+
+              <label for="adminPassword">
+                Administrator Password
+              </label>
+
+              <input
+                id="adminPassword"
+                class="input"
+                type="password"
+                autocomplete="current-password"
+                placeholder="Enter administrator password"
+                required
+              >
+
+            </div>
+
+
+            <button
+              id="adminLoginButton"
+              class="btn btn-dark"
+              type="submit"
+            >
+              Sign in as Administrator
+            </button>
+
+          </form>
+
+        </div>
+
+
+        <!-- ==================================================
+             STAFF LOGIN
+             ================================================== -->
+
+        <div class="login-option">
+
+          <h3>
+            Staff Member
+          </h3>
+
+          <p>
+            Use the staff login code given to you by an
+            administrator.
+          </p>
+
+
+          <form id="staffLoginForm">
+
+            <div class="form-group">
+
+              <label for="staffCode">
+                Staff Login Code
+              </label>
+
+              <input
+                id="staffCode"
+                class="input"
+                type="text"
+                autocomplete="off"
+                autocapitalize="characters"
+                spellcheck="false"
+                placeholder="AEGIS-XXXX-XXXX"
+                required
+              >
+
+            </div>
+
+
+            <button
+              id="staffLoginButton"
+              class="btn btn-primary"
+              type="submit"
+            >
+              Sign in as Staff
+            </button>
+
+          </form>
+
+        </div>
+
+
+      </div>
+
+
+      <!-- ====================================================
+           FOOTER
+           ==================================================== -->
+
+      <div
+        style="
+          margin-top: 30px;
+          padding-top: 20px;
+          border-top: 1px solid var(--border);
+        "
       >
-        ← Return to website
-      </a>
 
-    </div>
+        <p
+          style="
+            margin: 0;
+            color: var(--muted);
+            font-size: 11px;
+          "
+        >
+          Authorised users only. Access is controlled by
+          The Aegis Institute.
+        </p>
 
-  </div>
+      </div>
 
+    </section>
 
-<script>
-
-const adminForm =
-  document.getElementById(
-    "adminLoginForm"
-  );
-
-const staffForm =
-  document.getElementById(
-    "staffLoginForm"
-  );
-
-const message =
-  document.getElementById(
-    "loginMessage"
-  );
+  </main>
 
 
-function showMessage(
-  text,
-  type = "error"
-) {
+  <script>
 
-  message.textContent =
-    text;
+    // ========================================================
+    // ELEMENTS
+    // ========================================================
 
-  message.className =
-    "login-message " +
-    type;
-
-}
-
-
-/* =========================================================
-   ADMIN LOGIN
-========================================================= */
-
-adminForm.addEventListener(
-  "submit",
-  async event => {
-
-    event.preventDefault();
-
-    showMessage(
-      "Signing in...",
-      "loading"
-    );
-
-
-    const password =
-      document
-        .getElementById(
-          "adminPassword"
-        )
-        .value;
-
-
-    try {
-
-      const response =
-        await fetch(
-          "/api/auth/password",
-          {
-
-            method:
-              "POST",
-
-            headers: {
-
-              "Content-Type":
-                "application/json"
-
-            },
-
-            body:
-              JSON.stringify({
-
-                password
-
-              })
-
-          }
-        );
-
-
-      const data =
-        await response.json();
-
-
-      if (
-        !response.ok ||
-        !data.success
-      ) {
-
-        showMessage(
-          data.error ||
-          "Unable to sign in."
-        );
-
-        return;
-
-      }
-
-
-      window.location.href =
-        data.redirect ||
-        "/admin.html";
-
-    } catch {
-
-      showMessage(
-        "Unable to connect to the Aegis portal."
+    const loginMessage =
+      document.getElementById(
+        "loginMessage"
       );
+
+    const adminLoginForm =
+      document.getElementById(
+        "adminLoginForm"
+      );
+
+    const staffLoginForm =
+      document.getElementById(
+        "staffLoginForm"
+      );
+
+    const adminLoginButton =
+      document.getElementById(
+        "adminLoginButton"
+      );
+
+    const staffLoginButton =
+      document.getElementById(
+        "staffLoginButton"
+      );
+
+
+    // ========================================================
+    // MESSAGE
+    // ========================================================
+
+    function showMessage(
+      message,
+      type = "error"
+    ) {
+
+      loginMessage.textContent =
+        message;
+
+      loginMessage.className =
+        `alert alert-${type}`;
 
     }
 
-  }
-);
 
+    function hideMessage() {
 
-/* =========================================================
-   STAFF LOGIN
-========================================================= */
+      loginMessage.className =
+        "alert hidden";
 
-staffForm.addEventListener(
-  "submit",
-  async event => {
-
-    event.preventDefault();
-
-    showMessage(
-      "Checking access code...",
-      "loading"
-    );
-
-
-    const code =
-      document
-        .getElementById(
-          "staffCode"
-        )
-        .value
-        .trim()
-        .toUpperCase();
-
-
-    try {
-
-      const response =
-        await fetch(
-          "/api/auth/code",
-          {
-
-            method:
-              "POST",
-
-            headers: {
-
-              "Content-Type":
-                "application/json"
-
-            },
-
-            body:
-              JSON.stringify({
-
-                code
-
-              })
-
-          }
-        );
-
-
-      const data =
-        await response.json();
-
-
-      if (
-        !response.ok ||
-        !data.success
-      ) {
-
-        showMessage(
-          data.error ||
-          "Invalid staff code."
-        );
-
-        return;
-
-      }
-
-
-      window.location.href =
-        data.redirect ||
-        "/staff.html";
-
-    } catch {
-
-      showMessage(
-        "Unable to connect to the Aegis portal."
-      );
+      loginMessage.textContent =
+        "";
 
     }
 
-  }
-);
 
-</script>
+    // ========================================================
+    // BUTTON LOADING
+    // ========================================================
+
+    function setLoading(
+      button,
+      loading,
+      originalText
+    ) {
+
+      button.disabled =
+        loading;
+
+      button.textContent =
+        loading
+          ? "Signing in..."
+          : originalText;
+
+    }
+
+
+    // ========================================================
+    // CHECK EXISTING LOGIN
+    // ========================================================
+
+    async function checkExistingSession() {
+
+      try {
+
+        const response =
+          await fetch(
+            "/api/auth/me",
+            {
+              method: "GET",
+              credentials: "same-origin",
+              cache: "no-store"
+            }
+          );
+
+
+        if (!response.ok) {
+
+          return;
+
+        }
+
+
+        const data =
+          await response.json();
+
+
+        if (
+          !data.authenticated
+        ) {
+
+          return;
+
+        }
+
+
+        if (
+          data.role ===
+          "main_admin"
+        ) {
+
+          window.location.href =
+            "/admin.html";
+
+          return;
+
+        }
+
+
+        if (
+          data.role ===
+          "staff"
+        ) {
+
+          window.location.href =
+            "/staff.html";
+
+        }
+
+      } catch (error) {
+
+        console.error(
+          "Session check failed:",
+          error
+        );
+
+      }
+
+    }
+
+
+    // ========================================================
+    // ADMIN LOGIN
+    // ========================================================
+
+    adminLoginForm.addEventListener(
+      "submit",
+      async function(event) {
+
+        event.preventDefault();
+
+        hideMessage();
+
+
+        const password =
+          document
+            .getElementById(
+              "adminPassword"
+            )
+            .value;
+
+
+        if (!password) {
+
+          showMessage(
+            "Please enter the administrator password."
+          );
+
+          return;
+
+        }
+
+
+        setLoading(
+          adminLoginButton,
+          true,
+          "Sign in as Administrator"
+        );
+
+
+        try {
+
+          const response =
+            await fetch(
+              "/api/auth/password",
+              {
+                method: "POST",
+
+                credentials:
+                  "same-origin",
+
+                headers: {
+                  "Content-Type":
+                    "application/json"
+                },
+
+                body:
+                  JSON.stringify({
+                    password
+                  })
+              }
+            );
+
+
+          const data =
+            await response.json();
+
+
+          if (
+            !response.ok ||
+            !data.success
+          ) {
+
+            showMessage(
+              data.error ||
+              "Administrator login failed."
+            );
+
+            return;
+
+          }
+
+
+          window.location.href =
+            data.redirect ||
+            "/admin.html";
+
+        } catch (error) {
+
+          console.error(
+            "Administrator login error:",
+            error
+          );
+
+
+          showMessage(
+            "Unable to contact the portal. Please try again."
+          );
+
+        } finally {
+
+          setLoading(
+            adminLoginButton,
+            false,
+            "Sign in as Administrator"
+          );
+
+        }
+
+      }
+    );
+
+
+    // ========================================================
+    // STAFF LOGIN
+    // ========================================================
+
+    staffLoginForm.addEventListener(
+      "submit",
+      async function(event) {
+
+        event.preventDefault();
+
+        hideMessage();
+
+
+        const input =
+          document.getElementById(
+            "staffCode"
+          );
+
+
+        const code =
+          input.value
+            .trim()
+            .toUpperCase();
+
+
+        if (!code) {
+
+          showMessage(
+            "Please enter your staff login code."
+          );
+
+          return;
+
+        }
+
+
+        setLoading(
+          staffLoginButton,
+          true,
+          "Sign in as Staff"
+        );
+
+
+        try {
+
+          const response =
+            await fetch(
+              "/api/auth/code",
+              {
+                method: "POST",
+
+                credentials:
+                  "same-origin",
+
+                headers: {
+                  "Content-Type":
+                    "application/json"
+                },
+
+                body:
+                  JSON.stringify({
+                    code
+                  })
+              }
+            );
+
+
+          const data =
+            await response.json();
+
+
+          if (
+            !response.ok ||
+            !data.success
+          ) {
+
+            showMessage(
+              data.error ||
+              "Staff login failed."
+            );
+
+            return;
+
+          }
+
+
+          window.location.href =
+            data.redirect ||
+            "/staff.html";
+
+        } catch (error) {
+
+          console.error(
+            "Staff login error:",
+            error
+          );
+
+
+          showMessage(
+            "Unable to contact the portal. Please try again."
+          );
+
+        } finally {
+
+          setLoading(
+            staffLoginButton,
+            false,
+            "Sign in as Staff"
+          );
+
+        }
+
+      }
+    );
+
+
+    // ========================================================
+    // FORMAT STAFF CODE
+    // ========================================================
+
+    document
+      .getElementById("staffCode")
+      .addEventListener(
+        "input",
+        function() {
+
+          this.value =
+            this.value
+              .toUpperCase()
+              .replace(
+                /[^A-Z0-9-]/g,
+                ""
+              );
+
+        }
+      );
+
+
+    // ========================================================
+    // START
+    // ========================================================
+
+    checkExistingSession();
+
+  </script>
 
 </body>
 </html>
