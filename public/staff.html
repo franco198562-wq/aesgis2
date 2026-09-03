@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Staff Portal — The Aegis Institute
+  </title>
+
+  <link
+    rel="stylesheet"
+    href="/portal.css"
+  >
+
+</head>
+
+
+<body class="portal-page">
+
+
+  <header class="portal-header">
+
+
+    <a
+      class="portal-brand"
+      href="/"
+    >
+
+      <span class="brand-mark">
+        A
+      </span>
+
+      <span>
+        THE AEGIS INSTITUTE
+      </span>
+
+    </a>
+
+
+    <div class="header-actions">
+
+
+      <div class="user-info">
+
+        <span class="user-label">
+          SIGNED IN AS
+        </span>
+
+        <strong id="staffName">
+          Staff Member
+        </strong>
+
+      </div>
+
+
+      <button
+        class="secondary-btn small-btn"
+        id="logoutButton"
+      >
+        Log out
+      </button>
+
+
+    </div>
+
+
+  </header>
+
+
+  <main class="portal-container">
+
+
+    <section class="page-heading">
+
+
+      <div>
+
+        <div class="eyebrow">
+          STAFF PORTAL
+        </div>
+
+
+        <h1>
+          Welcome to Aegis.
+        </h1>
+
+
+        <p>
+
+          Your available resources
+          are shown below. What you
+          can access is determined by
+          your staff login code.
+
+        </p>
+
+      </div>
+
+
+    </section>
+
+
+    <section
+      id="emptyState"
+      class="empty-state hidden"
+    >
+
+
+      <div class="empty-icon">
+        A
+      </div>
+
+
+      <h2>
+        No staff resources yet.
+      </h2>
+
+
+      <p>
+
+        Your account is active,
+        but no documents have been
+        assigned to your access code
+        yet.
+
+      </p>
+
+
+    </section>
+
+
+    <section
+      id="documentsGrid"
+      class="staff-document-grid"
+    ></section>
+
+
+  </main>
+
+
+  <script>
+
+    const permissionNames = {
+
+      handbook:
+        "Staff Handbook",
+
+      documents:
+        "General Documents",
+
+      training:
+        "Training",
+
+      resources:
+        "Staff Resources",
+
+      staff_directory:
+        "Staff Directory",
+
+      announcements:
+        "Staff Announcements"
+
+    };
+
+
+    function escapeHtml(
+      value
+    ) {
+
+      return String(
+        value ?? ""
+      )
+
+        .replaceAll(
+          "&",
+          "&amp;"
+        )
+
+        .replaceAll(
+          "<",
+          "&lt;"
+        )
+
+        .replaceAll(
+          ">",
+          "&gt;"
+        )
+
+        .replaceAll(
+          '"',
+          "&quot;"
+        )
+
+        .replaceAll(
+          "'",
+          "&#039;"
+        );
+
+    }
+
+
+    function formatDate(
+      value
+    ) {
+
+      if (
+        !value
+      ) {
+
+        return "";
+
+      }
+
+
+      const date =
+        new Date(
+          value
+        );
+
+
+      if (
+        Number.isNaN(
+          date.getTime()
+        )
+      ) {
+
+        return "";
+
+      }
+
+
+      return date.toLocaleDateString(
+        undefined,
+        {
+
+          day:
+            "numeric",
+
+          month:
+            "long",
+
+          year:
+            "numeric"
+
+        }
+      );
+
+    }
+
+
+    async function api(
+      url,
+      options = {}
+    ) {
+
+      const response =
+        await fetch(
+          url,
+          {
+
+            ...options,
+
+            headers: {
+
+              "Content-Type":
+                "application/json",
+
+              ...(options.headers || {})
+
+            }
+
+          }
+        );
+
+
+      let data = {};
+
+
+      try {
+
+        data =
+          await response.json();
+
+      } catch {}
+
+
+      if (
+        !response.ok
+      ) {
+
+        throw new Error(
+          data.error ||
+          "Request failed."
+        );
+
+      }
+
+
+      return data;
+
+    }
+
+
+    async function loadPortal() {
+
+
+      const me =
+        await api(
+          "/api/auth/me"
+        );
+
+
+      if (
+        !me.authenticated ||
+        !me.authorized
+      ) {
+
+        window.location.href =
+          "/staff-login.html";
+
+        return;
+
+      }
+
+
+      document.getElementById(
+        "staffName"
+      ).textContent =
+        me.username ||
+        "Staff Member";
+
+
+      const data =
+        await api(
+          "/api/staff/documents"
+        );
+
+
+      const grid =
+        document.getElementById(
+          "documentsGrid"
+        );
+
+
+      if (
+        !data.documents.length
+      ) {
+
+        document
+          .getElementById(
+            "emptyState"
+          )
+          .classList
+          .remove(
+            "hidden"
+          );
+
+        return;
+
+      }
+
+
+      grid.innerHTML =
+        data.documents
+          .map(
+            doc => `
+
+              <article
+                class="staff-document-card"
+              >
+
+                <div
+                  class="document-card-header"
+                >
+
+                  <span
+                    class="document-icon"
+                  >
+                    A
+                  </span>
+
+                  <span
+                    class="tag"
+                  >
+                    ${escapeHtml(
+                      permissionNames[
+                        doc.permission
+                      ] ||
+                      doc.permission
+                    )}
+                  </span>
+
+                </div>
+
+
+                <h2>
+                  ${escapeHtml(
+                    doc.title
+                  )}
+                </h2>
+
+
+                <p
+                  class="document-description"
+                >
+                  ${escapeHtml(
+                    doc.description
+                  )}
+                </p>
+
+
+                <div
+                  class="document-divider"
+                ></div>
+
+
+                <div
+                  class="document-content"
+                >
+                  ${escapeHtml(
+                    doc.content
+                  )}
+                </div>
+
+
+                <div
+                  class="document-footer"
+                >
+
+                  Updated
+                  ${escapeHtml(
+                    formatDate(
+                      doc.updated_at
+                    )
+                  )}
+
+                </div>
+
+
+              </article>
+
+            `
+          )
+          .join("");
+
+    }
+
+
+    document
+      .getElementById(
+        "logoutButton"
+      )
+      .addEventListener(
+        "click",
+        async () => {
+
+          await fetch(
+            "/api/auth/logout",
+            {
+              method:
+                "POST"
+            }
+          );
+
+
+          window.location.href =
+            "/staff-login.html";
+
+        }
+      );
+
+
+    loadPortal()
+      .catch(
+        error => {
+
+          console.error(
+            error
+          );
+
+
+          window.location.href =
+            "/staff-login.html";
+
+        }
+      );
+
+  </script>
+
+</body>
+
+</html>
