@@ -1,211 +1,742 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services — The Aegis Institute</title>
 
-  <title>Services — The Aegis Institute</title>
+    <meta
+        name="description"
+        content="Explore the services provided by The Aegis Institute."
+    >
 
-  <link rel="stylesheet" href="/styles.css">
-
+    <link rel="stylesheet" href="/portal.css">
 </head>
 
-<body>
+<body class="public-site">
 
-<header class="site-header">
+    <!-- =========================
+         HEADER
+    ========================== -->
+    <header class="site-header">
+        <div class="container nav">
 
-  <a href="/" class="brand">
-    <span class="brand-logo">A</span>
+            <a href="/" class="brand">
+                <span class="brand-mark">A</span>
 
-    <span class="brand-text">
-      <strong>THE AEGIS INSTITUTE</strong>
-    </span>
-  </a>
+                <span class="brand-text">
+                    <strong id="siteName">
+                        THE AEGIS INSTITUTE
+                    </strong>
+                </span>
+            </a>
 
-  <nav class="main-nav">
-    <a href="/">Home</a>
-    <a href="/services.html" class="active">Services</a>
-    <a href="/work.html">Our Work</a>
-    <a href="/contact.html">Contact</a>
+            <nav class="nav-links">
+                <a href="/">Home</a>
+                <a href="/services.html" class="active">
+                    Services
+                </a>
+                <a href="/work.html">
+                    Our Work
+                </a>
+                <a href="/contact.html">
+                    Contact
+                </a>
+                <a href="/staff-login.html" class="nav-login">
+                    Staff Login
+                </a>
+            </nav>
 
-    <a href="/api/auth/discord" class="staff-login">
-      Staff Login
-    </a>
-  </nav>
-
-</header>
-
-
-<main>
-
-  <section class="page-hero">
-
-    <div class="container">
-
-      <span class="eyebrow">
-        EDUCATION
-      </span>
-
-      <h1>
-        Practical training for real situations
-      </h1>
-
-      <p>
-        A dual model for communities outsourcing staff training
-        and individuals preparing for moderation and leadership roles.
-      </p>
-
-    </div>
-
-  </section>
+        </div>
+    </header>
 
 
-  <section class="section">
+    <!-- =========================
+         ANNOUNCEMENT
+    ========================== -->
+    <div id="announcementBar" class="announcement-bar hidden">
 
-    <div class="container">
+        <div class="container announcement-inner">
 
-      <div class="two-card-grid">
+            <div>
+                <strong id="announcementTitle">
+                    Announcement
+                </strong>
 
-        <article class="large-card">
+                <span id="announcementText"></span>
+            </div>
 
-          <span class="card-label">
-            SERVER OWNERS
-          </span>
+            <a
+                id="announcementLink"
+                href="#"
+                class="announcement-link"
+            >
+                Learn more
+            </a>
 
-          <h2>
-            Outsourced staff training
-          </h2>
-
-          <p>
-            High-quality training, assessments and feedback
-            aligned to your community's rules and procedures.
-          </p>
-
-          <ul>
-            <li>Training, assessments & educator support</li>
-            <li>Structured standards</li>
-            <li>Actionable feedback</li>
-          </ul>
-
-        </article>
-
-
-        <article class="large-card">
-
-          <span class="card-label">
-            PLAYERS
-          </span>
-
-          <h2>
-            Moderator & Advanced Fundamentals
-          </h2>
-
-          <p>
-            Preparation for aspiring moderators and supervisors
-            who want to build practical skills.
-          </p>
-
-          <ul>
-            <li>Moderator fundamentals</li>
-            <li>Advanced fundamentals</li>
-            <li>Practical scenarios</li>
-          </ul>
-
-        </article>
-
-      </div>
+        </div>
 
     </div>
 
-  </section>
+
+    <!-- =========================
+         PAGE HERO
+    ========================== -->
+    <main>
+
+        <section class="page-hero">
+
+            <div class="container">
+
+                <div class="eyebrow" id="servicesKicker">
+                    WHAT WE DO
+                </div>
+
+                <h1 id="servicesTitle">
+                    Services designed around
+                    real-world outcomes.
+                </h1>
+
+                <p id="servicesIntro">
+                    The Aegis Institute provides practical education,
+                    consulting and professional support tailored to the
+                    needs of people and organisations.
+                </p>
+
+            </div>
+
+        </section>
 
 
-  <section class="section section-soft">
+        <!-- =========================
+             SERVICES
+        ========================== -->
+        <section class="section">
 
-    <div class="container">
+            <div class="container">
 
-      <span class="eyebrow">
-        CONSULTING
-      </span>
+                <div class="card-grid">
 
-      <h2 class="section-title">
-        Better systems, clearer standards.
-      </h2>
+                    <!-- EDUCATION -->
+                    <article class="card service-card">
 
-      <div class="three-grid">
+                        <div class="card-number">
+                            01
+                        </div>
 
-        <article class="info-card">
+                        <div class="service-icon">
+                            E
+                        </div>
 
-          <span class="card-label">
-            STANDARDS
-          </span>
+                        <h2 id="servicesEducationTitle">
+                            Education
+                        </h2>
 
-          <h3>
-            Staff standards
-          </h3>
+                        <p id="servicesEducationText">
+                            Develop knowledge, confidence and practical
+                            capability through structured learning and
+                            professional development.
+                        </p>
 
-          <p>
-            Build clear expectations for staff behaviour,
-            communication and decision-making.
-          </p>
+                        <div class="service-list">
 
-        </article>
+                            <div>
+                                <span>01</span>
+                                Structured learning
+                            </div>
 
+                            <div>
+                                <span>02</span>
+                                Professional development
+                            </div>
 
-        <article class="info-card">
+                            <div>
+                                <span>03</span>
+                                Practical capability
+                            </div>
 
-          <span class="card-label">
-            COMMUNITY
-          </span>
+                        </div>
 
-          <h3>
-            Foundation community audit
-          </h3>
-
-          <p>
-            Review your current systems and identify
-            practical areas for improvement.
-          </p>
-
-        </article>
-
-
-        <article class="info-card">
-
-          <span class="card-label">
-            MODERATION
-          </span>
-
-          <h3>
-            Moderator fundamentals
-          </h3>
-
-          <p>
-            Create a stronger foundation for staff entering
-            community moderation.
-          </p>
-
-        </article>
-
-      </div>
-
-    </div>
-
-  </section>
-
-</main>
+                    </article>
 
 
-<footer class="site-footer">
-  <div class="container footer-inner">
-    <span>© 2026 The Aegis Institute</span>
-    <span>Education · Consulting · Community</span>
-  </div>
-</footer>
+                    <!-- CONSULTING -->
+                    <article class="card service-card">
+
+                        <div class="card-number">
+                            02
+                        </div>
+
+                        <div class="service-icon">
+                            C
+                        </div>
+
+                        <h2 id="servicesConsultingTitle">
+                            Consulting
+                        </h2>
+
+                        <p id="servicesConsultingText">
+                            Gain practical guidance and tailored support
+                            to help solve problems, improve processes and
+                            strengthen performance.
+                        </p>
+
+                        <div class="service-list">
+
+                            <div>
+                                <span>01</span>
+                                Strategic guidance
+                            </div>
+
+                            <div>
+                                <span>02</span>
+                                Problem solving
+                            </div>
+
+                            <div>
+                                <span>03</span>
+                                Performance improvement
+                            </div>
+
+                        </div>
+
+                    </article>
 
 
-<script src="/app.js"></script>
+                    <!-- SUPPORT -->
+                    <article class="card service-card">
+
+                        <div class="card-number">
+                            03
+                        </div>
+
+                        <div class="service-icon">
+                            S
+                        </div>
+
+                        <h2 id="servicesSupportTitle">
+                            Professional Support
+                        </h2>
+
+                        <p id="servicesSupportText">
+                            Reliable professional support designed around
+                            your requirements, priorities and objectives.
+                        </p>
+
+                        <div class="service-list">
+
+                            <div>
+                                <span>01</span>
+                                Professional assistance
+                            </div>
+
+                            <div>
+                                <span>02</span>
+                                Tailored support
+                            </div>
+
+                            <div>
+                                <span>03</span>
+                                Ongoing guidance
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             APPROACH
+        ========================== -->
+        <section class="section section-soft">
+
+            <div class="container">
+
+                <div class="split-section">
+
+                    <div class="split-content">
+
+                        <div class="eyebrow">
+                            HOW WE WORK
+                        </div>
+
+                        <h2>
+                            Built around your
+                            requirements.
+                        </h2>
+
+                        <p>
+                            No two organisations, teams or projects are
+                            exactly the same. Our approach focuses on
+                            understanding the situation first and then
+                            developing practical solutions.
+                        </p>
+
+                        <p>
+                            We aim to keep our work clear, useful and
+                            focused on outcomes that can be applied beyond
+                            the initial engagement.
+                        </p>
+
+                        <a
+                            href="/contact.html"
+                            class="btn btn-primary"
+                        >
+                            Talk to us
+                        </a>
+
+                    </div>
+
+
+                    <div class="feature-panel">
+
+                        <div class="feature-panel-header">
+                            <span>AEGIS METHOD</span>
+                            <span>03</span>
+                        </div>
+
+                        <div class="feature-panel-main">
+
+                            <div class="feature-symbol">
+                                A
+                            </div>
+
+                            <h3>
+                                Understand.
+                                Develop.
+                                Deliver.
+                            </h3>
+
+                            <p>
+                                A straightforward approach designed to
+                                turn knowledge and ideas into practical
+                                action.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             CTA
+        ========================== -->
+        <section class="section">
+
+            <div class="container">
+
+                <div class="cta">
+
+                    <div>
+
+                        <div class="eyebrow">
+                            START A CONVERSATION
+                        </div>
+
+                        <h2>
+                            Have a project in mind?
+                        </h2>
+
+                        <p>
+                            Get in touch with The Aegis Institute to
+                            discuss how we can help.
+                        </p>
+
+                    </div>
+
+                    <a
+                        href="/contact.html"
+                        class="btn btn-primary"
+                    >
+                        Contact us
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+    <footer class="site-footer">
+
+        <div class="container footer-grid">
+
+            <div>
+
+                <a href="/" class="brand footer-brand">
+
+                    <span class="brand-mark">
+                        A
+                    </span>
+
+                    <span class="brand-text">
+                        <strong id="footerSiteName">
+                            THE AEGIS INSTITUTE
+                        </strong>
+                    </span>
+
+                </a>
+
+                <p id="footerText">
+                    Professional education, consulting and support.
+                </p>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <div>
+
+                    <strong>
+                        Explore
+                    </strong>
+
+                    <a href="/">
+                        Home
+                    </a>
+
+                    <a href="/services.html">
+                        Services
+                    </a>
+
+                    <a href="/work.html">
+                        Our Work
+                    </a>
+
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        Connect
+                    </strong>
+
+                    <a href="/contact.html">
+                        Contact
+                    </a>
+
+                    <a href="/staff-login.html">
+                        Staff Login
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="container footer-bottom">
+
+            <span id="footerCopyright">
+                © The Aegis Institute. All rights reserved.
+            </span>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =========================
+         CONTENT LOADER
+    ========================== -->
+    <script>
+
+        const fallbackContent = {
+
+            site_name:
+                "THE AEGIS INSTITUTE",
+
+            footer_text:
+                "Professional education, consulting and support.",
+
+
+            services_kicker:
+                "WHAT WE DO",
+
+            services_title:
+                "Services designed around real-world outcomes.",
+
+            services_intro:
+                "The Aegis Institute provides practical education, consulting and professional support tailored to the needs of people and organisations.",
+
+
+            services_education_title:
+                "Education",
+
+            services_education_text:
+                "Develop knowledge, confidence and practical capability through structured learning and professional development.",
+
+
+            services_consulting_title:
+                "Consulting",
+
+            services_consulting_text:
+                "Gain practical guidance and tailored support to help solve problems, improve processes and strengthen performance.",
+
+
+            services_support_title:
+                "Professional Support",
+
+            services_support_text:
+                "Reliable professional support designed around your requirements, priorities and objectives.",
+
+
+            announcement_enabled:
+                "false",
+
+            announcement_title:
+                "Announcement",
+
+            announcement_text:
+                "",
+
+            announcement_link_text:
+                "Learn more",
+
+            announcement_link:
+                "#"
+        };
+
+
+        function applyContent(content) {
+
+            const get = (key) => {
+
+                if (
+                    content &&
+                    content[key] !== undefined &&
+                    content[key] !== null &&
+                    content[key] !== ""
+                ) {
+                    return content[key];
+                }
+
+                return fallbackContent[key] || "";
+            };
+
+
+            /* PAGE TITLE */
+
+            document.title =
+                "Services — " +
+                get("site_name");
+
+
+            /* SITE NAME */
+
+            document
+                .querySelectorAll(
+                    "#siteName, #footerSiteName"
+                )
+                .forEach(element => {
+
+                    element.textContent =
+                        get("site_name");
+
+                });
+
+
+            /* SERVICES HERO */
+
+            document.getElementById(
+                "servicesKicker"
+            ).textContent =
+                get("services_kicker");
+
+
+            document.getElementById(
+                "servicesTitle"
+            ).textContent =
+                get("services_title");
+
+
+            document.getElementById(
+                "servicesIntro"
+            ).textContent =
+                get("services_intro");
+
+
+            /* EDUCATION */
+
+            document.getElementById(
+                "servicesEducationTitle"
+            ).textContent =
+                get("services_education_title");
+
+
+            document.getElementById(
+                "servicesEducationText"
+            ).textContent =
+                get("services_education_text");
+
+
+            /* CONSULTING */
+
+            document.getElementById(
+                "servicesConsultingTitle"
+            ).textContent =
+                get("services_consulting_title");
+
+
+            document.getElementById(
+                "servicesConsultingText"
+            ).textContent =
+                get("services_consulting_text");
+
+
+            /* SUPPORT */
+
+            document.getElementById(
+                "servicesSupportTitle"
+            ).textContent =
+                get("services_support_title");
+
+
+            document.getElementById(
+                "servicesSupportText"
+            ).textContent =
+                get("services_support_text");
+
+
+            /* FOOTER */
+
+            document.getElementById(
+                "footerText"
+            ).textContent =
+                get("footer_text");
+
+
+            document.getElementById(
+                "footerCopyright"
+            ).textContent =
+                "© " +
+                get("site_name") +
+                ". All rights reserved.";
+
+
+            /* ANNOUNCEMENT */
+
+            const enabled =
+                String(
+                    get("announcement_enabled")
+                ).toLowerCase() === "true";
+
+
+            const announcementBar =
+                document.getElementById(
+                    "announcementBar"
+                );
+
+
+            if (enabled) {
+
+                announcementBar.classList.remove(
+                    "hidden"
+                );
+
+
+                document.getElementById(
+                    "announcementTitle"
+                ).textContent =
+                    get("announcement_title");
+
+
+                document.getElementById(
+                    "announcementText"
+                ).textContent =
+                    " " +
+                    get("announcement_text");
+
+
+                const link =
+                    document.getElementById(
+                        "announcementLink"
+                    );
+
+
+                link.textContent =
+                    get("announcement_link_text");
+
+
+                link.href =
+                    get("announcement_link");
+
+            } else {
+
+                announcementBar.classList.add(
+                    "hidden"
+                );
+
+            }
+
+        }
+
+
+        async function loadWebsiteContent() {
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/api/content"
+                    );
+
+
+                if (!response.ok) {
+                    throw new Error(
+                        "Content request failed"
+                    );
+                }
+
+
+                const content =
+                    await response.json();
+
+
+                applyContent(content);
+
+            } catch (error) {
+
+                console.warn(
+                    "Using default services content:",
+                    error
+                );
+
+
+                applyContent(
+                    fallbackContent
+                );
+
+            }
+
+        }
+
+
+        loadWebsiteContent();
+
+    </script>
 
 </body>
 </html>
