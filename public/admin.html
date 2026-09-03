@@ -1,4590 +1,2511 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-  <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>
-    Administration | The Aegis Institute
-  </title>
-
-  <link
-    rel="stylesheet"
-    href="/portal.css"
-  >
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal | The Aegis Institute</title>
+    <link rel="stylesheet" href="/portal.css">
 </head>
 
+<body class="portal-body">
 
-<body class="portal-shell">
+<header class="portal-header">
+    <div class="header-inner">
+        <a href="/admin.html" class="brand">
+            <div class="brand-mark">A</div>
+            <div class="brand-text">
+                <strong>THE AEGIS INSTITUTE</strong>
+                <span>Administration Portal</span>
+            </div>
+        </a>
 
+        <div class="portal-user">
+            <div>
+                <div class="portal-user-name" id="adminName">Administrator</div>
+                <div class="portal-user-role">Main Administrator</div>
+            </div>
 
-  <!-- ========================================================
-       HEADER
-       ======================================================== -->
-
-  <header class="portal-header">
-
-    <div class="container header-inner">
-
-
-      <!-- BRAND -->
-
-      <a
-        href="/"
-        class="brand"
-      >
-
-        <span class="brand-mark">
-          A
-        </span>
-
-        <span class="brand-text">
-
-          THE AEGIS INSTITUTE
-
-          <span class="brand-subtext">
-            ADMINISTRATION
-          </span>
-
-        </span>
-
-      </a>
-
-
-      <!-- USER -->
-
-      <div class="portal-user">
-
-        <span
-          id="adminUserName"
-          class="portal-user-name"
-        >
-          Aegis Administrator
-        </span>
-
-        <button
-          id="logoutButton"
-          class="logout-button"
-          type="button"
-        >
-          Log out
-        </button>
-
-      </div>
-
-
+            <button class="logout-button" id="logoutButton">
+                Logout
+            </button>
+        </div>
     </div>
+</header>
 
-  </header>
-
-
-
-  <!-- ========================================================
-       ADMIN LAYOUT
-       ======================================================== -->
-
-  <div class="admin-layout">
-
-
-    <!-- ======================================================
-         SIDEBAR
-         ====================================================== -->
+<div class="admin-layout">
 
     <aside class="admin-sidebar">
+        <div class="admin-sidebar-title">Administration</div>
 
-      <div class="admin-sidebar-title">
-        Administration
-      </div>
+        <button class="admin-nav-button active" data-section="overview">
+            Overview
+        </button>
 
+        <button class="admin-nav-button" data-section="website">
+            Website Editor
+        </button>
 
-      <button
-        class="admin-nav-button active"
-        data-tab="overview"
-        type="button"
-      >
-        Overview
-      </button>
+        <button class="admin-nav-button" data-section="codes">
+            Staff Login Codes
+        </button>
 
+        <button class="admin-nav-button" data-section="documents">
+            Staff Documents
+        </button>
 
-      <button
-        class="admin-nav-button"
-        data-tab="website"
-        type="button"
-      >
-        Website Editor
-      </button>
+        <button class="admin-nav-button" data-section="announcement">
+            Announcement
+        </button>
 
+        <a href="/" class="admin-nav-button">
+            View Public Website
+        </a>
 
-      <button
-        class="admin-nav-button"
-        data-tab="codes"
-        type="button"
-      >
-        Staff Login Codes
-      </button>
-
-
-      <button
-        class="admin-nav-button"
-        data-tab="documents"
-        type="button"
-      >
-        Staff Documents
-      </button>
-
-
-      <button
-        class="admin-nav-button"
-        data-tab="announcement"
-        type="button"
-      >
-        Announcement
-      </button>
-
-
-      <a
-        class="admin-nav-button"
-        href="/"
-      >
-        View Public Website
-      </a>
-
-
-      <a
-        class="admin-nav-button"
-        href="/staff.html"
-      >
-        View Staff Portal
-      </a>
-
+        <a href="/staff.html" class="admin-nav-button">
+            Staff Portal
+        </a>
     </aside>
-
-
-
-    <!-- ======================================================
-         MAIN
-         ====================================================== -->
 
     <main class="admin-main">
 
+        <div id="globalAlert" class="alert hidden"></div>
 
-      <!-- ====================================================
-           OVERVIEW
-           ==================================================== -->
+        <!-- OVERVIEW -->
+        <section class="admin-section" id="section-overview">
 
-      <section
-        id="tab-overview"
-        class="admin-tab"
-      >
-
-        <h1 class="admin-page-title">
-          Administration
-        </h1>
-
-        <p class="admin-page-description">
-          Welcome to the Aegis Institute administration
-          control centre. Manage your public website,
-          staff access and private resources from here.
-        </p>
-
-
-        <!-- STATS -->
-
-        <div class="stats-grid">
-
-          <div class="stat-card">
-
-            <div class="stat-label">
-              Staff Codes
+            <div class="admin-page-title">
+                <h1>Administrator Dashboard</h1>
+                <p>
+                    Manage The Aegis Institute website, staff access,
+                    permissions and private documents.
+                </p>
             </div>
 
-            <div
-              id="statCodes"
-              class="stat-value"
-            >
-              0
-            </div>
-
-          </div>
-
-
-          <div class="stat-card">
-
-            <div class="stat-label">
-              Active Codes
-            </div>
-
-            <div
-              id="statActiveCodes"
-              class="stat-value"
-            >
-              0
-            </div>
-
-          </div>
-
-
-          <div class="stat-card">
-
-            <div class="stat-label">
-              Documents
-            </div>
-
-            <div
-              id="statDocuments"
-              class="stat-value"
-            >
-              0
-            </div>
-
-          </div>
-
-
-          <div class="stat-card">
-
-            <div class="stat-label">
-              Website
-            </div>
-
-            <div
-              class="stat-value"
-              style="font-size:18px;"
-            >
-              Online
-            </div>
-
-          </div>
-
-        </div>
-
-
-
-        <!-- QUICK ACTIONS -->
-
-        <div class="admin-panel">
-
-          <div class="admin-panel-header">
-
-            <div>
-
-              <h2>
-                Quick Actions
-              </h2>
-
-              <p>
-                Common administration tasks.
-              </p>
-
-            </div>
-
-          </div>
-
-
-          <div
-            style="
-              display:flex;
-              flex-wrap:wrap;
-              gap:10px;
-            "
-          >
-
-            <button
-              class="btn btn-dark"
-              type="button"
-              onclick="openTab('website')"
-            >
-              Edit Website
-            </button>
-
-
-            <button
-              class="btn btn-primary"
-              type="button"
-              onclick="openTab('codes')"
-            >
-              Create Staff Code
-            </button>
-
-
-            <button
-              class="btn btn-outline"
-              type="button"
-              onclick="openTab('documents')"
-            >
-              Create Document
-            </button>
-
-
-            <button
-              class="btn btn-outline"
-              type="button"
-              onclick="openTab('announcement')"
-            >
-              Edit Announcement
-            </button>
-
-          </div>
-
-        </div>
-
-
-
-        <!-- INFORMATION -->
-
-        <div class="admin-panel">
-
-          <div class="admin-panel-header">
-
-            <div>
-
-              <h2>
-                How the system works
-              </h2>
-
-            </div>
-
-          </div>
-
-
-          <div
-            style="
-              display:grid;
-              grid-template-columns:
-                repeat(2,minmax(0,1fr));
-              gap:15px;
-            "
-          >
-
-            <div class="card">
-
-              <div class="card-icon">
-                01
-              </div>
-
-              <h3>
-                Website
-              </h3>
-
-              <p>
-                Use the Website Editor to change the public
-                Home, Services, Our Work and Contact pages.
-                Changes are saved to the Aegis database.
-              </p>
-
-            </div>
-
-
-            <div class="card">
-
-              <div class="card-icon">
-                02
-              </div>
-
-              <h3>
-                Staff Access
-              </h3>
-
-              <p>
-                Create a staff login code and select exactly
-                which sections that staff member can access.
-              </p>
-
-            </div>
-
-
-            <div class="card">
-
-              <div class="card-icon">
-                03
-              </div>
-
-              <h3>
-                Documents
-              </h3>
-
-              <p>
-                Create private staff documents and assign
-                each document to a permission.
-              </p>
-
-            </div>
-
-
-            <div class="card">
-
-              <div class="card-icon">
-                04
-              </div>
-
-              <h3>
-                Security
-              </h3>
-
-              <p>
-                Permissions are checked by the Worker,
-                not just hidden by the webpage.
-              </p>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-
-      <!-- ====================================================
-           WEBSITE EDITOR
-           ==================================================== -->
-
-      <section
-        id="tab-website"
-        class="admin-tab hidden"
-      >
-
-        <h1 class="admin-page-title">
-          Website Editor
-        </h1>
-
-        <p class="admin-page-description">
-          Edit the content displayed on the public Aegis
-          Institute website without changing the HTML files.
-        </p>
-
-
-        <div
-          id="websiteMessage"
-          class="alert hidden"
-        ></div>
-
-
-
-        <!-- ==================================================
-             GENERAL
-             ================================================== -->
-
-        <div class="admin-panel">
-
-          <div class="editor-section">
-
-            <div class="editor-section-title">
-              General Website Settings
-            </div>
-
-
-            <div class="editor-grid">
-
-
-              <div class="form-group">
-
-                <label>
-                  Site Name
-                </label>
-
-                <input
-                  class="input"
-                  data-site-key="site_name"
-                  type="text"
-                >
-
-              </div>
-
-
-              <div class="form-group">
-
-                <label>
-                  Site Tagline
-                </label>
-
-                <input
-                  class="input"
-                  data-site-key="site_tagline"
-                  type="text"
-                >
-
-              </div>
-
-
-              <div class="form-group editor-full">
-
-                <label>
-                  Footer Text
-                </label>
-
-                <textarea
-                  class="input"
-                  data-site-key="footer_text"
-                ></textarea>
-
-              </div>
-
-            </div>
-
-          </div>
-
-
-
-          <!-- =================================================
-               HOME
-               ================================================= -->
-
-          <div class="editor-section">
-
-            <div class="editor-section-title">
-              Home Page
-            </div>
-
-
-            <div class="editor-grid">
-
-
-              <div class="form-group">
-
-                <label>
-                  Hero Kicker
-                </label>
-
-                <input
-                  class="input"
-                  data-site-key="home_hero_kicker"
-                  type="text"
-                >
-
-              </div>
-
-
-              <div class="form-group">
-
-                <label>
-                  Hero Title
-                </label>
-
-                <input
-                  class="input"
-                  data-site-key="home_hero_title"
-                  type="text"
-                >
-
-              </div>
-
-
-              <div class="form-group editor-full">
-
-                <label>
-                  Hero Description
-                </label>
-
-                <textarea
-                  class="input"
-                  data-site-key="home_hero_text"
-                ></textarea>
-
-              </div>
-
-
-              <div class="form-group">
-
-                <label>
-                  Primary Button Text
-                </label>
-
-                <input
-                  class="input"
-                  data-site-key="home_hero_primary_button"
-                  type="text"
-                >
-
-              </div>
-
-
-              <div class="form-group">
-
-                <label>
-                  Primary Button Link
-                </label>
-
-                <input
-                  class="input"
-                  data-site-key="home_hero_primary_link"
-                  type="text"
-                >
-
-              </div>
-
-
-              <div class="form-group">
-
-                <label>
-                  Secondary Button Text
-                </label>
-
-                <input
-                  class="input"
-                  data-site-key="home_hero_secondary_button"
-                  type="text"
-                >
-
-              </div>
-
-
-              <div class="form-group">
-
-                <label>
-                  Secondary Button Link
-                </label>
-
-                <input
-                  class="input"
-                  data-site-key="home_hero_secondary_link"
-                  type="text"
-                >
-
-              </div>
-
-
-              <div class="form-group">
-
-                <label>
-                  Approach Heading
-                </label>
-
-                <input
-                  class="input"
-                  data-site-key="home_approach_title"
-                  type="text"
-                >
-
-              </div>
-
-
-              <div class="form-group">
-
-                <label>
-                  Approach Text
-                </label>
-
-                <textarea
-                  class="input"
-                  data-site-key="home_approach_text"
-                ></textarea>
-
-              </div>
-
-
-              <div class="form-group">
-
-                <label>
-                  Education Heading
-                </label>
-
-                <input
-                  class="input"
-                  data-site-key="home_education_title"
-                  type="text"
-                >
-
-              </div>
-
-
-              <div class="form-group">
-
-                <label>
-                  Education Text
-                </label>
-
-                <textarea
-                  class="input"
-                  data-site-key="home_education_text"
-                ></textarea>
-
-              </div>
-
-
-              <div class="form-group">
-
-                <label>
-                  Consulting Heading
-                </label>
-
-                <input
-                  class="input"
-                  data-site-key="home_consulting_title"
-                  type="text"
-                >
-
-              </div>
-
-
-              <div class="form-group">
-
-                <label>
-                  Consulting Text
-                </label>
-
-                <textarea
-                  class="input"
-                  data-site-key="home_consulting_text"
-                ></textarea>
-
-              </div>
-
-
-              <div class="form-group">
-
-                <label>
-                  CTA Heading
-                </label>
-
-                <input
-                  class="input"
-                  data-site-key="home_cta_title"
-                  type="text"
-                >
-
-              </div>
-
-
-              <div class="form-group">
-
-                <label>
-                  CTA Text
-                </label>
-
-                <textarea
-                  class="input"
-                  data-site-key="home_cta_text"
-                ></textarea>
-
-              </div>
-
-
-              <div class="form-group">
-
-                <label>
-                  CTA Button Text
-                </label>
-
-                <input
-                  class="input"
-                  data-site-key="home_cta_button"
-                  type="text"
-                >
-
-              </div>
-
-
-              <div class="form-group">
-
-                <label>
-                  CTA Button Link
-                </label>
-
-                <input
-                  class="input"
-                  data-site-key="home_cta_link"
-                  type="text"
-                >
-
-              </div>
-
-
-            </div>
-
-          </div>
-
-
-
-          <!-- =================================================
-               SERVICES
-               ================================================= -->
-
-          <div class="editor-section">
-
-            <div class="editor-section-title">
-              Services Page
-            </div>
-
-
-            <div class="editor-grid">
-
-
-              <div class="form-group">
-
-                <label>
-                  Page Kicker
-                </label>
-
-                <input
-                  class="input"
-                  data-site-key="services_kicker"
-                  type="text"
-                >
-
-              </div>
-
-
-              <div class="form-group">
-
-                <label>
-                  Page Title
-                </label>
-
-                <input
-                  class="input"
-                  data-site-key="services_title"
-                  type="text"
-                >
-
-              </div>
-
-
-              <div class="form-group editor-full">
-
-                <label>
-                  Introduction
-                </label>
-
-                <textarea
-                  class="input"
-                  data-site-key="services_intro"
-                ></textarea>
-
-              </div>
-
-
-              <div class="form-group">
-
-                <label>
-                  Education / Training Title
-                </label>
-
-                <input
-                  class="input"
-                  data-site-key="services_education_title"
-                  type="text"
-                >
-
-              </div>
-
-
-              <div class="form-group">
-
-                <label>
-                  Education / Training Text
-                </label>
-
-                <textarea
-                  class="input"
-                  data-site-key="services_education_text"
-                ></textarea>
-
-              </div>
-
-
-              <div class="form-group">
-
-                <label>
-                  Consulting Title
-                </label>
-
-                <input
-                  class="input"
-                  data-site-key="services_consulting_title"
-                  type="text"
-                >
-
-              </div>
-
-
-              <div class="form-group">
-
-                <label>
-                  Consulting Text
-                </label>
-
-                <textarea
-                  class="input"
-                  data-site-key="services_consulting_text"
-                ></textarea>
-
-              </div>
-
-
-              <div class="form-group">
-
-                <label>
-                  Operational Support Title
-                </label>
-
-                <input
-                  class="input"
-                  data-site-key="services_support_title"
-                  type="text"
-                >
-
-              </div>
-
-
-              <div class="form-group">
-
-                <label>
-                  Operational Support Text
-                </label>
-
-                <textarea
-                  class="input"
-                  data-site-key="services_support_text"
-                ></textarea>
-
-              </div>
-
-
-            </div>
-
-          </div>
-
-
-
-          <!-- =================================================
-               OUR WORK
-               ================================================= -->
-
-          <div class="editor-section">
-
-            <div class="editor-section-title">
-              Our Work Page
-            </div>
-
-
-            <div class="editor-grid">
-
-
-              <div class="form-group">
-
-                <label>
-                  Page Kicker
-                </label>
-
-                <input
-                  class="input"
-                  data-site-key="work_kicker"
-                  type="text"
-                >
-
-              </div>
-
-
-              <div class="form-group">
-
-                <label>
-                  Page Title
-                </label>
-
-                <input
-                  class="input"
-                  data-site-key="work_title"
-                  type="text"
-                >
-
-              </div>
-
-
-              <div class="form-group editor-full">
-
-                <label>
-                  Introduction
-                </label>
-
-                <textarea
-                  class="input"
-                  data-site-key="work_intro"
-                ></textarea>
-
-              </div>
-
-
-              <div class="form-group">
-
-                <label>
-                  Project 1 Title
-                </label>
-
-                <input
-                  class="input"
-                  data-site-key="work_project_1_title"
-                  type="text"
-                >
-
-              </div>
-
-
-              <div class="form-group">
-
-                <label>
-                  Project 1 Description
-                </label>
-
-                <textarea
-                  class="input"
-                  data-site-key="work_project_1_text"
-                ></textarea>
-
-              </div>
-
-
-              <div class="form-group">
-
-                <label>
-                  Project 2 Title
-                </label>
-
-                <input
-                  class="input"
-                  data-site-key="work_project_2_title"
-                  type="text"
-                >
-
-              </div>
-
-
-              <div class="form-group">
-
-                <label>
-                  Project 2 Description
-                </label>
-
-                <textarea
-                  class="input"
-                  data-site-key="work_project_2_text"
-                ></textarea>
-
-              </div>
-
-
-              <div class="form-group">
-
-                <label>
-                  Project 3 Title
-                </label>
-
-                <input
-                  class="input"
-                  data-site-key="work_project_3_title"
-                  type="text"
-                >
-
-              </div>
-
-
-              <div class="form-group">
-
-                <label>
-                  Project 3 Description
-                </label>
-
-                <textarea
-                  class="input"
-                  data-site-key="work_project_3_text"
-                ></textarea>
-
-              </div>
-
-
-            </div>
-
-          </div>
-
-
-
-          <!-- =================================================
-               CONTACT
-               ================================================= -->
-
-          <div class="editor-section">
-
-            <div class="editor-section-title">
-              Contact Page
-            </div>
-
-
-            <div class="editor-grid">
-
-
-              <div class="form-group">
-
-                <label>
-                  Page Kicker
-                </label>
-
-                <input
-                  class="input"
-                  data-site-key="contact_kicker"
-                  type="text"
-                >
-
-              </div>
-
-
-              <div class="form-group">
-
-                <label>
-                  Page Title
-                </label>
-
-                <input
-                  class="input"
-                  data-site-key="contact_title"
-                  type="text"
-                >
-
-              </div>
-
-
-              <div class="form-group editor-full">
-
-                <label>
-                  Introduction
-                </label>
-
-                <textarea
-                  class="input"
-                  data-site-key="contact_intro"
-                ></textarea>
-
-              </div>
-
-
-              <div class="form-group">
-
-                <label>
-                  Discord Label
-                </label>
-
-                <input
-                  class="input"
-                  data-site-key="contact_discord_label"
-                  type="text"
-                >
-
-              </div>
-
-
-              <div class="form-group">
-
-                <label>
-                  Discord Description
-                </label>
-
-                <textarea
-                  class="input"
-                  data-site-key="contact_discord_text"
-                ></textarea>
-
-              </div>
-
-
-              <div class="form-group">
-
-                <label>
-                  Discord URL
-                </label>
-
-                <input
-                  class="input"
-                  data-site-key="contact_discord_url"
-                  type="text"
-                  placeholder="https://discord.com/..."
-                >
-
-              </div>
-
-
-              <div class="form-group">
-
-                <label>
-                  Email Label
-                </label>
-
-                <input
-                  class="input"
-                  data-site-key="contact_email_label"
-                  type="text"
-                >
-
-              </div>
-
-
-              <div class="form-group">
-
-                <label>
-                  Email Description
-                </label>
-
-                <textarea
-                  class="input"
-                  data-site-key="contact_email_text"
-                ></textarea>
-
-              </div>
-
-
-              <div class="form-group">
-
-                <label>
-                  Email Address
-                </label>
-
-                <input
-                  class="input"
-                  data-site-key="contact_email"
-                  type="email"
-                  placeholder="email@example.com"
-                >
-
-              </div>
-
-
-              <div class="form-group">
-
-                <label>
-                  Contact Section Title
-                </label>
-
-                <input
-                  class="input"
-                  data-site-key="contact_form_title"
-                  type="text"
-                >
-
-              </div>
-
-
-              <div class="form-group editor-full">
-
-                <label>
-                  Contact Section Text
-                </label>
-
-                <textarea
-                  class="input"
-                  data-site-key="contact_form_text"
-                ></textarea>
-
-              </div>
-
-
-            </div>
-
-          </div>
-
-
-
-          <!-- =================================================
-               SAVE
-               ================================================= -->
-
-          <div class="editor-actions">
-
-            <button
-              id="reloadWebsiteButton"
-              class="btn btn-outline"
-              type="button"
-            >
-              Reload
-            </button>
-
-            <button
-              id="saveWebsiteButton"
-              class="btn btn-primary"
-              type="button"
-            >
-              Save Website Changes
-            </button>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-
-      <!-- ====================================================
-           STAFF LOGIN CODES
-           ==================================================== -->
-
-      <section
-        id="tab-codes"
-        class="admin-tab hidden"
-      >
-
-        <h1 class="admin-page-title">
-          Staff Login Codes
-        </h1>
-
-        <p class="admin-page-description">
-          Create and manage staff login codes. Each code can
-          have its own permissions.
-        </p>
-
-
-        <div
-          id="codesMessage"
-          class="alert hidden"
-        ></div>
-
-
-        <!-- GENERATED CODE -->
-
-        <div
-          id="generatedCodeBox"
-          class="generated-code hidden"
-        >
-
-          <div class="generated-code-label">
-            New Staff Login Code
-          </div>
-
-          <div
-            id="generatedCode"
-            class="generated-code-value"
-          ></div>
-
-          <p
-            style="
-              margin:10px 0 0;
-              color:var(--muted);
-              font-size:11px;
-            "
-          >
-            Save this code somewhere secure. The portal does
-            not store the readable version of staff codes.
-          </p>
-
-          <button
-            id="copyGeneratedCode"
-            class="btn btn-primary btn-small"
-            type="button"
-            style="margin-top:14px;"
-          >
-            Copy Code
-          </button>
-
-        </div>
-
-
-
-        <!-- CREATE / EDIT -->
-
-        <div class="admin-panel">
-
-          <div class="admin-panel-header">
-
-            <div>
-
-              <h2 id="codeFormTitle">
-                Create Staff Login Code
-              </h2>
-
-              <p>
-                Give the code a name and choose what the
-                staff member can access.
-              </p>
-
-            </div>
-
-          </div>
-
-
-          <form id="codeForm">
-
-
-            <div class="editor-grid">
-
-
-              <div class="form-group">
-
-                <label for="codeName">
-                  Staff / Code Name
-                </label>
-
-                <input
-                  id="codeName"
-                  class="input"
-                  type="text"
-                  placeholder="Example: John Smith"
-                  required
-                >
-
-              </div>
-
-
-              <div class="form-group">
-
-                <label for="codeExpiry">
-                  Expiry Date
-                </label>
-
-                <input
-                  id="codeExpiry"
-                  class="input"
-                  type="date"
-                >
-
-                <div class="form-help">
-                  Leave blank for no expiry.
+            <div class="stats-grid">
+
+                <div class="stat-card">
+                    <div class="stat-label">Staff Login Codes</div>
+                    <div class="stat-value" id="statCodes">0</div>
                 </div>
 
-              </div>
+                <div class="stat-card">
+                    <div class="stat-label">Active Codes</div>
+                    <div class="stat-value" id="statActiveCodes">0</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-label">Staff Documents</div>
+                    <div class="stat-value" id="statDocuments">0</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-label">Website Status</div>
+                    <div class="stat-value">Live</div>
+                </div>
+
+            </div>
+
+            <div class="admin-panel">
+                <div class="admin-panel-header">
+                    <div>
+                        <h2>Quick Actions</h2>
+                        <p>Manage the most important parts of your portal.</p>
+                    </div>
+                </div>
+
+                <div class="editor-grid">
+
+                    <button class="btn btn-primary" onclick="openSection('website')">
+                        Edit Website
+                    </button>
+
+                    <button class="btn btn-dark" onclick="openSection('codes')">
+                        Create Staff Login
+                    </button>
+
+                    <button class="btn btn-outline" onclick="openSection('documents')">
+                        Manage Documents
+                    </button>
+
+                    <a href="/" class="btn btn-outline">
+                        Open Website
+                    </a>
+
+                </div>
+            </div>
+
+        </section>
 
 
-              <div class="form-group editor-full">
+        <!-- WEBSITE EDITOR -->
+        <section class="admin-section hidden" id="section-website">
 
-                <label>
-                  Permissions
-                </label>
+            <div class="admin-page-title">
+                <h1>Website Editor</h1>
+                <p>
+                    Edit the public website without changing the HTML files.
+                    Changes are saved directly to the portal database.
+                </p>
+            </div>
 
+            <div class="admin-panel">
 
-                <div
-                  id="permissionGrid"
-                  class="permission-grid"
-                ></div>
+                <div class="admin-panel-header">
+                    <div>
+                        <h2>General Website Information</h2>
+                        <p>These details appear throughout the public website.</p>
+                    </div>
+                </div>
 
+                <div class="editor-grid">
 
-                <div
-                  style="
-                    margin-top:10px;
-                    display:flex;
-                    gap:8px;
-                    flex-wrap:wrap;
-                  "
-                >
+                    <div>
+                        <label>Website Name</label>
+                        <input
+                            type="text"
+                            id="site_name"
+                            placeholder="THE AEGIS INSTITUTE"
+                        >
+                    </div>
 
-                  <button
-                    id="selectAllPermissions"
-                    class="btn btn-outline btn-small"
-                    type="button"
-                  >
-                    Select All
-                  </button>
+                    <div>
+                        <label>Website Tagline</label>
+                        <input
+                            type="text"
+                            id="site_tagline"
+                            placeholder="Professional. Reliable. Forward-thinking."
+                        >
+                    </div>
 
-                  <button
-                    id="clearPermissions"
-                    class="btn btn-outline btn-small"
-                    type="button"
-                  >
-                    Clear All
-                  </button>
+                    <div class="editor-full">
+                        <label>Footer Text</label>
+                        <textarea
+                            id="footer_text"
+                            rows="3"
+                            placeholder="Footer text..."
+                        ></textarea>
+                    </div>
 
                 </div>
 
-              </div>
+            </div>
 
 
-              <div class="form-group">
+            <!-- HOME -->
+            <div class="admin-panel">
 
-                <label>
-                  Account Status
-                </label>
+                <div class="admin-panel-header">
+                    <div>
+                        <h2>Home Page</h2>
+                        <p>Edit the main homepage content.</p>
+                    </div>
+                </div>
 
-                <label
-                  class="permission-option"
-                  style="height:46px;"
-                >
+                <div class="editor-section">
 
-                  <input
-                    id="codeActive"
-                    type="checkbox"
-                    checked
-                  >
+                    <h3 class="editor-section-title">Hero Section</h3>
 
-                  <span>
-                    Login code is active
-                  </span>
+                    <div class="editor-grid">
 
-                </label>
+                        <div>
+                            <label>Hero Kicker</label>
+                            <input type="text" id="home_hero_kicker">
+                        </div>
 
-              </div>
+                        <div>
+                            <label>Hero Title</label>
+                            <input type="text" id="home_hero_title">
+                        </div>
+
+                        <div class="editor-full">
+                            <label>Hero Text</label>
+                            <textarea id="home_hero_text" rows="4"></textarea>
+                        </div>
+
+                        <div>
+                            <label>Primary Button Text</label>
+                            <input type="text" id="home_hero_primary_button">
+                        </div>
+
+                        <div>
+                            <label>Primary Button Link</label>
+                            <input type="text" id="home_hero_primary_link">
+                        </div>
+
+                        <div>
+                            <label>Secondary Button Text</label>
+                            <input type="text" id="home_hero_secondary_button">
+                        </div>
+
+                        <div>
+                            <label>Secondary Button Link</label>
+                            <input type="text" id="home_hero_secondary_link">
+                        </div>
+
+                    </div>
+
+                </div>
 
 
-              <div
-                id="regenerateGroup"
-                class="form-group hidden"
-              >
+                <div class="editor-section">
 
-                <label>
-                  Code Security
-                </label>
+                    <h3 class="editor-section-title">Our Approach</h3>
 
-                <label
-                  class="permission-option"
-                  style="height:46px;"
-                >
+                    <div class="editor-grid">
 
-                  <input
-                    id="regenerateCode"
-                    type="checkbox"
-                  >
+                        <div>
+                            <label>Section Title</label>
+                            <input type="text" id="home_approach_title">
+                        </div>
 
-                  <span>
-                    Generate a new code
-                  </span>
+                        <div class="editor-full">
+                            <label>Section Text</label>
+                            <textarea id="home_approach_text" rows="4"></textarea>
+                        </div>
 
-                </label>
+                    </div>
 
-              </div>
+                </div>
 
+
+                <div class="editor-section">
+
+                    <h3 class="editor-section-title">Education</h3>
+
+                    <div class="editor-grid">
+
+                        <div>
+                            <label>Title</label>
+                            <input type="text" id="home_education_title">
+                        </div>
+
+                        <div class="editor-full">
+                            <label>Text</label>
+                            <textarea id="home_education_text" rows="4"></textarea>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="editor-section">
+
+                    <h3 class="editor-section-title">Consulting</h3>
+
+                    <div class="editor-grid">
+
+                        <div>
+                            <label>Title</label>
+                            <input type="text" id="home_consulting_title">
+                        </div>
+
+                        <div class="editor-full">
+                            <label>Text</label>
+                            <textarea id="home_consulting_text" rows="4"></textarea>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="editor-section">
+
+                    <h3 class="editor-section-title">Call To Action</h3>
+
+                    <div class="editor-grid">
+
+                        <div>
+                            <label>CTA Title</label>
+                            <input type="text" id="home_cta_title">
+                        </div>
+
+                        <div>
+                            <label>CTA Button</label>
+                            <input type="text" id="home_cta_button">
+                        </div>
+
+                        <div class="editor-full">
+                            <label>CTA Text</label>
+                            <textarea id="home_cta_text" rows="3"></textarea>
+                        </div>
+
+                        <div>
+                            <label>CTA Link</label>
+                            <input type="text" id="home_cta_link">
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SERVICES -->
+            <div class="admin-panel">
+
+                <div class="admin-panel-header">
+                    <div>
+                        <h2>Services Page</h2>
+                        <p>Edit your services page.</p>
+                    </div>
+                </div>
+
+                <div class="editor-grid">
+
+                    <div>
+                        <label>Kicker</label>
+                        <input type="text" id="services_kicker">
+                    </div>
+
+                    <div>
+                        <label>Page Title</label>
+                        <input type="text" id="services_title">
+                    </div>
+
+                    <div class="editor-full">
+                        <label>Introduction</label>
+                        <textarea id="services_intro" rows="4"></textarea>
+                    </div>
+
+                    <div>
+                        <label>Education & Training Title</label>
+                        <input type="text" id="services_education_title">
+                    </div>
+
+                    <div>
+                        <label>Education & Training Text</label>
+                        <textarea id="services_education_text" rows="4"></textarea>
+                    </div>
+
+                    <div>
+                        <label>Consulting Title</label>
+                        <input type="text" id="services_consulting_title">
+                    </div>
+
+                    <div>
+                        <label>Consulting Text</label>
+                        <textarea id="services_consulting_text" rows="4"></textarea>
+                    </div>
+
+                    <div>
+                        <label>Operational Support Title</label>
+                        <input type="text" id="services_support_title">
+                    </div>
+
+                    <div>
+                        <label>Operational Support Text</label>
+                        <textarea id="services_support_text" rows="4"></textarea>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- WORK -->
+            <div class="admin-panel">
+
+                <div class="admin-panel-header">
+                    <div>
+                        <h2>Our Work Page</h2>
+                        <p>Edit projects displayed on the website.</p>
+                    </div>
+                </div>
+
+                <div class="editor-grid">
+
+                    <div>
+                        <label>Kicker</label>
+                        <input type="text" id="work_kicker">
+                    </div>
+
+                    <div>
+                        <label>Page Title</label>
+                        <input type="text" id="work_title">
+                    </div>
+
+                    <div class="editor-full">
+                        <label>Introduction</label>
+                        <textarea id="work_intro" rows="4"></textarea>
+                    </div>
+
+                    <div>
+                        <label>Project 1 Title</label>
+                        <input type="text" id="work_project_1_title">
+                    </div>
+
+                    <div>
+                        <label>Project 1 Text</label>
+                        <textarea id="work_project_1_text" rows="4"></textarea>
+                    </div>
+
+                    <div>
+                        <label>Project 2 Title</label>
+                        <input type="text" id="work_project_2_title">
+                    </div>
+
+                    <div>
+                        <label>Project 2 Text</label>
+                        <textarea id="work_project_2_text" rows="4"></textarea>
+                    </div>
+
+                    <div>
+                        <label>Project 3 Title</label>
+                        <input type="text" id="work_project_3_title">
+                    </div>
+
+                    <div>
+                        <label>Project 3 Text</label>
+                        <textarea id="work_project_3_text" rows="4"></textarea>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CONTACT -->
+            <div class="admin-panel">
+
+                <div class="admin-panel-header">
+                    <div>
+                        <h2>Contact Page</h2>
+                        <p>Edit your public contact information.</p>
+                    </div>
+                </div>
+
+                <div class="editor-grid">
+
+                    <div>
+                        <label>Kicker</label>
+                        <input type="text" id="contact_kicker">
+                    </div>
+
+                    <div>
+                        <label>Page Title</label>
+                        <input type="text" id="contact_title">
+                    </div>
+
+                    <div class="editor-full">
+                        <label>Introduction</label>
+                        <textarea id="contact_intro" rows="4"></textarea>
+                    </div>
+
+                    <div>
+                        <label>Discord Label</label>
+                        <input type="text" id="contact_discord_label">
+                    </div>
+
+                    <div>
+                        <label>Discord Text</label>
+                        <textarea id="contact_discord_text" rows="3"></textarea>
+                    </div>
+
+                    <div>
+                        <label>Discord URL</label>
+                        <input type="text" id="contact_discord_url">
+                    </div>
+
+                    <div>
+                        <label>Email Label</label>
+                        <input type="text" id="contact_email_label">
+                    </div>
+
+                    <div>
+                        <label>Email Text</label>
+                        <textarea id="contact_email_text" rows="3"></textarea>
+                    </div>
+
+                    <div>
+                        <label>Email Address</label>
+                        <input type="email" id="contact_email">
+                    </div>
+
+                    <div>
+                        <label>Contact Form Title</label>
+                        <input type="text" id="contact_form_title">
+                    </div>
+
+                    <div class="editor-full">
+                        <label>Contact Form Text</label>
+                        <textarea id="contact_form_text" rows="4"></textarea>
+                    </div>
+
+                </div>
 
             </div>
 
 
             <div class="editor-actions">
 
-              <button
-                id="cancelCodeEdit"
-                class="btn btn-outline hidden"
-                type="button"
-              >
-                Cancel Edit
-              </button>
+                <button class="btn btn-primary" id="saveWebsiteButton">
+                    Save Website Changes
+                </button>
 
-              <button
-                id="saveCodeButton"
-                class="btn btn-primary"
-                type="submit"
-              >
-                Create Login Code
-              </button>
+                <button class="btn btn-outline" id="reloadWebsiteButton">
+                    Reload Current Content
+                </button>
 
             </div>
 
-          </form>
-
-        </div>
+        </section>
 
 
+        <!-- STAFF LOGIN CODES -->
+        <section class="admin-section hidden" id="section-codes">
 
-        <!-- CODE LIST -->
-
-        <div class="admin-panel">
-
-          <div class="admin-panel-header">
-
-            <div>
-
-              <h2>
-                Existing Login Codes
-              </h2>
-
-              <p>
-                Manage your current staff accounts.
-              </p>
-
+            <div class="admin-page-title">
+                <h1>Staff Login Codes</h1>
+                <p>
+                    Create and manage login codes for staff members.
+                </p>
             </div>
 
-            <button
-              id="refreshCodes"
-              class="btn btn-outline btn-small"
-              type="button"
-            >
-              Refresh
-            </button>
 
-          </div>
+            <div class="admin-panel">
 
-
-          <div
-            id="codesTable"
-            class="table-wrapper"
-          >
-
-            <div class="loading">
-              Loading login codes...
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-
-      <!-- ====================================================
-           STAFF DOCUMENTS
-           ==================================================== -->
-
-      <section
-        id="tab-documents"
-        class="admin-tab hidden"
-      >
-
-        <h1 class="admin-page-title">
-          Staff Documents
-        </h1>
-
-        <p class="admin-page-description">
-          Create private documents and assign them to a
-          permission. Staff will only see documents matching
-          their assigned permissions.
-        </p>
-
-
-        <div
-          id="documentsMessage"
-          class="alert hidden"
-        ></div>
-
-
-
-        <!-- DOCUMENT FORM -->
-
-        <div class="admin-panel">
-
-          <div class="admin-panel-header">
-
-            <div>
-
-              <h2 id="documentFormTitle">
-                Create Staff Document
-              </h2>
-
-              <p>
-                This content is private to the staff portal.
-              </p>
-
-            </div>
-
-          </div>
-
-
-          <form id="documentForm">
-
-
-            <div class="editor-grid">
-
-
-              <div class="form-group">
-
-                <label for="documentTitle">
-                  Document Title
-                </label>
-
-                <input
-                  id="documentTitle"
-                  class="input"
-                  type="text"
-                  placeholder="Staff Handbook"
-                  required
-                >
-
-              </div>
-
-
-              <div class="form-group">
-
-                <label for="documentPermission">
-                  Required Permission
-                </label>
-
-                <select
-                  id="documentPermission"
-                  class="input"
-                  required
-                ></select>
-
-              </div>
-
-
-              <div class="form-group editor-full">
-
-                <label for="documentDescription">
-                  Short Description
-                </label>
-
-                <input
-                  id="documentDescription"
-                  class="input"
-                  type="text"
-                  placeholder="A short description shown before the document."
-                >
-
-              </div>
-
-
-              <div class="form-group editor-full">
-
-                <label for="documentContent">
-                  Document Content
-                </label>
-
-                <textarea
-                  id="documentContent"
-                  class="input"
-                  style="min-height:300px;"
-                  placeholder="Write your staff document here..."
-                ></textarea>
-
-                <div class="form-help">
-                  Line breaks will be preserved on the staff
-                  portal.
+                <div class="admin-panel-header">
+                    <div>
+                        <h2>Create Staff Login</h2>
+                        <p>
+                            Give the staff member a name and select the
+                            permissions they should receive.
+                        </p>
+                    </div>
                 </div>
 
-              </div>
+                <div class="editor-grid">
+
+                    <div>
+                        <label>Staff Name</label>
+                        <input
+                            type="text"
+                            id="newCodeName"
+                            placeholder="e.g. Staff Member"
+                        >
+                    </div>
+
+                    <div>
+                        <label>Expiration</label>
+                        <select id="newCodeExpiration">
+                            <option value="">Never expires</option>
+                            <option value="1">1 day</option>
+                            <option value="7">7 days</option>
+                            <option value="30">30 days</option>
+                            <option value="90">90 days</option>
+                            <option value="365">1 year</option>
+                        </select>
+                    </div>
+
+                </div>
 
 
-            </div>
+                <h3 class="editor-section-title">
+                    Permissions
+                </h3>
+
+                <div class="permission-grid">
+
+                    <label class="permission-option">
+                        <input
+                            type="checkbox"
+                            name="newPermission"
+                            value="staff_portal"
+                        >
+                        <span>
+                            <strong>Staff Portal</strong>
+                            <small>Access the staff portal.</small>
+                        </span>
+                    </label>
+
+                    <label class="permission-option">
+                        <input
+                            type="checkbox"
+                            name="newPermission"
+                            value="handbook"
+                        >
+                        <span>
+                            <strong>Staff Handbook</strong>
+                            <small>Access handbook documents.</small>
+                        </span>
+                    </label>
+
+                    <label class="permission-option">
+                        <input
+                            type="checkbox"
+                            name="newPermission"
+                            value="documents"
+                        >
+                        <span>
+                            <strong>Documents</strong>
+                            <small>Access private staff documents.</small>
+                        </span>
+                    </label>
+
+                    <label class="permission-option">
+                        <input
+                            type="checkbox"
+                            name="newPermission"
+                            value="management"
+                        >
+                        <span>
+                            <strong>Management</strong>
+                            <small>Access management information.</small>
+                        </span>
+                    </label>
+
+                    <label class="permission-option">
+                        <input
+                            type="checkbox"
+                            name="newPermission"
+                            value="training"
+                        >
+                        <span>
+                            <strong>Training</strong>
+                            <small>Access training resources.</small>
+                        </span>
+                    </label>
+
+                    <label class="permission-option">
+                        <input
+                            type="checkbox"
+                            name="newPermission"
+                            value="announcements"
+                        >
+                        <span>
+                            <strong>Announcements</strong>
+                            <small>Access staff announcements.</small>
+                        </span>
+                    </label>
+
+                </div>
 
 
-            <div class="editor-actions">
+                <div class="editor-actions">
 
-              <button
-                id="cancelDocumentEdit"
-                class="btn btn-outline hidden"
-                type="button"
-              >
-                Cancel Edit
-              </button>
+                    <button class="btn btn-primary" id="createCodeButton">
+                        Generate Staff Login Code
+                    </button>
 
-              <button
-                id="saveDocumentButton"
-                class="btn btn-primary"
-                type="submit"
-              >
-                Create Document
-              </button>
+                </div>
 
-            </div>
-
-          </form>
-
-        </div>
-
-
-
-        <!-- DOCUMENT LIST -->
-
-        <div class="admin-panel">
-
-          <div class="admin-panel-header">
-
-            <div>
-
-              <h2>
-                Existing Documents
-              </h2>
-
-              <p>
-                Edit or delete private staff documents.
-              </p>
-
-            </div>
-
-            <button
-              id="refreshDocuments"
-              class="btn btn-outline btn-small"
-              type="button"
-            >
-              Refresh
-            </button>
-
-          </div>
-
-
-          <div
-            id="documentsTable"
-            class="table-wrapper"
-          >
-
-            <div class="loading">
-              Loading documents...
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-
-      <!-- ====================================================
-           ANNOUNCEMENT
-           ==================================================== -->
-
-      <section
-        id="tab-announcement"
-        class="admin-tab hidden"
-      >
-
-        <h1 class="admin-page-title">
-          Announcement
-        </h1>
-
-        <p class="admin-page-description">
-          Control the announcement displayed across the
-          public website.
-        </p>
-
-
-        <div
-          id="announcementMessage"
-          class="alert hidden"
-        ></div>
-
-
-        <div class="admin-panel">
-
-          <div class="editor-grid">
-
-
-            <div class="form-group">
-
-              <label>
-                Announcement Status
-              </label>
-
-              <label
-                class="permission-option"
-                style="height:46px;"
-              >
-
-                <input
-                  id="announcementEnabled"
-                  type="checkbox"
+                <div
+                    id="generatedCodeBox"
+                    class="generated-code hidden"
                 >
+                    <div class="generated-code-label">
+                        New Staff Login Code
+                    </div>
 
-                <span>
-                  Show announcement
-                </span>
+                    <div
+                        class="generated-code-value"
+                        id="generatedCode"
+                    ></div>
 
-              </label>
-
-            </div>
-
-
-            <div class="form-group">
-
-              <label>
-                Announcement Title
-              </label>
-
-              <input
-                id="announcementTitle"
-                class="input"
-                type="text"
-              >
+                    <p>
+                        Save or copy this code. It will only be shown here
+                        after it is generated.
+                    </p>
+                </div>
 
             </div>
 
 
-            <div class="form-group editor-full">
+            <div class="admin-panel">
 
-              <label>
-                Announcement Text
-              </label>
+                <div class="admin-panel-header">
+                    <div>
+                        <h2>Existing Staff Codes</h2>
+                        <p>Manage existing staff access codes.</p>
+                    </div>
+                </div>
 
-              <textarea
-                id="announcementText"
-                class="input"
-              ></textarea>
+                <div class="table-wrapper">
+
+                    <table class="admin-table">
+
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Status</th>
+                                <th>Permissions</th>
+                                <th>Expires</th>
+                                <th>Last Used</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="codesTableBody">
+                            <tr>
+                                <td colspan="6" class="loading">
+                                    Loading staff codes...
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- STAFF DOCUMENTS -->
+        <section class="admin-section hidden" id="section-documents">
+
+            <div class="admin-page-title">
+                <h1>Staff Documents</h1>
+                <p>
+                    Create private documents that can only be viewed by
+                    staff with the required permission.
+                </p>
+            </div>
+
+
+            <div class="admin-panel">
+
+                <div class="admin-panel-header">
+                    <div>
+                        <h2>Create Document</h2>
+                        <p>
+                            Documents are stored privately and filtered by
+                            permission when staff log in.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="editor-grid">
+
+                    <div>
+                        <label>Document Title</label>
+                        <input
+                            type="text"
+                            id="documentTitle"
+                            placeholder="Staff Handbook"
+                        >
+                    </div>
+
+                    <div>
+                        <label>Required Permission</label>
+                        <select id="documentPermission">
+                            <option value="staff_portal">
+                                Staff Portal
+                            </option>
+                            <option value="handbook">
+                                Staff Handbook
+                            </option>
+                            <option value="documents">
+                                Documents
+                            </option>
+                            <option value="management">
+                                Management
+                            </option>
+                            <option value="training">
+                                Training
+                            </option>
+                            <option value="announcements">
+                                Announcements
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="editor-full">
+                        <label>Description</label>
+                        <textarea
+                            id="documentDescription"
+                            rows="3"
+                            placeholder="Short description..."
+                        ></textarea>
+                    </div>
+
+                    <div class="editor-full">
+                        <label>Document Content</label>
+                        <textarea
+                            id="documentContent"
+                            rows="14"
+                            placeholder="Write the private document here..."
+                        ></textarea>
+                    </div>
+
+                </div>
+
+                <div class="editor-actions">
+
+                    <button
+                        class="btn btn-primary"
+                        id="createDocumentButton"
+                    >
+                        Create Document
+                    </button>
+
+                </div>
 
             </div>
 
 
-            <div class="form-group">
+            <div class="admin-panel">
 
-              <label>
-                Link Text
-              </label>
+                <div class="admin-panel-header">
+                    <div>
+                        <h2>Existing Documents</h2>
+                        <p>Manage your private staff content.</p>
+                    </div>
+                </div>
 
-              <input
-                id="announcementLinkText"
-                class="input"
-                type="text"
-              >
-
-            </div>
-
-
-            <div class="form-group">
-
-              <label>
-                Link URL
-              </label>
-
-              <input
-                id="announcementLink"
-                class="input"
-                type="text"
-              >
+                <div id="documentsList">
+                    <div class="loading">
+                        Loading documents...
+                    </div>
+                </div>
 
             </div>
 
+        </section>
 
-          </div>
+
+        <!-- ANNOUNCEMENT -->
+        <section class="admin-section hidden" id="section-announcement">
+
+            <div class="admin-page-title">
+                <h1>Website Announcement</h1>
+                <p>
+                    Control the announcement displayed across the public
+                    website.
+                </p>
+            </div>
 
 
-          <div class="editor-actions">
+            <div class="admin-panel">
 
-            <button
-              id="saveAnnouncement"
-              class="btn btn-primary"
-              type="button"
-            >
-              Save Announcement
-            </button>
+                <div class="admin-panel-header">
+                    <div>
+                        <h2>Announcement Settings</h2>
+                        <p>
+                            Enable or disable the announcement banner.
+                        </p>
+                    </div>
+                </div>
 
-          </div>
+                <div class="editor-grid">
 
-        </div>
+                    <div>
+                        <label>Enabled</label>
 
-      </section>
+                        <select id="announcement_enabled">
+                            <option value="false">Disabled</option>
+                            <option value="true">Enabled</option>
+                        </select>
+                    </div>
 
+                    <div>
+                        <label>Announcement Title</label>
+                        <input
+                            type="text"
+                            id="announcement_title"
+                        >
+                    </div>
+
+                    <div class="editor-full">
+                        <label>Announcement Text</label>
+                        <textarea
+                            id="announcement_text"
+                            rows="4"
+                        ></textarea>
+                    </div>
+
+                    <div>
+                        <label>Link Text</label>
+                        <input
+                            type="text"
+                            id="announcement_link_text"
+                        >
+                    </div>
+
+                    <div>
+                        <label>Link</label>
+                        <input
+                            type="text"
+                            id="announcement_link"
+                        >
+                    </div>
+
+                </div>
+
+
+                <div class="editor-actions">
+
+                    <button
+                        class="btn btn-primary"
+                        id="saveAnnouncementButton"
+                    >
+                        Save Announcement
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
 
     </main>
 
-  </div>
+</div>
 
 
+<script>
+"use strict";
 
-  <!-- ========================================================
-       JAVASCRIPT
-       ======================================================== -->
+/* =========================================================
+   GLOBAL STATE
+========================================================= */
 
-  <script>
-
-    // ========================================================
-    // GLOBAL STATE
-    // ========================================================
-
-    let websiteContent = {};
-
-    let loginCodes = [];
-
-    let documents = [];
-
-    let permissionLabels = {};
-
-    let editingCodeId = null;
-
-    let editingDocumentId = null;
+let websiteContent = {};
+let staffCodes = [];
+let staffDocuments = [];
 
 
+/* =========================================================
+   HELPERS
+========================================================= */
 
-    // ========================================================
-    // BASIC HELPERS
-    // ========================================================
+function $(id) {
+    return document.getElementById(id);
+}
 
-    function $(id) {
-      return document.getElementById(id);
+function showAlert(message, type = "success") {
+    const alert = $("globalAlert");
+
+    if (!alert) return;
+
+    alert.textContent = message;
+    alert.className = "alert";
+
+    if (type === "error") {
+        alert.classList.add("alert-error");
+    } else {
+        alert.classList.add("alert-success");
     }
 
+    setTimeout(() => {
+        alert.classList.add("hidden");
+    }, 4000);
+}
 
-    function escapeHtml(value) {
-
-      return String(value ?? "")
+function escapeHtml(value) {
+    return String(value ?? "")
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
+}
 
-    }
+function formatDate(value) {
+    if (!value) return "Never";
 
+    const date = new Date(value);
 
-    function formatDate(value) {
-
-      if (!value) {
-        return "Never";
-      }
-
-      const date =
-        new Date(value);
-
-      if (
-        Number.isNaN(
-          date.getTime()
-        )
-      ) {
+    if (Number.isNaN(date.getTime())) {
         return value;
-      }
-
-      return date.toLocaleString();
-
     }
 
+    return date.toLocaleString();
+}
 
-    function showAlert(
-      elementId,
-      message,
-      type = "success"
-    ) {
 
-      const element =
-        $(elementId);
+/* =========================================================
+   SECTION NAVIGATION
+========================================================= */
 
-      if (!element) {
-        return;
-      }
+function openSection(sectionName) {
 
-      element.textContent =
-        message;
+    document.querySelectorAll(".admin-section").forEach(section => {
+        section.classList.add("hidden");
+    });
 
-      element.className =
-        `alert alert-${type}`;
+    const target = $("section-" + sectionName);
 
+    if (target) {
+        target.classList.remove("hidden");
     }
 
+    document.querySelectorAll(".admin-nav-button[data-section]").forEach(button => {
+        button.classList.remove("active");
 
-    function hideAlert(elementId) {
-
-      const element =
-        $(elementId);
-
-      if (!element) {
-        return;
-      }
-
-      element.textContent =
-        "";
-
-      element.className =
-        "alert hidden";
-
-    }
-
-
-
-    // ========================================================
-    // TABS
-    // ========================================================
-
-    function openTab(tabName) {
-
-      document
-        .querySelectorAll(
-          ".admin-tab"
-        )
-        .forEach(
-          tab => {
-            tab.classList.add(
-              "hidden"
-            );
-          }
-        );
-
-
-      const selected =
-        $(
-          `tab-${tabName}`
-        );
-
-
-      if (selected) {
-
-        selected.classList.remove(
-          "hidden"
-        );
-
-      }
-
-
-      document
-        .querySelectorAll(
-          ".admin-nav-button[data-tab]"
-        )
-        .forEach(
-          button => {
-
-            button.classList.toggle(
-              "active",
-              button.dataset.tab ===
-                tabName
-            );
-
-          }
-        );
-
-
-      if (
-        tabName === "codes"
-      ) {
-        loadCodes();
-      }
-
-
-      if (
-        tabName === "documents"
-      ) {
-        loadDocuments();
-      }
-
-
-      if (
-        tabName === "website"
-      ) {
-        loadWebsiteContent();
-      }
-
-
-      if (
-        tabName === "announcement"
-      ) {
-        loadAnnouncement();
-      }
-
-    }
-
-
-    document
-      .querySelectorAll(
-        ".admin-nav-button[data-tab]"
-      )
-      .forEach(
-        button => {
-
-          button.addEventListener(
-            "click",
-            () => {
-              openTab(
-                button.dataset.tab
-              );
-            }
-          );
-
+        if (button.dataset.section === sectionName) {
+            button.classList.add("active");
         }
-      );
+    });
+
+    if (sectionName === "website") {
+        loadWebsiteContent();
+    }
+
+    if (sectionName === "codes") {
+        loadStaffCodes();
+    }
+
+    if (sectionName === "documents") {
+        loadDocuments();
+    }
+
+    if (sectionName === "announcement") {
+        loadWebsiteContent();
+    }
+}
+
+document.querySelectorAll(".admin-nav-button[data-section]").forEach(button => {
+
+    button.addEventListener("click", () => {
+        openSection(button.dataset.section);
+    });
+
+});
 
 
+/* =========================================================
+   AUTHENTICATION
+========================================================= */
 
-    // ========================================================
-    // AUTHENTICATION
-    // ========================================================
+async function checkAuthentication() {
 
-    async function checkAdminAccess() {
+    try {
 
-      try {
+        const response = await fetch("/api/auth/me", {
+            credentials: "same-origin"
+        });
 
-        const response =
-          await fetch(
-            "/api/auth/me",
-            {
-              credentials:
-                "same-origin",
-              cache:
-                "no-store"
+        if (!response.ok) {
+            window.location.href = "/staff-login.html";
+            return false;
+        }
+
+        const data = await response.json();
+
+        if (!data.authenticated) {
+            window.location.href = "/staff-login.html";
+            return false;
+        }
+
+        if (data.role !== "main_admin") {
+            window.location.href = "/staff.html";
+            return false;
+        }
+
+        if (data.name) {
+            $("adminName").textContent = data.name;
+        }
+
+        return true;
+
+    } catch (error) {
+
+        console.error("Authentication error:", error);
+
+        window.location.href = "/staff-login.html";
+
+        return false;
+    }
+}
+
+
+/* =========================================================
+   WEBSITE CONTENT
+========================================================= */
+
+const websiteFields = [
+
+    "site_name",
+    "site_tagline",
+    "footer_text",
+
+    "home_hero_kicker",
+    "home_hero_title",
+    "home_hero_text",
+    "home_hero_primary_button",
+    "home_hero_primary_link",
+    "home_hero_secondary_button",
+    "home_hero_secondary_link",
+    "home_approach_title",
+    "home_approach_text",
+    "home_education_title",
+    "home_education_text",
+    "home_consulting_title",
+    "home_consulting_text",
+    "home_cta_title",
+    "home_cta_text",
+    "home_cta_button",
+    "home_cta_link",
+
+    "services_kicker",
+    "services_title",
+    "services_intro",
+    "services_education_title",
+    "services_education_text",
+    "services_consulting_title",
+    "services_consulting_text",
+    "services_support_title",
+    "services_support_text",
+
+    "work_kicker",
+    "work_title",
+    "work_intro",
+    "work_project_1_title",
+    "work_project_1_text",
+    "work_project_2_title",
+    "work_project_2_text",
+    "work_project_3_title",
+    "work_project_3_text",
+
+    "contact_kicker",
+    "contact_title",
+    "contact_intro",
+    "contact_discord_label",
+    "contact_discord_text",
+    "contact_discord_url",
+    "contact_email_label",
+    "contact_email_text",
+    "contact_email",
+    "contact_form_title",
+    "contact_form_text",
+
+    "announcement_enabled",
+    "announcement_title",
+    "announcement_text",
+    "announcement_link_text",
+    "announcement_link"
+
+];
+
+
+async function loadWebsiteContent() {
+
+    try {
+
+        const response = await fetch("/api/content", {
+            credentials: "same-origin",
+            cache: "no-store"
+        });
+
+        if (!response.ok) {
+            throw new Error(
+                "Content request failed with status " +
+                response.status
+            );
+        }
+
+        const data = await response.json();
+
+        if (!data || typeof data !== "object") {
+            throw new Error("Invalid content response.");
+        }
+
+        websiteContent = data;
+
+        websiteFields.forEach(key => {
+
+            const element = $(key);
+
+            if (!element) {
+                return;
             }
-          );
+
+            const value = Object.prototype.hasOwnProperty.call(data, key)
+                ? data[key]
+                : "";
+
+            element.value = value ?? "";
+
+        });
+
+        updateAnnouncementPreview();
+
+    } catch (error) {
+
+        console.error("Unable to load website content:", error);
+
+        showAlert(
+            "Unable to load website content. Check the browser console for details.",
+            "error"
+        );
+    }
+}
+
+
+function collectWebsiteContent() {
+
+    const content = {};
+
+    websiteFields.forEach(key => {
+
+        const element = $(key);
+
+        if (!element) {
+            return;
+        }
+
+        content[key] = element.value;
+
+    });
+
+    return content;
+}
+
+
+async function saveWebsiteContent() {
+
+    const button = $("saveWebsiteButton");
+
+    const originalText = button.textContent;
+
+    button.disabled = true;
+    button.textContent = "Saving...";
+
+    try {
+
+        const content = collectWebsiteContent();
+
+        const response = await fetch("/api/content", {
+            method: "PUT",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            credentials: "same-origin",
+
+            body: JSON.stringify(content)
+        });
+
+        const data = await response.json().catch(() => ({}));
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                "Unable to save website content."
+            );
+        }
+
+        websiteContent = {
+            ...websiteContent,
+            ...content
+        };
+
+        showAlert("Website content saved successfully.");
+
+    } catch (error) {
+
+        console.error("Save website content error:", error);
+
+        showAlert(
+            error.message || "Unable to save website content.",
+            "error"
+        );
+
+    } finally {
+
+        button.disabled = false;
+        button.textContent = originalText;
+
+    }
+}
+
+
+function updateAnnouncementPreview() {
+
+    const enabled = $("announcement_enabled");
+
+    if (!enabled) return;
+
+    // This function intentionally only updates the editor.
+    // Public pages are responsible for displaying the announcement.
+}
+
+
+/* =========================================================
+   STAFF LOGIN CODES
+========================================================= */
+
+async function loadStaffCodes() {
+
+    const tableBody = $("codesTableBody");
+
+    tableBody.innerHTML = `
+        <tr>
+            <td colspan="6" class="loading">
+                Loading staff codes...
+            </td>
+        </tr>
+    `;
+
+    try {
+
+        const response = await fetch(
+            "/api/admin/login-codes",
+            {
+                credentials: "same-origin",
+                cache: "no-store"
+            }
+        );
+
+        const data = await response.json().catch(() => ({}));
+
+        if (!response.ok) {
+            throw new Error(
+                data.error || "Unable to load staff codes."
+            );
+        }
+
+        staffCodes = Array.isArray(data)
+            ? data
+            : Array.isArray(data.codes)
+                ? data.codes
+                : [];
+
+        renderStaffCodes();
+
+        updateStats();
+
+    } catch (error) {
+
+        console.error("Load staff codes error:", error);
+
+        tableBody.innerHTML = `
+            <tr>
+                <td colspan="6">
+                    <div class="empty-state">
+                        Unable to load staff codes.
+                    </div>
+                </td>
+            </tr>
+        `;
+
+        showAlert(
+            error.message || "Unable to load staff codes.",
+            "error"
+        );
+    }
+}
+
+
+function renderStaffCodes() {
+
+    const tableBody = $("codesTableBody");
+
+    if (!staffCodes.length) {
+
+        tableBody.innerHTML = `
+            <tr>
+                <td colspan="6">
+                    <div class="empty-state">
+                        No staff login codes have been created yet.
+                    </div>
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+
+    tableBody.innerHTML = staffCodes.map(code => {
+
+        const permissions = Array.isArray(code.permissions)
+            ? code.permissions
+            : parsePermissions(code.permissions);
+
+        const active = Number(code.active) === 1 || code.active === true;
+
+        const permissionHtml = permissions.length
+            ? permissions.map(permission => `
+                <span class="badge badge-permission">
+                    ${escapeHtml(permission)}
+                </span>
+            `).join(" ")
+            : `<span class="badge badge-inactive">None</span>`;
+
+
+        return `
+            <tr>
+
+                <td>
+                    <strong>${escapeHtml(code.name)}</strong>
+                </td>
+
+                <td>
+                    ${
+                        active
+                        ? `<span class="badge badge-active">Active</span>`
+                        : `<span class="badge badge-inactive">Inactive</span>`
+                    }
+                </td>
+
+                <td>
+                    ${permissionHtml}
+                </td>
+
+                <td>
+                    ${escapeHtml(formatDate(code.expires_at))}
+                </td>
+
+                <td>
+                    ${escapeHtml(formatDate(code.last_used_at))}
+                </td>
+
+                <td>
+
+                    <div class="table-actions">
+
+                        <button
+                            class="btn btn-small btn-outline"
+                            onclick="toggleStaffCode(${Number(code.id)}, ${active})"
+                        >
+                            ${active ? "Disable" : "Enable"}
+                        </button>
+
+                        <button
+                            class="btn btn-small btn-outline"
+                            onclick="regenerateStaffCode(${Number(code.id)})"
+                        >
+                            Regenerate
+                        </button>
+
+                        <button
+                            class="btn btn-small btn-danger"
+                            onclick="deleteStaffCode(${Number(code.id)})"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+
+                </td>
+
+            </tr>
+        `;
+
+    }).join("");
+}
+
+
+function parsePermissions(value) {
+
+    if (Array.isArray(value)) {
+        return value;
+    }
+
+    if (!value) {
+        return [];
+    }
+
+    try {
+
+        const parsed = JSON.parse(value);
+
+        return Array.isArray(parsed)
+            ? parsed
+            : [];
+
+    } catch {
+
+        return [];
+    }
+}
+
+
+async function createStaffCode() {
+
+    const name = $("newCodeName").value.trim();
+
+    if (!name) {
+
+        showAlert(
+            "Please enter a staff member name.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    const permissions = Array.from(
+        document.querySelectorAll(
+            'input[name="newPermission"]:checked'
+        )
+    ).map(input => input.value);
+
+
+    if (!permissions.length) {
+
+        showAlert(
+            "Select at least one permission.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    const expirationDays = $("newCodeExpiration").value;
+
+    let expiresAt = null;
+
+    if (expirationDays) {
+
+        const date = new Date();
+
+        date.setDate(
+            date.getDate() + Number(expirationDays)
+        );
+
+        expiresAt = date.toISOString();
+    }
+
+
+    const button = $("createCodeButton");
+
+    button.disabled = true;
+    button.textContent = "Generating...";
+
+
+    try {
+
+        const response = await fetch(
+            "/api/admin/login-codes",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                credentials: "same-origin",
+
+                body: JSON.stringify({
+                    name,
+                    permissions,
+                    expires_at: expiresAt
+                })
+            }
+        );
+
+
+        const data = await response.json().catch(() => ({}));
 
 
         if (!response.ok) {
 
-          window.location.href =
-            "/staff-login.html";
-
-          return false;
-
+            throw new Error(
+                data.error ||
+                "Unable to create staff login code."
+            );
         }
 
 
-        const data =
-          await response.json();
+        $("generatedCode").textContent =
+            data.code || data.login_code || "Code unavailable";
 
 
-        if (
-          !data.authenticated ||
-          data.role !==
-            "main_admin"
-        ) {
-
-          window.location.href =
-            "/staff-login.html";
-
-          return false;
-
-        }
+        $("generatedCodeBox").classList.remove("hidden");
 
 
-        $("adminUserName")
-          .textContent =
-            data.username ||
-            "Aegis Administrator";
+        $("newCodeName").value = "";
+        $("newCodeExpiration").value = "";
+
+        document
+            .querySelectorAll('input[name="newPermission"]')
+            .forEach(input => {
+                input.checked = false;
+            });
 
 
-        return true;
-
-      } catch (error) {
-
-        console.error(
-          "Authentication error:",
-          error
+        showAlert(
+            "Staff login code created successfully."
         );
 
 
-        window.location.href =
-          "/staff-login.html";
+        await loadStaffCodes();
 
-        return false;
 
-      }
+    } catch (error) {
 
+        console.error("Create staff code error:", error);
+
+        showAlert(
+            error.message ||
+            "Unable to create staff login code.",
+            "error"
+        );
+
+    } finally {
+
+        button.disabled = false;
+        button.textContent =
+            "Generate Staff Login Code";
+
+    }
+}
+
+
+async function toggleStaffCode(id, currentlyActive) {
+
+    try {
+
+        const response = await fetch(
+            `/api/admin/login-codes?id=${encodeURIComponent(id)}`,
+            {
+                method: "PUT",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                credentials: "same-origin",
+
+                body: JSON.stringify({
+                    active: !currentlyActive
+                })
+            }
+        );
+
+
+        const data = await response.json().catch(() => ({}));
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                "Unable to update staff code."
+            );
+        }
+
+
+        showAlert(
+            currentlyActive
+                ? "Staff code disabled."
+                : "Staff code enabled."
+        );
+
+
+        await loadStaffCodes();
+
+
+    } catch (error) {
+
+        console.error("Toggle staff code error:", error);
+
+        showAlert(
+            error.message ||
+            "Unable to update staff code.",
+            "error"
+        );
+    }
+}
+
+
+async function regenerateStaffCode(id) {
+
+    if (
+        !confirm(
+            "Regenerate this staff login code?\n\nThe old code will stop working."
+        )
+    ) {
+        return;
     }
 
 
+    try {
 
-    // ========================================================
-    // LOGOUT
-    // ========================================================
-
-    $("logoutButton")
-      .addEventListener(
-        "click",
-        async () => {
-
-          try {
-
-            await fetch(
-              "/api/auth/logout",
-              {
-                method: "POST",
-                credentials:
-                  "same-origin"
-              }
-            );
-
-          } catch {
-
-          }
-
-          window.location.href =
-            "/staff-login.html";
-
-        }
-      );
-
-
-
-    // ========================================================
-    // WEBSITE CONTENT
-    // ========================================================
-
-    async function loadWebsiteContent() {
-
-      try {
-
-        const response =
-          await fetch(
-            "/api/content",
+        const response = await fetch(
+            `/api/admin/login-codes?id=${encodeURIComponent(id)}`,
             {
-              credentials:
-                "same-origin",
-              cache:
-                "no-store"
+                method: "PUT",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                credentials: "same-origin",
+
+                body: JSON.stringify({
+                    generate_code: true
+                })
             }
-          );
+        );
 
 
-        const data =
-          await response.json();
+        const data = await response.json().catch(() => ({}));
 
 
-        if (
-          !response.ok ||
-          !data.success
-        ) {
+        if (!response.ok) {
 
-          throw new Error(
-            data.error ||
-            "Unable to load website content."
-          );
-
+            throw new Error(
+                data.error ||
+                "Unable to regenerate staff code."
+            );
         }
 
 
-        websiteContent =
-          data.content ||
-          {};
+        if (data.code || data.login_code) {
+
+            $("generatedCode").textContent =
+                data.code || data.login_code;
+
+            $("generatedCodeBox").classList.remove("hidden");
+        }
 
 
-        document
-          .querySelectorAll(
-            "[data-site-key]"
-          )
-          .forEach(
-            input => {
-
-              const key =
-                input.dataset.siteKey;
+        showAlert(
+            "Staff login code regenerated successfully."
+        );
 
 
-              input.value =
-                websiteContent[key] ||
-                "";
-
-            }
-          );
+        await loadStaffCodes();
 
 
-        loadAnnouncementFields();
-
-      } catch (error) {
+    } catch (error) {
 
         console.error(
-          error
+            "Regenerate staff code error:",
+            error
         );
 
         showAlert(
-          "websiteMessage",
-          error.message ||
-            "Unable to load website content.",
-          "error"
+            error.message ||
+            "Unable to regenerate staff code.",
+            "error"
         );
-
-      }
-
     }
+}
 
 
+async function deleteStaffCode(id) {
 
-    // ========================================================
-    // SAVE WEBSITE
-    // ========================================================
-
-    $("saveWebsiteButton")
-      .addEventListener(
-        "click",
-        async () => {
-
-          hideAlert(
-            "websiteMessage"
-          );
-
-
-          const button =
-            $("saveWebsiteButton");
-
-
-          button.disabled =
-            true;
-
-          button.textContent =
-            "Saving...";
-
-
-          const content = {};
-
-
-          document
-            .querySelectorAll(
-              "[data-site-key]"
-            )
-            .forEach(
-              input => {
-
-                content[
-                  input.dataset.siteKey
-                ] =
-                  input.value;
-
-              }
-            );
-
-
-          try {
-
-            const response =
-              await fetch(
-                "/api/content",
-                {
-                  method: "PUT",
-
-                  credentials:
-                    "same-origin",
-
-                  headers: {
-                    "Content-Type":
-                      "application/json"
-                  },
-
-                  body:
-                    JSON.stringify({
-                      content
-                    })
-                }
-              );
-
-
-            const data =
-              await response.json();
-
-
-            if (
-              !response.ok ||
-              !data.success
-            ) {
-
-              throw new Error(
-                data.error ||
-                "Unable to save website content."
-              );
-
-            }
-
-
-            websiteContent =
-              {
-                ...websiteContent,
-                ...content
-              };
-
-
-            showAlert(
-              "websiteMessage",
-              "Website changes saved successfully.",
-              "success"
-            );
-
-
-          } catch (error) {
-
-            console.error(
-              error
-            );
-
-
-            showAlert(
-              "websiteMessage",
-              error.message ||
-                "Unable to save website content.",
-              "error"
-            );
-
-          } finally {
-
-            button.disabled =
-              false;
-
-            button.textContent =
-              "Save Website Changes";
-
-          }
-
-        }
-      );
-
-
-
-    $("reloadWebsiteButton")
-      .addEventListener(
-        "click",
-        () => {
-
-          loadWebsiteContent();
-
-        }
-      );
-
-
-
-    // ========================================================
-    // PERMISSIONS
-    // ========================================================
-
-    function renderPermissionOptions(
-      selected = []
-    ) {
-
-      const container =
-        $("permissionGrid");
-
-
-      container.innerHTML =
-        "";
-
-
-      Object.entries(
-        permissionLabels
-      )
-        .forEach(
-          ([key, label]) => {
-
-            const wrapper =
-              document.createElement(
-                "label"
-              );
-
-
-            wrapper.className =
-              "permission-option";
-
-
-            const checkbox =
-              document.createElement(
-                "input"
-              );
-
-
-            checkbox.type =
-              "checkbox";
-
-            checkbox.value =
-              key;
-
-            checkbox.className =
-              "permission-checkbox";
-
-            checkbox.checked =
-              selected.includes(
-                key
-              );
-
-
-            const text =
-              document.createElement(
-                "span"
-              );
-
-
-            text.textContent =
-              label;
-
-
-            wrapper.appendChild(
-              checkbox
-            );
-
-            wrapper.appendChild(
-              text
-            );
-
-
-            container.appendChild(
-              wrapper
-            );
-
-          }
-        );
-
-    }
-
-
-
-    function getSelectedPermissions() {
-
-      return Array.from(
-        document.querySelectorAll(
-          ".permission-checkbox:checked"
+    if (
+        !confirm(
+            "Delete this staff login code?\n\nThis cannot be undone."
         )
-      )
-        .map(
-          checkbox =>
-            checkbox.value
-        );
-
+    ) {
+        return;
     }
 
 
+    try {
 
-    $("selectAllPermissions")
-      .addEventListener(
-        "click",
-        () => {
-
-          document
-            .querySelectorAll(
-              ".permission-checkbox"
-            )
-            .forEach(
-              checkbox => {
-                checkbox.checked =
-                  true;
-              }
-            );
-
-        }
-      );
-
-
-    $("clearPermissions")
-      .addEventListener(
-        "click",
-        () => {
-
-          document
-            .querySelectorAll(
-              ".permission-checkbox"
-            )
-            .forEach(
-              checkbox => {
-                checkbox.checked =
-                  false;
-              }
-            );
-
-        }
-      );
-
-
-
-    // ========================================================
-    // LOAD LOGIN CODES
-    // ========================================================
-
-    async function loadCodes() {
-
-      const container =
-        $("codesTable");
-
-
-      container.innerHTML =
-        `<div class="loading">
-          Loading login codes...
-        </div>`;
-
-
-      try {
-
-        const response =
-          await fetch(
-            "/api/admin/login-codes",
+        const response = await fetch(
+            `/api/admin/login-codes?id=${encodeURIComponent(id)}`,
             {
-              credentials:
-                "same-origin",
-              cache:
-                "no-store"
+                method: "DELETE",
+                credentials: "same-origin"
             }
-          );
+        );
 
 
-        const data =
-          await response.json();
+        const data = await response.json().catch(() => ({}));
 
 
-        if (
-          !response.ok ||
-          !data.success
-        ) {
+        if (!response.ok) {
 
-          throw new Error(
-            data.error ||
-            "Unable to load login codes."
-          );
-
+            throw new Error(
+                data.error ||
+                "Unable to delete staff code."
+            );
         }
 
 
-        loginCodes =
-          data.codes ||
-          [];
+        showAlert(
+            "Staff login code deleted."
+        );
 
 
-        permissionLabels =
-          data.permissions ||
-          permissionLabels;
+        await loadStaffCodes();
 
 
-        renderPermissionOptions();
-
-
-        renderCodes();
-
-        updateStats();
-
-
-      } catch (error) {
+    } catch (error) {
 
         console.error(
-          error
+            "Delete staff code error:",
+            error
         );
 
-
-        container.innerHTML =
-          `<div class="alert alert-error">
-            ${escapeHtml(
-              error.message ||
-              "Unable to load login codes."
-            )}
-          </div>`;
-
-      }
-
-    }
-
-
-
-    // ========================================================
-    // RENDER LOGIN CODES
-    // ========================================================
-
-    function renderCodes() {
-
-      const container =
-        $("codesTable");
-
-
-      if (
-        !loginCodes.length
-      ) {
-
-        container.innerHTML =
-          `
-          <div class="empty-state">
-
-            <h3>
-              No staff login codes yet.
-            </h3>
-
-            <p>
-              Create your first staff login code above.
-            </p>
-
-          </div>
-          `;
-
-        return;
-
-      }
-
-
-      let html = `
-        <table class="admin-table">
-
-          <thead>
-
-            <tr>
-
-              <th>
-                Name
-              </th>
-
-              <th>
-                Permissions
-              </th>
-
-              <th>
-                Status
-              </th>
-
-              <th>
-                Expiry
-              </th>
-
-              <th>
-                Last Used
-              </th>
-
-              <th>
-                Actions
-              </th>
-
-            </tr>
-
-          </thead>
-
-          <tbody>
-      `;
-
-
-      for (
-        const code of
-        loginCodes
-      ) {
-
-        const permissions =
-          Array.isArray(
-            code.permissions
-          )
-            ? code.permissions
-            : [];
-
-
-        const permissionHtml =
-          permissions.length
-            ? permissions
-                .map(
-                  permission =>
-                    `<span class="badge badge-permission">
-                      ${escapeHtml(
-                        permissionLabels[
-                          permission
-                        ] ||
-                        permission
-                      )}
-                    </span>`
-                )
-                .join(" ")
-            : `<span class="muted">
-                None
-              </span>`;
-
-
-        const status =
-          code.active
-            ? `<span class="badge badge-active">
-                Active
-              </span>`
-            : `<span class="badge badge-inactive">
-                Disabled
-              </span>`;
-
-
-        html += `
-          <tr>
-
-            <td>
-              <strong>
-                ${escapeHtml(
-                  code.name
-                )}
-              </strong>
-
-              <div
-                class="muted"
-                style="
-                  font-size:10px;
-                  margin-top:3px;
-                "
-              >
-                Created:
-                ${escapeHtml(
-                  formatDate(
-                    code.createdAt
-                  )
-                )}
-              </div>
-            </td>
-
-
-            <td>
-              <div
-                style="
-                  display:flex;
-                  flex-wrap:wrap;
-                  gap:4px;
-                "
-              >
-                ${permissionHtml}
-              </div>
-            </td>
-
-
-            <td>
-              ${status}
-            </td>
-
-
-            <td>
-              ${
-                code.expiresAt
-                  ? escapeHtml(
-                      formatDate(
-                        code.expiresAt
-                      )
-                    )
-                  : "Never"
-              }
-            </td>
-
-
-            <td>
-              ${escapeHtml(
-                formatDate(
-                  code.lastUsedAt
-                )
-              )}
-            </td>
-
-
-            <td>
-
-              <div class="table-actions">
-
-                <button
-                  class="btn btn-outline btn-small"
-                  type="button"
-                  onclick="editCode(${code.id})"
-                >
-                  Edit
-                </button>
-
-
-                <button
-                  class="btn btn-outline btn-small"
-                  type="button"
-                  onclick="toggleCode(${code.id})"
-                >
-                  ${
-                    code.active
-                      ? "Disable"
-                      : "Enable"
-                  }
-                </button>
-
-
-                <button
-                  class="btn btn-danger btn-small"
-                  type="button"
-                  onclick="deleteCode(${code.id})"
-                >
-                  Delete
-                </button>
-
-              </div>
-
-            </td>
-
-          </tr>
-        `;
-
-      }
-
-
-      html += `
-          </tbody>
-
-        </table>
-      `;
-
-
-      container.innerHTML =
-        html;
-
-    }
-
-
-
-    // ========================================================
-    // CREATE / UPDATE CODE
-    // ========================================================
-
-    $("codeForm")
-      .addEventListener(
-        "submit",
-        async event => {
-
-          event.preventDefault();
-
-
-          hideAlert(
-            "codesMessage"
-          );
-
-
-          const button =
-            $("saveCodeButton");
-
-
-          button.disabled =
-            true;
-
-          button.textContent =
-            "Saving...";
-
-
-          const name =
-            $("codeName")
-              .value
-              .trim();
-
-
-          const expiry =
-            $("codeExpiry")
-              .value;
-
-
-          const permissions =
-            getSelectedPermissions();
-
-
-          const active =
-            $("codeActive")
-              .checked;
-
-
-          const regenerate =
-            $("regenerateCode")
-              .checked;
-
-
-          try {
-
-            let response;
-
-
-            if (
-              editingCodeId === null
-            ) {
-
-              response =
-                await fetch(
-                  "/api/admin/login-codes",
-                  {
-                    method: "POST",
-
-                    credentials:
-                      "same-origin",
-
-                    headers: {
-                      "Content-Type":
-                        "application/json"
-                    },
-
-                    body:
-                      JSON.stringify({
-
-                        name,
-
-                        permissions,
-
-                        active,
-
-                        expiresAt:
-                          expiry ||
-                          null
-
-                      })
-                  }
-                );
-
-            } else {
-
-              response =
-                await fetch(
-                  `/api/admin/login-codes?id=${editingCodeId}`,
-                  {
-                    method: "PUT",
-
-                    credentials:
-                      "same-origin",
-
-                    headers: {
-                      "Content-Type":
-                        "application/json"
-                    },
-
-                    body:
-                      JSON.stringify({
-
-                        name,
-
-                        permissions,
-
-                        active,
-
-                        expiresAt:
-                          expiry ||
-                          null,
-
-                        regenerate
-
-                      })
-                  }
-                );
-
-            }
-
-
-            const data =
-              await response.json();
-
-
-            if (
-              !response.ok ||
-              !data.success
-            ) {
-
-              throw new Error(
-                data.error ||
-                "Unable to save login code."
-              );
-
-            }
-
-
-            if (
-              data.code
-            ) {
-
-              $("generatedCode")
-                .textContent =
-                  data.code;
-
-              $("generatedCodeBox")
-                .classList.remove(
-                  "hidden"
-                );
-
-            }
-
-
-            showAlert(
-              "codesMessage",
-              editingCodeId === null
-                ? "Staff login code created successfully."
-                : "Staff login code updated successfully.",
-              "success"
-            );
-
-
-            resetCodeForm();
-
-            await loadCodes();
-
-
-          } catch (error) {
-
-            console.error(
-              error
-            );
-
-
-            showAlert(
-              "codesMessage",
-              error.message ||
-                "Unable to save login code.",
-              "error"
-            );
-
-          } finally {
-
-            button.disabled =
-              false;
-
-            button.textContent =
-              editingCodeId === null
-                ? "Create Login Code"
-                : "Save Changes";
-
-          }
-
-        }
-      );
-
-
-
-    // ========================================================
-    // EDIT CODE
-    // ========================================================
-
-    window.editCode =
-      function(id) {
-
-        const code =
-          loginCodes.find(
-            item =>
-              Number(item.id) ===
-              Number(id)
-          );
-
-
-        if (!code) {
-          return;
-        }
-
-
-        editingCodeId =
-          code.id;
-
-
-        $("codeFormTitle")
-          .textContent =
-            "Edit Staff Login Code";
-
-
-        $("saveCodeButton")
-          .textContent =
-            "Save Changes";
-
-
-        $("cancelCodeEdit")
-          .classList.remove(
-            "hidden"
-          );
-
-
-        $("regenerateGroup")
-          .classList.remove(
-            "hidden"
-          );
-
-
-        $("regenerateCode")
-          .checked =
-            false;
-
-
-        $("codeName")
-          .value =
-            code.name || "";
-
-
-        $("codeActive")
-          .checked =
-            !!code.active;
-
-
-        if (
-          code.expiresAt
-        ) {
-
-          const date =
-            new Date(
-              code.expiresAt
-            );
-
-
-          if (
-            !Number.isNaN(
-              date.getTime()
-            )
-          ) {
-
-            $("codeExpiry")
-              .value =
-                date
-                  .toISOString()
-                  .slice(
-                    0,
-                    10
-                  );
-
-          }
-
-        } else {
-
-          $("codeExpiry")
-            .value =
-              "";
-
-        }
-
-
-        document
-          .querySelectorAll(
-            ".permission-checkbox"
-          )
-          .forEach(
-            checkbox => {
-
-              checkbox.checked =
-                (
-                  code.permissions ||
-                  []
-                ).includes(
-                  checkbox.value
-                );
-
-            }
-          );
-
-
-        openTab(
-          "codes"
-        );
-
-
-        window.scrollTo(
-          {
-            top: 0,
-            behavior: "smooth"
-          }
-        );
-
-      };
-
-
-
-    // ========================================================
-    // TOGGLE CODE
-    // ========================================================
-
-    window.toggleCode =
-      async function(id) {
-
-        const code =
-          loginCodes.find(
-            item =>
-              Number(item.id) ===
-              Number(id)
-          );
-
-
-        if (!code) {
-          return;
-        }
-
-
-        const action =
-          code.active
-            ? "disable"
-            : "enable";
-
-
-        if (
-          !confirm(
-            `Are you sure you want to ${action} this login code?`
-          )
-        ) {
-
-          return;
-
-        }
-
-
-        try {
-
-          const response =
-            await fetch(
-              `/api/admin/login-codes?id=${id}`,
-              {
-                method: "PUT",
-
-                credentials:
-                  "same-origin",
-
-                headers: {
-                  "Content-Type":
-                    "application/json"
-                },
-
-                body:
-                  JSON.stringify({
-
-                    name:
-                      code.name,
-
-                    permissions:
-                      code.permissions,
-
-                    active:
-                      !code.active,
-
-                    expiresAt:
-                      code.expiresAt
-
-                  })
-              }
-            );
-
-
-          const data =
-            await response.json();
-
-
-          if (
-            !response.ok ||
-            !data.success
-          ) {
-
-            throw new Error(
-              data.error ||
-              "Unable to update login code."
-            );
-
-          }
-
-
-          await loadCodes();
-
-
-        } catch (error) {
-
-          showAlert(
-            "codesMessage",
+        showAlert(
             error.message ||
-              "Unable to update login code.",
+            "Unable to delete staff code.",
             "error"
-          );
-
-        }
-
-      };
-
-
-
-    // ========================================================
-    // DELETE CODE
-    // ========================================================
-
-    window.deleteCode =
-      async function(id) {
-
-        const code =
-          loginCodes.find(
-            item =>
-              Number(item.id) ===
-              Number(id)
-          );
-
-
-        if (!code) {
-          return;
-        }
-
-
-        if (
-          !confirm(
-            `Delete the login code for "${code.name}"? This cannot be undone.`
-          )
-        ) {
-
-          return;
-
-        }
-
-
-        try {
-
-          const response =
-            await fetch(
-              `/api/admin/login-codes?id=${id}`,
-              {
-                method: "DELETE",
-
-                credentials:
-                  "same-origin"
-              }
-            );
-
-
-          const data =
-            await response.json();
-
-
-          if (
-            !response.ok ||
-            !data.success
-          ) {
-
-            throw new Error(
-              data.error ||
-              "Unable to delete login code."
-            );
-
-          }
-
-
-          if (
-            editingCodeId ===
-            Number(id)
-          ) {
-
-            resetCodeForm();
-
-          }
-
-
-          await loadCodes();
-
-
-          showAlert(
-            "codesMessage",
-            "Login code deleted.",
-            "success"
-          );
-
-
-        } catch (error) {
-
-          showAlert(
-            "codesMessage",
-            error.message ||
-              "Unable to delete login code.",
-            "error"
-          );
-
-        }
-
-      };
-
-
-
-    // ========================================================
-    // RESET CODE FORM
-    // ========================================================
-
-    function resetCodeForm() {
-
-      editingCodeId =
-        null;
-
-
-      $("codeForm")
-        .reset();
-
-
-      $("codeActive")
-        .checked =
-          true;
-
-
-      $("codeFormTitle")
-        .textContent =
-          "Create Staff Login Code";
-
-
-      $("saveCodeButton")
-        .textContent =
-          "Create Login Code";
-
-
-      $("cancelCodeEdit")
-        .classList.add(
-          "hidden"
         );
-
-
-      $("regenerateGroup")
-        .classList.add(
-          "hidden"
-        );
-
-
-      $("regenerateCode")
-        .checked =
-          false;
-
-
-      renderPermissionOptions(
-        []
-      );
-
     }
+}
 
 
-    $("cancelCodeEdit")
-      .addEventListener(
-        "click",
-        () => {
+/* =========================================================
+   STAFF DOCUMENTS
+========================================================= */
 
-          resetCodeForm();
+async function loadDocuments() {
 
-        }
-      );
+    const container = $("documentsList");
 
-
-    $("refreshCodes")
-      .addEventListener(
-        "click",
-        loadCodes
-      );
+    container.innerHTML = `
+        <div class="loading">
+            Loading documents...
+        </div>
+    `;
 
 
+    try {
 
-    // ========================================================
-    // COPY GENERATED CODE
-    // ========================================================
-
-    $("copyGeneratedCode")
-      .addEventListener(
-        "click",
-        async () => {
-
-          const code =
-            $("generatedCode")
-              .textContent;
-
-
-          if (!code) {
-            return;
-          }
-
-
-          try {
-
-            await navigator.clipboard.writeText(
-              code
-            );
-
-
-            $("copyGeneratedCode")
-              .textContent =
-                "Copied!";
-
-
-            setTimeout(
-              () => {
-
-                $("copyGeneratedCode")
-                  .textContent =
-                    "Copy Code";
-
-              },
-              1500
-            );
-
-
-          } catch {
-
-            showAlert(
-              "codesMessage",
-              "Unable to copy automatically. Select and copy the code manually.",
-              "error"
-            );
-
-          }
-
-        }
-      );
-
-
-
-    // ========================================================
-    // DOCUMENTS
-    // ========================================================
-
-    function populateDocumentPermissions() {
-
-      const select =
-        $("documentPermission");
-
-
-      select.innerHTML =
-        "";
-
-
-      Object.entries(
-        permissionLabels
-      )
-        .forEach(
-          ([key, label]) => {
-
-            const option =
-              document.createElement(
-                "option"
-              );
-
-
-            option.value =
-              key;
-
-
-            option.textContent =
-              label;
-
-
-            select.appendChild(
-              option
-            );
-
-          }
-        );
-
-    }
-
-
-
-    async function loadDocuments() {
-
-      const container =
-        $("documentsTable");
-
-
-      container.innerHTML =
-        `<div class="loading">
-          Loading documents...
-        </div>`;
-
-
-      try {
-
-        const response =
-          await fetch(
+        const response = await fetch(
             "/api/admin/documents",
             {
-              credentials:
-                "same-origin",
-              cache:
-                "no-store"
+                credentials: "same-origin",
+                cache: "no-store"
             }
-          );
+        );
 
 
-        const data =
-          await response.json();
+        const data = await response.json().catch(() => ({}));
 
 
-        if (
-          !response.ok ||
-          !data.success
-        ) {
+        if (!response.ok) {
 
-          throw new Error(
-            data.error ||
-            "Unable to load documents."
-          );
-
+            throw new Error(
+                data.error ||
+                "Unable to load documents."
+            );
         }
 
 
-        documents =
-          data.documents ||
-          [];
+        staffDocuments = Array.isArray(data)
+            ? data
+            : Array.isArray(data.documents)
+                ? data.documents
+                : [];
 
-
-        permissionLabels =
-          data.permissions ||
-          permissionLabels;
-
-
-        populateDocumentPermissions();
 
         renderDocuments();
 
         updateStats();
 
 
-      } catch (error) {
+    } catch (error) {
 
         console.error(
-          error
+            "Load documents error:",
+            error
         );
 
 
-        container.innerHTML =
-          `<div class="alert alert-error">
-            ${escapeHtml(
-              error.message ||
-              "Unable to load documents."
-            )}
-          </div>`;
+        container.innerHTML = `
+            <div class="empty-state">
+                Unable to load documents.
+            </div>
+        `;
 
-      }
 
+        showAlert(
+            error.message ||
+            "Unable to load documents.",
+            "error"
+        );
     }
+}
 
 
+function renderDocuments() {
 
-    // ========================================================
-    // RENDER DOCUMENTS
-    // ========================================================
-
-    function renderDocuments() {
-
-      const container =
-        $("documentsTable");
+    const container = $("documentsList");
 
 
-      if (
-        !documents.length
-      ) {
+    if (!staffDocuments.length) {
 
-        container.innerHTML =
-          `
-          <div class="empty-state">
-
-            <h3>
-              No staff documents yet.
-            </h3>
-
-            <p>
-              Create a Staff Handbook, training document,
-              resource or other private document above.
-            </p>
-
-          </div>
-          `;
+        container.innerHTML = `
+            <div class="empty-state">
+                No staff documents have been created yet.
+            </div>
+        `;
 
         return;
-
-      }
-
-
-      let html = `
-        <table class="admin-table">
-
-          <thead>
-
-            <tr>
-
-              <th>
-                Document
-              </th>
-
-              <th>
-                Permission
-              </th>
-
-              <th>
-                Updated
-              </th>
-
-              <th>
-                Actions
-              </th>
-
-            </tr>
-
-          </thead>
-
-          <tbody>
-      `;
-
-
-      documents.forEach(
-        document => {
-
-          html += `
-            <tr>
-
-              <td>
-
-                <strong>
-                  ${escapeHtml(
-                    document.title
-                  )}
-                </strong>
-
-                <div
-                  class="muted"
-                  style="
-                    margin-top:3px;
-                    font-size:10px;
-                  "
-                >
-                  ${escapeHtml(
-                    document.description ||
-                    "No description"
-                  )}
-                </div>
-
-              </td>
-
-
-              <td>
-
-                <span class="badge badge-permission">
-                  ${escapeHtml(
-                    permissionLabels[
-                      document.permission
-                    ] ||
-                    document.permission
-                  )}
-                </span>
-
-              </td>
-
-
-              <td>
-                ${escapeHtml(
-                  formatDate(
-                    document.updatedAt
-                  )
-                )}
-              </td>
-
-
-              <td>
-
-                <div class="table-actions">
-
-                  <button
-                    class="btn btn-outline btn-small"
-                    type="button"
-                    onclick="editDocument(${document.id})"
-                  >
-                    Edit
-                  </button>
-
-
-                  <button
-                    class="btn btn-danger btn-small"
-                    type="button"
-                    onclick="deleteDocument(${document.id})"
-                  >
-                    Delete
-                  </button>
-
-                </div>
-
-              </td>
-
-            </tr>
-          `;
-
-        }
-      );
-
-
-      html += `
-          </tbody>
-
-        </table>
-      `;
-
-
-      container.innerHTML =
-        html;
-
     }
 
 
+    container.innerHTML = staffDocuments.map(document => {
 
-    // ========================================================
-    // CREATE / UPDATE DOCUMENT
-    // ========================================================
+        return `
+            <div class="card" style="margin-bottom: 16px;">
 
-    $("documentForm")
-      .addEventListener(
-        "submit",
-        async event => {
+                <div style="display:flex;justify-content:space-between;gap:20px;align-items:flex-start;">
 
-          event.preventDefault();
+                    <div>
 
+                        <h3>
+                            ${escapeHtml(document.title)}
+                        </h3>
 
-          hideAlert(
-            "documentsMessage"
-          );
+                        <p>
+                            ${escapeHtml(document.description || "")}
+                        </p>
 
+                        <div style="margin-top:10px;">
+                            <span class="badge badge-permission">
+                                ${escapeHtml(document.permission)}
+                            </span>
+                        </div>
 
-          const button =
-            $("saveDocumentButton");
+                        <small>
+                            Updated:
+                            ${escapeHtml(formatDate(document.updated_at))}
+                        </small>
 
-
-          button.disabled =
-            true;
-
-          button.textContent =
-            "Saving...";
-
-
-          const body = {
-
-            title:
-              $("documentTitle")
-                .value
-                .trim(),
-
-            description:
-              $("documentDescription")
-                .value,
-
-            content:
-              $("documentContent")
-                .value,
-
-            permission:
-              $("documentPermission")
-                .value
-
-          };
+                    </div>
 
 
-          try {
+                    <div class="table-actions">
 
-            let response;
+                        <button
+                            class="btn btn-small btn-outline"
+                            onclick="editDocument(${Number(document.id)})"
+                        >
+                            Edit
+                        </button>
+
+                        <button
+                            class="btn btn-small btn-danger"
+                            onclick="deleteDocument(${Number(document.id)})"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+        `;
+
+    }).join("");
+}
 
 
-            if (
-              editingDocumentId ===
-              null
-            ) {
+async function createDocument() {
 
-              response =
-                await fetch(
-                  "/api/admin/documents",
-                  {
-                    method: "POST",
+    const title = $("documentTitle").value.trim();
+    const description = $("documentDescription").value.trim();
+    const content = $("documentContent").value;
+    const permission = $("documentPermission").value;
 
-                    credentials:
-                      "same-origin",
 
-                    headers: {
-                      "Content-Type":
-                        "application/json"
-                    },
+    if (!title) {
 
-                    body:
-                      JSON.stringify(
-                        body
-                      )
-                  }
-                );
+        showAlert(
+            "Please enter a document title.",
+            "error"
+        );
 
-            } else {
+        return;
+    }
 
-              response =
-                await fetch(
-                  `/api/admin/documents?id=${editingDocumentId}`,
-                  {
-                    method: "PUT",
 
-                    credentials:
-                      "same-origin",
+    if (!content.trim()) {
 
-                    headers: {
-                      "Content-Type":
-                        "application/json"
-                    },
+        showAlert(
+            "Please enter document content.",
+            "error"
+        );
 
-                    body:
-                      JSON.stringify(
-                        body
-                      )
-                  }
-                );
+        return;
+    }
 
+
+    const button = $("createDocumentButton");
+
+    button.disabled = true;
+    button.textContent = "Creating...";
+
+
+    try {
+
+        const response = await fetch(
+            "/api/admin/documents",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                credentials: "same-origin",
+
+                body: JSON.stringify({
+                    title,
+                    description,
+                    content,
+                    permission
+                })
             }
-
-
-            const data =
-              await response.json();
-
-
-            if (
-              !response.ok ||
-              !data.success
-            ) {
-
-              throw new Error(
-                data.error ||
-                "Unable to save document."
-              );
-
-            }
-
-
-            showAlert(
-              "documentsMessage",
-              editingDocumentId ===
-                null
-                ? "Document created successfully."
-                : "Document updated successfully.",
-              "success"
-            );
-
-
-            resetDocumentForm();
-
-            await loadDocuments();
-
-
-          } catch (error) {
-
-            console.error(
-              error
-            );
-
-
-            showAlert(
-              "documentsMessage",
-              error.message ||
-                "Unable to save document.",
-              "error"
-            );
-
-          } finally {
-
-            button.disabled =
-              false;
-
-            button.textContent =
-              editingDocumentId ===
-                null
-                ? "Create Document"
-                : "Save Changes";
-
-          }
-
-        }
-      );
-
-
-
-    // ========================================================
-    // EDIT DOCUMENT
-    // ========================================================
-
-    window.editDocument =
-      function(id) {
-
-        const document =
-          documents.find(
-            item =>
-              Number(item.id) ===
-              Number(id)
-          );
-
-
-        if (!document) {
-          return;
-        }
-
-
-        editingDocumentId =
-          document.id;
-
-
-        $("documentFormTitle")
-          .textContent =
-            "Edit Staff Document";
-
-
-        $("saveDocumentButton")
-          .textContent =
-            "Save Changes";
-
-
-        $("cancelDocumentEdit")
-          .classList.remove(
-            "hidden"
-          );
-
-
-        $("documentTitle")
-          .value =
-            document.title ||
-            "";
-
-
-        $("documentDescription")
-          .value =
-            document.description ||
-            "";
-
-
-        $("documentContent")
-          .value =
-            document.content ||
-            "";
-
-
-        $("documentPermission")
-          .value =
-            document.permission ||
-            "";
-
-
-        openTab(
-          "documents"
         );
 
 
-        window.scrollTo(
-          {
-            top: 0,
-            behavior: "smooth"
-          }
-        );
-
-      };
+        const data = await response.json().catch(() => ({}));
 
 
-
-    // ========================================================
-    // DELETE DOCUMENT
-    // ========================================================
-
-    window.deleteDocument =
-      async function(id) {
-
-        const document =
-          documents.find(
-            item =>
-              Number(item.id) ===
-              Number(id)
-          );
-
-
-        if (!document) {
-          return;
-        }
-
-
-        if (
-          !confirm(
-            `Delete "${document.title}"? This cannot be undone.`
-          )
-        ) {
-
-          return;
-
-        }
-
-
-        try {
-
-          const response =
-            await fetch(
-              `/api/admin/documents?id=${id}`,
-              {
-                method: "DELETE",
-
-                credentials:
-                  "same-origin"
-              }
-            );
-
-
-          const data =
-            await response.json();
-
-
-          if (
-            !response.ok ||
-            !data.success
-          ) {
+        if (!response.ok) {
 
             throw new Error(
-              data.error ||
-              "Unable to delete document."
+                data.error ||
+                "Unable to create document."
             );
-
-          }
-
-
-          if (
-            editingDocumentId ===
-            Number(id)
-          ) {
-
-            resetDocumentForm();
-
-          }
-
-
-          await loadDocuments();
-
-
-          showAlert(
-            "documentsMessage",
-            "Document deleted.",
-            "success"
-          );
-
-
-        } catch (error) {
-
-          showAlert(
-            "documentsMessage",
-            error.message ||
-              "Unable to delete document.",
-            "error"
-          );
-
         }
 
-      };
+
+        $("documentTitle").value = "";
+        $("documentDescription").value = "";
+        $("documentContent").value = "";
 
 
-
-    // ========================================================
-    // RESET DOCUMENT FORM
-    // ========================================================
-
-    function resetDocumentForm() {
-
-      editingDocumentId =
-        null;
-
-
-      $("documentForm")
-        .reset();
-
-
-      $("documentFormTitle")
-        .textContent =
-          "Create Staff Document";
-
-
-      $("saveDocumentButton")
-        .textContent =
-          "Create Document";
-
-
-      $("cancelDocumentEdit")
-        .classList.add(
-          "hidden"
+        showAlert(
+            "Staff document created successfully."
         );
 
-    }
+
+        await loadDocuments();
 
 
-    $("cancelDocumentEdit")
-      .addEventListener(
-        "click",
-        () => {
+    } catch (error) {
 
-          resetDocumentForm();
-
-        }
-      );
+        console.error(
+            "Create document error:",
+            error
+        );
 
 
-    $("refreshDocuments")
-      .addEventListener(
-        "click",
-        loadDocuments
-      );
+        showAlert(
+            error.message ||
+            "Unable to create document.",
+            "error"
+        );
 
 
+    } finally {
 
-    // ========================================================
-    // ANNOUNCEMENT
-    // ========================================================
-
-    function loadAnnouncementFields() {
-
-      $("announcementEnabled")
-        .checked =
-          websiteContent
-            .announcement_enabled ===
-          "true";
-
-
-      $("announcementTitle")
-        .value =
-          websiteContent
-            .announcement_title ||
-          "";
-
-
-      $("announcementText")
-        .value =
-          websiteContent
-            .announcement_text ||
-          "";
-
-
-      $("announcementLinkText")
-        .value =
-          websiteContent
-            .announcement_link_text ||
-          "";
-
-
-      $("announcementLink")
-        .value =
-          websiteContent
-            .announcement_link ||
-          "";
+        button.disabled = false;
+        button.textContent = "Create Document";
 
     }
+}
 
 
+async function editDocument(id) {
 
-    function loadAnnouncement() {
+    const document = staffDocuments.find(
+        item => Number(item.id) === Number(id)
+    );
 
-      if (
-        Object.keys(
-          websiteContent
-        ).length
-      ) {
 
-        loadAnnouncementFields();
+    if (!document) {
+
+        showAlert(
+            "Document could not be found.",
+            "error"
+        );
 
         return;
-
-      }
-
-
-      loadWebsiteContent();
-
     }
 
 
-
-    $("saveAnnouncement")
-      .addEventListener(
-        "click",
-        async () => {
-
-          hideAlert(
-            "announcementMessage"
-          );
+    const title = prompt(
+        "Document title:",
+        document.title
+    );
 
 
-          const button =
-            $("saveAnnouncement");
+    if (title === null) {
+        return;
+    }
 
 
-          button.disabled =
-            true;
-
-          button.textContent =
-            "Saving...";
-
-
-          const content = {
-
-            announcement_enabled:
-              $("announcementEnabled")
-                .checked
-                ? "true"
-                : "false",
-
-            announcement_title:
-              $("announcementTitle")
-                .value,
-
-            announcement_text:
-              $("announcementText")
-                .value,
-
-            announcement_link_text:
-              $("announcementLinkText")
-                .value,
-
-            announcement_link:
-              $("announcementLink")
-                .value
-
-          };
+    const description = prompt(
+        "Document description:",
+        document.description || ""
+    );
 
 
-          try {
-
-            const response =
-              await fetch(
-                "/api/content",
-                {
-                  method: "PUT",
-
-                  credentials:
-                    "same-origin",
-
-                  headers: {
-                    "Content-Type":
-                      "application/json"
-                  },
-
-                  body:
-                    JSON.stringify({
-                      content
-                    })
-                }
-              );
+    if (description === null) {
+        return;
+    }
 
 
-            const data =
-              await response.json();
+    const content = prompt(
+        "Document content:",
+        document.content || ""
+    );
 
 
-            if (
-              !response.ok ||
-              !data.success
-            ) {
+    if (content === null) {
+        return;
+    }
 
-              throw new Error(
+
+    const permission = prompt(
+        "Required permission:",
+        document.permission
+    );
+
+
+    if (permission === null) {
+        return;
+    }
+
+
+    try {
+
+        const response = await fetch(
+            `/api/admin/documents?id=${encodeURIComponent(id)}`,
+            {
+                method: "PUT",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                credentials: "same-origin",
+
+                body: JSON.stringify({
+                    title,
+                    description,
+                    content,
+                    permission
+                })
+            }
+        );
+
+
+        const data = await response.json().catch(() => ({}));
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                "Unable to update document."
+            );
+        }
+
+
+        showAlert(
+            "Document updated successfully."
+        );
+
+
+        await loadDocuments();
+
+
+    } catch (error) {
+
+        console.error(
+            "Edit document error:",
+            error
+        );
+
+
+        showAlert(
+            error.message ||
+            "Unable to update document.",
+            "error"
+        );
+    }
+}
+
+
+async function deleteDocument(id) {
+
+    if (
+        !confirm(
+            "Delete this document?\n\nThis cannot be undone."
+        )
+    ) {
+        return;
+    }
+
+
+    try {
+
+        const response = await fetch(
+            `/api/admin/documents?id=${encodeURIComponent(id)}`,
+            {
+                method: "DELETE",
+                credentials: "same-origin"
+            }
+        );
+
+
+        const data = await response.json().catch(() => ({}));
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                "Unable to delete document."
+            );
+        }
+
+
+        showAlert(
+            "Document deleted successfully."
+        );
+
+
+        await loadDocuments();
+
+
+    } catch (error) {
+
+        console.error(
+            "Delete document error:",
+            error
+        );
+
+
+        showAlert(
+            error.message ||
+            "Unable to delete document.",
+            "error"
+        );
+    }
+}
+
+
+/* =========================================================
+   ANNOUNCEMENT
+========================================================= */
+
+async function saveAnnouncement() {
+
+    const fields = [
+        "announcement_enabled",
+        "announcement_title",
+        "announcement_text",
+        "announcement_link_text",
+        "announcement_link"
+    ];
+
+
+    const content = {};
+
+
+    fields.forEach(key => {
+
+        const element = $(key);
+
+        if (element) {
+            content[key] = element.value;
+        }
+
+    });
+
+
+    const button = $("saveAnnouncementButton");
+
+    button.disabled = true;
+    button.textContent = "Saving...";
+
+
+    try {
+
+        const response = await fetch(
+            "/api/content",
+            {
+                method: "PUT",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                credentials: "same-origin",
+
+                body: JSON.stringify(content)
+            }
+        );
+
+
+        const data = await response.json().catch(() => ({}));
+
+
+        if (!response.ok) {
+
+            throw new Error(
                 data.error ||
                 "Unable to save announcement."
-              );
-
-            }
-
-
-            websiteContent =
-              {
-                ...websiteContent,
-                ...content
-              };
-
-
-            showAlert(
-              "announcementMessage",
-              "Announcement saved successfully.",
-              "success"
             );
-
-
-          } catch (error) {
-
-            console.error(
-              error
-            );
-
-
-            showAlert(
-              "announcementMessage",
-              error.message ||
-                "Unable to save announcement.",
-              "error"
-            );
-
-          } finally {
-
-            button.disabled =
-              false;
-
-            button.textContent =
-              "Save Announcement";
-
-          }
-
         }
-      );
 
 
-
-    // ========================================================
-    // STATISTICS
-    // ========================================================
-
-    function updateStats() {
-
-      $("statCodes")
-        .textContent =
-          loginCodes.length;
+        websiteContent = {
+            ...websiteContent,
+            ...content
+        };
 
 
-      $("statActiveCodes")
-        .textContent =
-          loginCodes.filter(
-            code =>
-              code.active
-          ).length;
+        showAlert(
+            "Announcement settings saved."
+        );
 
 
-      $("statDocuments")
-        .textContent =
-          documents.length;
+    } catch (error) {
+
+        console.error(
+            "Save announcement error:",
+            error
+        );
+
+
+        showAlert(
+            error.message ||
+            "Unable to save announcement.",
+            "error"
+        );
+
+
+    } finally {
+
+        button.disabled = false;
+        button.textContent = "Save Announcement";
 
     }
+}
 
 
+/* =========================================================
+   STATISTICS
+========================================================= */
 
-    // ========================================================
-    // INITIALISE
-    // ========================================================
+function updateStats() {
 
-    async function initialise() {
+    const totalCodes = staffCodes.length;
 
-      const authenticated =
-        await checkAdminAccess();
+    const activeCodes = staffCodes.filter(code => {
+        return Number(code.active) === 1 ||
+               code.active === true;
+    }).length;
 
 
-      if (!authenticated) {
+    $("statCodes").textContent =
+        totalCodes;
+
+
+    $("statActiveCodes").textContent =
+        activeCodes;
+
+
+    $("statDocuments").textContent =
+        staffDocuments.length;
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+async function logout() {
+
+    try {
+
+        await fetch(
+            "/api/auth/logout",
+            {
+                method: "POST",
+                credentials: "same-origin"
+            }
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Logout error:",
+            error
+        );
+
+    } finally {
+
+        window.location.href =
+            "/staff-login.html";
+    }
+}
+
+
+/* =========================================================
+   EVENT LISTENERS
+========================================================= */
+
+$("logoutButton").addEventListener(
+    "click",
+    logout
+);
+
+
+$("saveWebsiteButton").addEventListener(
+    "click",
+    saveWebsiteContent
+);
+
+
+$("reloadWebsiteButton").addEventListener(
+    "click",
+    loadWebsiteContent
+);
+
+
+$("createCodeButton").addEventListener(
+    "click",
+    createStaffCode
+);
+
+
+$("createDocumentButton").addEventListener(
+    "click",
+    createDocument
+);
+
+
+$("saveAnnouncementButton").addEventListener(
+    "click",
+    saveAnnouncement
+);
+
+
+/* =========================================================
+   INITIALISE
+========================================================= */
+
+(async function initialiseAdmin() {
+
+    const authenticated =
+        await checkAuthentication();
+
+    if (!authenticated) {
         return;
-      }
-
-
-      await loadWebsiteContent();
-
-      await loadCodes();
-
-      await loadDocuments();
-
-      populateDocumentPermissions();
-
-      updateStats();
-
     }
 
 
-    initialise();
+    // Load the dashboard data in the background.
+    await Promise.allSettled([
+        loadWebsiteContent(),
+        loadStaffCodes(),
+        loadDocuments()
+    ]);
 
-  </script>
+
+    updateStats();
+
+})();
+</script>
 
 </body>
-
 </html>
