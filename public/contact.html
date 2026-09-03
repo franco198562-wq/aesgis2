@@ -1,821 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Contact — The Aegis Institute</title>
-
-    <meta
-        name="description"
-        content="Contact The Aegis Institute."
-    >
-
-    <link rel="stylesheet" href="/portal.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contact The Aegis Institute.">
+  <title>Contact | The Aegis Institute</title>
+  <link rel="stylesheet" href="/portal.css">
 </head>
 
-<body class="public-site">
+<body>
+  <header class="site-header">
+    <div class="container site-header-inner">
+      <a href="/" class="site-brand" aria-label="The Aegis Institute home">
+        <span class="site-brand-mark">A</span>
+        <span class="site-brand-text">
+          <strong data-content="site_name">The Aegis Institute</strong>
+          <small data-content="site_tagline">Knowledge. Preparation. Excellence.</small>
+        </span>
+      </a>
 
-    <!-- =========================
-         HEADER
-    ========================== -->
-    <header class="site-header">
-        <div class="container nav">
+      <button
+        class="mobile-menu-button"
+        id="mobileMenuButton"
+        type="button"
+        aria-label="Open navigation menu"
+        aria-expanded="false"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
 
-            <a href="/" class="brand">
-                <span class="brand-mark">A</span>
-
-                <span class="brand-text">
-                    <strong id="siteName">
-                        THE AEGIS INSTITUTE
-                    </strong>
-                </span>
-            </a>
-
-            <nav class="nav-links">
-
-                <a href="/">
-                    Home
-                </a>
-
-                <a href="/services.html">
-                    Services
-                </a>
-
-                <a href="/work.html">
-                    Our Work
-                </a>
-
-                <a href="/contact.html" class="active">
-                    Contact
-                </a>
-
-                <a
-                    href="/staff-login.html"
-                    class="nav-login"
-                >
-                    Staff Login
-                </a>
-
-            </nav>
-
-        </div>
-    </header>
-
-
-    <!-- =========================
-         ANNOUNCEMENT
-    ========================== -->
-    <div
-        id="announcementBar"
-        class="announcement-bar hidden"
-    >
-
-        <div class="container announcement-inner">
-
-            <div>
-
-                <strong id="announcementTitle">
-                    Announcement
-                </strong>
-
-                <span id="announcementText"></span>
-
-            </div>
-
-            <a
-                id="announcementLink"
-                href="#"
-                class="announcement-link"
-            >
-                Learn more
-            </a>
-
-        </div>
-
+      <nav class="site-navigation" id="siteNavigation" aria-label="Main navigation">
+        <a href="/">Home</a>
+        <a href="/services.html">Services</a>
+        <a href="/work.html">Our Work</a>
+        <a href="/contact.html" class="active">Contact</a>
+        <a href="/staff-login.html" class="nav-login">Staff Login</a>
+      </nav>
     </div>
-
-
-    <!-- =========================
-         MAIN
-    ========================== -->
-    <main>
-
-        <!-- =========================
-             PAGE HERO
-        ========================== -->
-        <section class="page-hero">
-
-            <div class="container">
-
-                <div
-                    class="eyebrow"
-                    id="contactKicker"
-                >
-                    GET IN TOUCH
-                </div>
-
-                <h1 id="contactTitle">
-                    Let's start a conversation.
-                </h1>
-
-                <p id="contactIntro">
-                    Whether you have a question, a project in mind or
-                    simply want to find out more, we'd be happy to hear
-                    from you.
-                </p>
-
-            </div>
-
-        </section>
-
-
-        <!-- =========================
-             CONTACT CONTENT
-        ========================== -->
-        <section class="section">
-
-            <div class="container">
-
-                <div class="contact-grid">
-
-                    <!-- =====================
-                         CONTACT DETAILS
-                    ====================== -->
-                    <div>
-
-                        <div class="section-heading">
-
-                            <div class="eyebrow">
-                                CONTACT
-                            </div>
-
-                            <h2>
-                                Choose the best
-                                way to reach us.
-                            </h2>
-
-                            <p>
-                                For general enquiries, project
-                                discussions and other questions, use one
-                                of the options below.
-                            </p>
-
-                        </div>
-
-
-                        <!-- DISCORD -->
-                        <div class="contact-card">
-
-                            <div class="contact-card-icon">
-                                D
-                            </div>
-
-                            <div>
-
-                                <span
-                                    class="contact-card-label"
-                                    id="contactDiscordLabel"
-                                >
-                                    DISCORD
-                                </span>
-
-                                <h3>
-                                    <a
-                                        id="contactDiscordLink"
-                                        href="#"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        Contact us on Discord
-                                    </a>
-                                </h3>
-
-                                <p id="contactDiscordText">
-                                    Send us a message through Discord
-                                    for a quick response.
-                                </p>
-
-                            </div>
-
-                        </div>
-
-
-                        <!-- EMAIL -->
-                        <div class="contact-card">
-
-                            <div class="contact-card-icon">
-                                @
-                            </div>
-
-                            <div>
-
-                                <span
-                                    class="contact-card-label"
-                                    id="contactEmailLabel"
-                                >
-                                    EMAIL
-                                </span>
-
-                                <h3>
-                                    <a
-                                        id="contactEmailLink"
-                                        href="mailto:"
-                                    >
-                                        Contact us by email
-                                    </a>
-                                </h3>
-
-                                <p id="contactEmailText">
-                                    Send us an email for enquiries,
-                                    projects and general information.
-                                </p>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- =====================
-                         CONTACT MESSAGE
-                    ====================== -->
-                    <div class="contact-form-wrapper">
-
-                        <div class="contact-form-header">
-
-                            <div class="eyebrow">
-                                ENQUIRY
-                            </div>
-
-                            <h2 id="contactFormTitle">
-                                Tell us what you need.
-                            </h2>
-
-                            <p id="contactFormText">
-                                Give us a little information about your
-                                enquiry and we'll get back to you.
-                            </p>
-
-                        </div>
-
-
-                        <div class="contact-form-notice">
-
-                            <div class="notice-icon">
-                                i
-                            </div>
-
-                            <div>
-
-                                <strong>
-                                    Contact Under Development
-                                </strong>
-
-                                <p>
-                                    Our online contact form is currently
-                                    being developed. In the meantime,
-                                    please contact us through Discord or
-                                    email using the details provided.
-                                </p>
-
-                            </div>
-
-                        </div>
-
-
-                        <!-- CONTACT OPTIONS -->
-                        <div class="contact-form-options">
-
-                            <a
-                                id="contactDiscordButton"
-                                href="#"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="btn btn-primary"
-                            >
-                                Contact on Discord
-                            </a>
-
-                            <a
-                                id="contactEmailButton"
-                                href="mailto:"
-                                class="btn btn-outline"
-                            >
-                                Send an Email
-                            </a>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =========================
-             CTA
-        ========================== -->
-        <section class="section section-soft">
-
-            <div class="container">
-
-                <div class="cta">
-
-                    <div>
-
-                        <div class="eyebrow">
-                            THE AEGIS INSTITUTE
-                        </div>
-
-                        <h2>
-                            Have a question?
-                        </h2>
-
-                        <p>
-                            We're always happy to hear from you.
-                        </p>
-
-                    </div>
-
-                    <a
-                        id="bottomContactButton"
-                        href="#"
-                        class="btn btn-primary"
-                    >
-                        Get in touch
-                    </a>
-
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- =========================
-         FOOTER
-    ========================== -->
-    <footer class="site-footer">
-
-        <div class="container footer-grid">
-
-            <div>
-
-                <a
-                    href="/"
-                    class="brand footer-brand"
-                >
-
-                    <span class="brand-mark">
-                        A
-                    </span>
-
-                    <span class="brand-text">
-
-                        <strong id="footerSiteName">
-                            THE AEGIS INSTITUTE
-                        </strong>
-
-                    </span>
-
-                </a>
-
-                <p id="footerText">
-                    Professional education, consulting and support.
-                </p>
-
-            </div>
-
-
-            <div class="footer-links">
-
-                <div>
-
-                    <strong>
-                        Explore
-                    </strong>
-
-                    <a href="/">
-                        Home
-                    </a>
-
-                    <a href="/services.html">
-                        Services
-                    </a>
-
-                    <a href="/work.html">
-                        Our Work
-                    </a>
-
-                </div>
-
-
-                <div>
-
-                    <strong>
-                        Connect
-                    </strong>
-
-                    <a href="/contact.html">
-                        Contact
-                    </a>
-
-                    <a href="/staff-login.html">
-                        Staff Login
-                    </a>
-
-                </div>
-
-            </div>
-
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container narrow-container">
+        <p class="eyebrow">Get in touch</p>
+        <h1>Contact Us</h1>
+        <p class="hero-description">
+          Contact The Aegis Institute for more information, questions, or
+          assistance.
+        </p>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <div class="container">
+        <div class="contact-layout">
+          <div class="section-heading">
+            <p class="eyebrow">Contact Under Development</p>
+            <h2>Our contact system is currently being developed.</h2>
+            <p>
+              Please check back soon for the full contact form and additional
+              contact options.
+            </p>
+          </div>
+
+          <div class="content-card contact-notice">
+            <div class="card-icon" aria-hidden="true">!</div>
+            <h2>Contact Under Development</h2>
+            <p>
+              The contact page is not currently accepting requests. We are
+              working on improving this service and will make it available
+              shortly.
+            </p>
+            <a href="/" class="button button-primary">
+              Return Home
+            </a>
+          </div>
         </div>
-
-
-        <div class="container footer-bottom">
-
-            <span id="footerCopyright">
-                © The Aegis Institute. All rights reserved.
-            </span>
-
-        </div>
-
-    </footer>
-
-
-    <!-- =========================
-         CONTENT LOADER
-    ========================== -->
-    <script>
-
-        const fallbackContent = {
-
-            site_name:
-                "THE AEGIS INSTITUTE",
-
-            footer_text:
-                "Professional education, consulting and support.",
-
-
-            contact_kicker:
-                "GET IN TOUCH",
-
-            contact_title:
-                "Let's start a conversation.",
-
-            contact_intro:
-                "Whether you have a question, a project in mind or simply want to find out more, we'd be happy to hear from you.",
-
-
-            contact_discord_label:
-                "DISCORD",
-
-            contact_discord_text:
-                "Send us a message through Discord for a quick response.",
-
-            contact_discord_url:
-                "#",
-
-
-            contact_email_label:
-                "EMAIL",
-
-            contact_email_text:
-                "Send us an email for enquiries, projects and general information.",
-
-            contact_email:
-                "",
-
-
-            contact_form_title:
-                "Tell us what you need.",
-
-            contact_form_text:
-                "Give us a little information about your enquiry and we'll get back to you.",
-
-
-            announcement_enabled:
-                "false",
-
-            announcement_title:
-                "Announcement",
-
-            announcement_text:
-                "",
-
-            announcement_link_text:
-                "Learn more",
-
-            announcement_link:
-                "#"
-        };
-
-
-        function applyContent(content) {
-
-            const get = (key) => {
-
-                if (
-                    content &&
-                    content[key] !== undefined &&
-                    content[key] !== null &&
-                    content[key] !== ""
-                ) {
-                    return content[key];
-                }
-
-                return fallbackContent[key] || "";
-
-            };
-
-
-            /* PAGE TITLE */
-
-            document.title =
-                "Contact — " +
-                get("site_name");
-
-
-            /* SITE NAME */
-
-            document
-                .querySelectorAll(
-                    "#siteName, #footerSiteName"
-                )
-                .forEach(element => {
-
-                    element.textContent =
-                        get("site_name");
-
-                });
-
-
-            /* HERO */
-
-            document.getElementById(
-                "contactKicker"
-            ).textContent =
-                get("contact_kicker");
-
-
-            document.getElementById(
-                "contactTitle"
-            ).textContent =
-                get("contact_title");
-
-
-            document.getElementById(
-                "contactIntro"
-            ).textContent =
-                get("contact_intro");
-
-
-            /* DISCORD */
-
-            document.getElementById(
-                "contactDiscordLabel"
-            ).textContent =
-                get("contact_discord_label");
-
-
-            document.getElementById(
-                "contactDiscordText"
-            ).textContent =
-                get("contact_discord_text");
-
-
-            const discordUrl =
-                get("contact_discord_url");
-
-
-            const discordLink =
-                document.getElementById(
-                    "contactDiscordLink"
-                );
-
-
-            discordLink.href =
-                discordUrl;
-
-
-            const discordButton =
-                document.getElementById(
-                    "contactDiscordButton"
-                );
-
-
-            discordButton.href =
-                discordUrl;
-
-
-            /* EMAIL */
-
-            document.getElementById(
-                "contactEmailLabel"
-            ).textContent =
-                get("contact_email_label");
-
-
-            document.getElementById(
-                "contactEmailText"
-            ).textContent =
-                get("contact_email_text");
-
-
-            const email =
-                get("contact_email");
-
-
-            const emailHref =
-                email
-                    ? "mailto:" + email
-                    : "mailto:";
-
-
-            document.getElementById(
-                "contactEmailLink"
-            ).href =
-                emailHref;
-
-
-            document.getElementById(
-                "contactEmailButton"
-            ).href =
-                emailHref;
-
-
-            document.getElementById(
-                "contactEmailLink"
-            ).textContent =
-                email || "Contact us by email";
-
-
-            /* CONTACT FORM */
-
-            document.getElementById(
-                "contactFormTitle"
-            ).textContent =
-                get("contact_form_title");
-
-
-            document.getElementById(
-                "contactFormText"
-            ).textContent =
-                get("contact_form_text");
-
-
-            /* BOTTOM BUTTON */
-
-            const bottomButton =
-                document.getElementById(
-                    "bottomContactButton"
-                );
-
-
-            if (discordUrl && discordUrl !== "#") {
-
-                bottomButton.href =
-                    discordUrl;
-
-                bottomButton.target =
-                    "_blank";
-
-                bottomButton.rel =
-                    "noopener noreferrer";
-
-            } else if (email) {
-
-                bottomButton.href =
-                    emailHref;
-
-            }
-
-
-            /* FOOTER */
-
-            document.getElementById(
-                "footerText"
-            ).textContent =
-                get("footer_text");
-
-
-            document.getElementById(
-                "footerCopyright"
-            ).textContent =
-                "© " +
-                get("site_name") +
-                ". All rights reserved.";
-
-
-            /* ANNOUNCEMENT */
-
-            const enabled =
-                String(
-                    get("announcement_enabled")
-                ).toLowerCase() === "true";
-
-
-            const announcementBar =
-                document.getElementById(
-                    "announcementBar"
-                );
-
-
-            if (enabled) {
-
-                announcementBar.classList.remove(
-                    "hidden"
-                );
-
-
-                document.getElementById(
-                    "announcementTitle"
-                ).textContent =
-                    get("announcement_title");
-
-
-                document.getElementById(
-                    "announcementText"
-                ).textContent =
-                    " " +
-                    get("announcement_text");
-
-
-                const announcementLink =
-                    document.getElementById(
-                        "announcementLink"
-                    );
-
-
-                announcementLink.textContent =
-                    get("announcement_link_text");
-
-
-                announcementLink.href =
-                    get("announcement_link");
-
-            } else {
-
-                announcementBar.classList.add(
-                    "hidden"
-                );
-
-            }
-
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer-inner">
+      <div class="footer-brand">
+        <strong data-content="site_name">The Aegis Institute</strong>
+        <p data-content="footer_text">
+          Professional education, guidance, and support.
+        </p>
+      </div>
+
+      <div class="footer-links">
+        <a href="/">Home</a>
+        <a href="/services.html">Services</a>
+        <a href="/work.html">Our Work</a>
+        <a href="/contact.html">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const mobileMenuButton = document.getElementById("mobileMenuButton");
+    const siteNavigation = document.getElementById("siteNavigation");
+
+    mobileMenuButton.addEventListener("click", () => {
+      const isOpen = siteNavigation.classList.toggle("open");
+
+      mobileMenuButton.setAttribute("aria-expanded", String(isOpen));
+      mobileMenuButton.setAttribute(
+        "aria-label",
+        isOpen ? "Close navigation menu" : "Open navigation menu"
+      );
+    });
+
+    function setText(key, value) {
+      if (value === undefined || value === null || value === "") return;
+
+      document.querySelectorAll(`[data-content="${key}"]`).forEach((element) => {
+        element.textContent = value;
+      });
+    }
+
+    function applyDesignVariables(content) {
+      const designVariables = {
+        design_primary: "--primary",
+        design_primary_dark: "--primary-dark",
+        design_accent: "--accent",
+        design_background: "--background",
+        design_surface: "--surface",
+        design_surface_alt: "--surface-alt",
+        design_text: "--text",
+        design_muted: "--muted",
+        design_border: "--border",
+        design_header_bg: "--header-bg",
+        design_footer_bg: "--footer-bg",
+        design_footer_text: "--footer-text",
+        design_font_family: "--font-family",
+        design_heading_weight: "--heading-weight",
+        design_body_size: "--body-size",
+        design_h1_size: "--h1-size",
+        design_h2_size: "--h2-size",
+        design_h3_size: "--h3-size",
+        design_line_height: "--line-height",
+        design_letter_spacing: "--letter-spacing",
+        design_content_width: "--content-width",
+        design_section_spacing: "--section-spacing",
+        design_card_gap: "--card-gap",
+        design_card_radius: "--card-radius",
+        design_button_radius: "--button-radius",
+        design_card_shadow: "--card-shadow",
+        design_header_height: "--header-height",
+        design_button_padding_x: "--button-padding-x",
+        design_button_padding_y: "--button-padding-y",
+        design_mobile_section_spacing: "--mobile-section-spacing",
+        design_mobile_body_size: "--mobile-body-size",
+        design_nav_text_size: "--nav-text-size",
+        design_hero_title_size: "--hero-title-size",
+        design_hero_text_size: "--hero-text-size"
+      };
+
+      Object.entries(designVariables).forEach(([contentKey, cssVariable]) => {
+        if (
+          content[contentKey] !== undefined &&
+          content[contentKey] !== null &&
+          content[contentKey] !== ""
+        ) {
+          document.documentElement.style.setProperty(
+            cssVariable,
+            content[contentKey]
+          );
+        }
+      });
+    }
+
+    async function loadContent() {
+      try {
+        const response = await fetch("/api/content", {
+          headers: {
+            Accept: "application/json"
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error("Unable to load website content.");
         }
 
+        const result = await response.json();
+        const content = result.content || result || {};
 
-        async function loadWebsiteContent() {
+        Object.entries(content).forEach(([key, value]) => {
+          setText(key, value);
+        });
 
-            try {
+        applyDesignVariables(content);
+      } catch (error) {
+        console.warn("Using default contact page content:", error);
+      }
+    }
 
-                const response =
-                    await fetch(
-                        "/api/content"
-                    );
-
-
-                if (!response.ok) {
-
-                    throw new Error(
-                        "Content request failed"
-                    );
-
-                }
-
-
-                const content =
-                    await response.json();
-
-
-                applyContent(content);
-
-            } catch (error) {
-
-                console.warn(
-                    "Using default contact content:",
-                    error
-                );
-
-
-                applyContent(
-                    fallbackContent
-                );
-
-            }
-
-        }
-
-
-        loadWebsiteContent();
-
-    </script>
-
+    loadContent();
+  </script>
 </body>
 </html>
