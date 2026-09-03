@@ -83,6 +83,21 @@ export default {
 
 
     /* =====================================================
+   OLD DISCORD LOGIN REDIRECT
+===================================================== */
+
+if (
+  url.pathname === "/api/auth/discord"
+) {
+  return new Response(null, {
+    status: 302,
+    headers: {
+      "Location": "/staff-login.html"
+    }
+  });
+}
+
+    /* =====================================================
        CURRENT SESSION
     ===================================================== */
 
