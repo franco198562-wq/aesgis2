@@ -1,62 +1,190 @@
-const MAIN_PASSWORD = "berzelia";
+/*
+=========================================================
+THE AEGIS INSTITUTE
+Cloudflare Workers + Static Assets + D1
+
+AUTHENTICATION:
+- Main password stored directly in this Worker
+- No Discord OAuth required
+
+IMPORTANT:
+Replace the value of MAIN_PASSWORD below with your
+staff password.
+=========================================================
+*/
+
+
+/* =========================================================
+   MAIN PASSWORD
+========================================================= */
+
+const MAIN_PASSWORD =
+  "berzelia";
+
+
+/* =========================================================
+   FALLBACK SESSION SECRET
+=========================================================
+
+   The Worker will use Cloudflare's SESSION_SECRET if it
+   exists.
+
+   If it doesn't exist, this fallback keeps the login
+   system working.
+
+   You can replace this with your own random string if
+   you want.
+========================================================= */
+
+const FALLBACK_SESSION_SECRET =
+  "aegis-institute-session-secret-2026-change-this";
+
+
+/* =========================================================
+   DEFAULT WEBSITE DATA
+========================================================= */
+
 const DEFAULT_DATA = {
+
   hero: {
-    title: "Training that sees the person behind every case.",
-    text: "The Aegis Institute supports Discord communities and individuals through personalised consulting and structured education — built around your rules, your people, and your goals.",
-    cardTitle: "Two branches. One standard of care.",
-    cardText: "Consulting for communities that want clarity — education for staff and aspiring moderators who want to know where to start."
+
+    title:
+      "Training that sees the person behind every case.",
+
+    text:
+      "The Aegis Institute supports Discord communities and individuals through personalised consulting and structured education — built around your rules, your people, and your goals.",
+
+    cardTitle:
+      "Two branches. One standard of care.",
+
+    cardText:
+      "Consulting for communities that want clarity — education for staff and aspiring moderators who want to know where to start."
+
   },
 
+
   services: [
+
     {
-      label: "SERVER OWNERS",
-      title: "Outsourced staff training",
-      description: "High-quality training, assessments and feedback aligned to your rules and procedures.",
+
+      label:
+        "SERVER OWNERS",
+
+      title:
+        "Outsourced staff training",
+
+      description:
+        "High-quality training, assessments and feedback aligned to your rules and procedures.",
+
       bullets: [
+
         "Training, assessments & educator support",
+
         "Structured standards",
+
         "Actionable feedback"
+
       ]
+
     },
+
+
     {
-      label: "PLAYERS",
-      title: "Moderator & Advanced Fundamentals",
-      description: "Preparation for aspiring moderators and supervisors who want to build practical skills.",
+
+      label:
+        "PLAYERS",
+
+      title:
+        "Moderator & Advanced Fundamentals",
+
+      description:
+        "Preparation for aspiring moderators and supervisors who want to build practical skills.",
+
       bullets: [
+
         "Moderator fundamentals",
+
         "Advanced fundamentals",
+
         "Practical scenarios"
+
       ]
+
     }
+
   ],
+
 
   work: [
+
     {
-      label: "STAFF DEVELOPMENT",
-      title: "Structured staff programmes",
-      description: "Clear pathways for trainees, moderators, supervisors and leadership teams."
+
+      label:
+        "STAFF DEVELOPMENT",
+
+      title:
+        "Structured staff programmes",
+
+      description:
+        "Clear pathways for trainees, moderators, supervisors and leadership teams."
+
     },
+
+
     {
-      label: "STANDARDS",
-      title: "Policies that people can actually use",
-      description: "Practical policies, procedures and expectations written around the way your community operates."
+
+      label:
+        "STANDARDS",
+
+      title:
+        "Policies that people can actually use",
+
+      description:
+        "Practical policies, procedures and expectations written around the way your community operates."
+
     },
+
+
     {
-      label: "CONSULTING",
-      title: "An external perspective",
-      description: "Honest feedback on systems, staff structures, training and community operations."
+
+      label:
+        "CONSULTING",
+
+      title:
+        "An external perspective",
+
+      description:
+        "Honest feedback on systems, staff structures, training and community operations."
+
     },
+
+
     {
-      label: "EDUCATION",
-      title: "Training built around scenarios",
-      description: "Learn through examples and situations that staff can actually encounter."
+
+      label:
+        "EDUCATION",
+
+      title:
+        "Training built around scenarios",
+
+      description:
+        "Learn through examples and situations that staff can actually encounter."
+
     }
+
   ],
 
+
   contact: {
-    title: "Let's talk about what your community needs.",
-    text: "Have a question, project idea, or training requirement? Send a message and the Aegis team can help."
+
+    title:
+      "Let's talk about what your community needs.",
+
+    text:
+      "Have a question, project idea, or training requirement? Send a message and the Aegis team can help."
+
   }
+
 };
 
 
@@ -68,7 +196,8 @@ export default {
 
   async fetch(request, env) {
 
-    const url = new URL(request.url);
+    const url =
+      new URL(request.url);
 
 
     /* =====================================================
@@ -76,48 +205,62 @@ export default {
     ===================================================== */
 
     if (
-      url.pathname === "/api/auth/password" &&
-      request.method === "POST"
+      url.pathname ===
+        "/api/auth/password" &&
+      request.method ===
+        "POST"
     ) {
-      return passwordLogin(request, env);
+
+      return passwordLogin(
+        request,
+        env
+      );
+
     }
 
 
     /* =====================================================
        OLD DISCORD LOGIN
-       
-       If an old button/link still points to Discord,
-       send it to the new password login page.
+
+       Any old Discord login buttons/links now go directly
+       to the password login page.
     ===================================================== */
 
     if (
-      url.pathname === "/api/auth/discord"
+      url.pathname ===
+        "/api/auth/discord"
     ) {
-      return new Response(null, {
-        status: 302,
-        headers: {
-          "Location": "/staff-login.html"
-        }
-      });
+
+      return Response.redirect(
+        new URL(
+          "/staff-login.html",
+          request.url
+        ).toString(),
+        302
+      );
+
     }
 
 
     /* =====================================================
-       DISCORD CALLBACK
+       OLD DISCORD CALLBACK
 
-       Kept as a harmless redirect in case an old Discord
-       callback is still accessed.
+       No longer used.
     ===================================================== */
 
     if (
-      url.pathname === "/api/auth/callback"
+      url.pathname ===
+        "/api/auth/callback"
     ) {
-      return new Response(null, {
-        status: 302,
-        headers: {
-          "Location": "/staff-login.html"
-        }
-      });
+
+      return Response.redirect(
+        new URL(
+          "/staff-login.html",
+          request.url
+        ).toString(),
+        302
+      );
+
     }
 
 
@@ -126,9 +269,15 @@ export default {
     ===================================================== */
 
     if (
-      url.pathname === "/api/auth/me"
+      url.pathname ===
+        "/api/auth/me"
     ) {
-      return getMe(request, env);
+
+      return getMe(
+        request,
+        env
+      );
+
     }
 
 
@@ -137,9 +286,12 @@ export default {
     ===================================================== */
 
     if (
-      url.pathname === "/api/auth/logout"
+      url.pathname ===
+        "/api/auth/logout"
     ) {
+
       return logout();
+
     }
 
 
@@ -148,29 +300,43 @@ export default {
     ===================================================== */
 
     if (
-      url.pathname === "/api/content"
+      url.pathname ===
+        "/api/content"
     ) {
 
       if (
-        request.method === "GET"
+        request.method ===
+          "GET"
       ) {
-        return getContent(env);
+
+        return getContent(
+          env
+        );
+
       }
 
 
       if (
-        request.method === "PUT"
+        request.method ===
+          "PUT"
       ) {
-        return saveContent(request, env);
+
+        return saveContent(
+          request,
+          env
+        );
+
       }
 
 
       return json(
         {
-          error: "Method not allowed."
+          error:
+            "Method not allowed."
         },
         405
       );
+
     }
 
 
@@ -178,8 +344,30 @@ export default {
        STATIC WEBSITE
     ===================================================== */
 
-    return env.ASSETS.fetch(request);
+    if (
+      !env.ASSETS
+    ) {
+
+      return new Response(
+        "Static assets binding is not configured.",
+        {
+          status: 500,
+          headers: {
+            "Content-Type":
+              "text/plain; charset=UTF-8"
+          }
+        }
+      );
+
+    }
+
+
+    return env.ASSETS.fetch(
+      request
+    );
+
   }
+
 };
 
 
@@ -192,149 +380,268 @@ async function passwordLogin(
   env
 ) {
 
+  /*
+    Read the request body.
+  */
+
+  let body;
+
+
   try {
 
-    const body =
+    body =
       await request.json();
-
-
-    const password =
-      String(
-        body.password || ""
-      );
-
-
-    /*
-       Primary source:
-       MAIN_PASSWORD
-
-       Fallback:
-       MAIN_PASSWORD_VALUE
-
-       This allows the Worker to work with either
-       Cloudflare Secret/Variable binding.
-    */
-
-const mainPassword = MAIN_PASSWORD;
-
-
-    if (!mainPassword) {
-
-      return json(
-        {
-          success: false,
-          error:
-            "Main password has not been configured."
-        },
-        500
-      );
-
-    }
-
-
-    if (!password) {
-
-      return json(
-        {
-          success: false,
-          error:
-            "Please enter the password."
-        },
-        400
-      );
-
-    }
-
-
-    if (password !== mainPassword) {
-
-      return json(
-        {
-          success: false,
-          error:
-            "Incorrect password."
-        },
-        401
-      );
-
-    }
-
-
-    /*
-       Successful login.
-
-       The password itself is NEVER placed
-       into the session.
-    */
-
-    const sessionPayload = {
-
-      authenticated: true,
-
-      authorized: true,
-
-      username:
-        "Aegis Administrator",
-
-      userId:
-        "main-admin",
-
-      exp:
-        Date.now() +
-        8 * 60 * 60 * 1000
-
-    };
-
-
-    const session =
-      await signSession(
-        sessionPayload,
-        env.SESSION_SECRET
-      );
-
-
-    return new Response(
-      JSON.stringify({
-        success: true
-      }),
-      {
-
-        status: 200,
-
-        headers: {
-
-          "Content-Type":
-            "application/json",
-
-          "Set-Cookie":
-            `aegis_session=${session}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=28800`,
-
-          "Cache-Control":
-            "no-store"
-
-        }
-
-      }
-    );
-
 
   } catch {
 
     return json(
       {
-        success: false,
+        success:
+          false,
+
         error:
-          "Invalid login request."
+          "The login request was not valid JSON."
+
       },
       400
     );
 
   }
+
+
+  /*
+    Get submitted password.
+  */
+
+  const password =
+    String(
+      body?.password ||
+        ""
+    );
+
+
+  /*
+    Password stored directly in Worker.
+  */
+
+  const configuredPassword =
+    String(
+      MAIN_PASSWORD ||
+        ""
+    );
+
+
+  /*
+    Check configuration.
+  */
+
+  if (
+    !configuredPassword ||
+    configuredPassword ===
+      "PASTE_YOUR_MAIN_PASSWORD_HERE"
+  ) {
+
+    return json(
+      {
+        success:
+          false,
+
+        error:
+          "MAIN_PASSWORD has not been entered in worker.js."
+
+      },
+      500
+    );
+
+  }
+
+
+  /*
+    Check that something was entered.
+  */
+
+  if (
+    !password
+  ) {
+
+    return json(
+      {
+        success:
+          false,
+
+        error:
+          "Please enter the staff password."
+
+      },
+      400
+    );
+
+  }
+
+
+  /*
+    Check password.
+  */
+
+  if (
+    password !==
+      configuredPassword
+  ) {
+
+    return json(
+      {
+        success:
+          false,
+
+        error:
+          "Incorrect password."
+
+      },
+      401
+    );
+
+  }
+
+
+  /*
+    Get session secret.
+
+    Cloudflare SESSION_SECRET is preferred.
+    The fallback exists so the login doesn't completely
+    fail if the Cloudflare secret isn't available.
+  */
+
+  const sessionSecret =
+    String(
+      env.SESSION_SECRET ||
+        FALLBACK_SESSION_SECRET
+    ).trim();
+
+
+  if (
+    !sessionSecret
+  ) {
+
+    return json(
+      {
+        success:
+          false,
+
+        error:
+          "Session system is not configured."
+
+      },
+      500
+    );
+
+  }
+
+
+  /*
+    Create authenticated session.
+  */
+
+  let session;
+
+
+  try {
+
+    session =
+      await signSession(
+
+        {
+
+          authenticated:
+            true,
+
+          authorized:
+            true,
+
+          username:
+            "Aegis Administrator",
+
+          userId:
+            "main-admin",
+
+          exp:
+            Date.now() +
+            (
+              8 *
+              60 *
+              60 *
+              1000
+            )
+
+        },
+
+        sessionSecret
+
+      );
+
+  } catch (error) {
+
+    return json(
+      {
+        success:
+          false,
+
+        error:
+          "Unable to create login session: " +
+          (
+            error?.message ||
+            "Unknown session error."
+          )
+      },
+      500
+    );
+
+  }
+
+
+  /*
+    Send the session cookie to the browser.
+  */
+
+  return new Response(
+
+    JSON.stringify(
+      {
+        success:
+          true
+      }
+    ),
+
+    {
+
+      status:
+        200,
+
+      headers: {
+
+        "Content-Type":
+          "application/json; charset=UTF-8",
+
+        "Set-Cookie":
+          [
+            "aegis_session=" +
+            session +
+            "; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=28800"
+          ].join(","),
+
+        "Cache-Control":
+          "no-store"
+
+      }
+
+    }
+
+  );
+
 }
 
 
 /* =========================================================
-   CURRENT USER
+   CURRENT USER / SESSION
 ========================================================= */
 
 async function getMe(
@@ -342,51 +649,83 @@ async function getMe(
   env
 ) {
 
-  const sessionToken =
+  const token =
     getCookie(
-      request.headers.get("Cookie") || "",
+
+      request.headers.get(
+        "Cookie"
+      ) || "",
+
       "aegis_session"
+
     );
 
 
-  if (!sessionToken) {
+  if (
+    !token
+  ) {
 
     return json({
-      authenticated: false,
-      authorized: false
+
+      authenticated:
+        false,
+
+      authorized:
+        false
+
     });
 
   }
 
 
-  const secret =
+  const sessionSecret =
     String(
-      env.SESSION_SECRET || ""
+
+      env.SESSION_SECRET ||
+        FALLBACK_SESSION_SECRET
+
     ).trim();
 
 
-  if (!secret) {
+  if (
+    !sessionSecret
+  ) {
 
     return json({
-      authenticated: false,
-      authorized: false
+
+      authenticated:
+        false,
+
+      authorized:
+        false
+
     });
 
   }
 
 
-  const session =
+  const payload =
     await verifySession(
-      sessionToken,
-      secret
+
+      token,
+
+      sessionSecret
+
     );
 
 
-  if (!session) {
+  if (
+    !payload
+  ) {
 
     return json({
-      authenticated: false,
-      authorized: false
+
+      authenticated:
+        false,
+
+      authorized:
+        false
+
     });
 
   }
@@ -394,16 +733,19 @@ async function getMe(
 
   return json({
 
-    authenticated: true,
+    authenticated:
+      true,
 
     authorized:
-      !!session.authorized,
+      !!payload.authorized,
 
     username:
-      session.username,
+      payload.username ||
+      "Aegis Administrator",
 
     userId:
-      session.userId
+      payload.userId ||
+      "main-admin"
 
   });
 
@@ -418,7 +760,13 @@ async function getContent(
   env
 ) {
 
-  if (!env.DB) {
+  /*
+    If D1 isn't connected, return default content.
+  */
+
+  if (
+    !env.DB
+  ) {
 
     return json(
       DEFAULT_DATA
@@ -431,13 +779,24 @@ async function getContent(
 
     const row =
       await env.DB
+
         .prepare(
+
           "SELECT value FROM portal_content WHERE id = 'main'"
+
         )
+
         .first();
 
 
-    if (!row) {
+    /*
+      No saved content.
+    */
+
+    if (
+      !row ||
+      !row.value
+    ) {
 
       return json(
         DEFAULT_DATA
@@ -445,6 +804,10 @@ async function getContent(
 
     }
 
+
+    /*
+      Convert JSON from D1.
+    */
 
     try {
 
@@ -464,6 +827,11 @@ async function getContent(
 
   } catch {
 
+    /*
+      Don't break the public website if D1
+      has a temporary problem.
+    */
+
     return json(
       DEFAULT_DATA
     );
@@ -482,10 +850,17 @@ async function saveContent(
   env
 ) {
 
+  /*
+    Check current login.
+  */
+
   const session =
     await getSession(
+
       request,
+
       env
+
     );
 
 
@@ -497,7 +872,7 @@ async function saveContent(
     return json(
       {
         error:
-          "You are not authorised to edit this website."
+          "You must be logged in as an Aegis administrator to edit the website."
       },
       403
     );
@@ -505,7 +880,13 @@ async function saveContent(
   }
 
 
-  if (!env.DB) {
+  /*
+    D1 required.
+  */
+
+  if (
+    !env.DB
+  ) {
 
     return json(
       {
@@ -517,6 +898,10 @@ async function saveContent(
 
   }
 
+
+  /*
+    Read JSON.
+  */
 
   let data;
 
@@ -539,10 +924,16 @@ async function saveContent(
   }
 
 
+  /*
+    Save to D1.
+  */
+
   try {
 
     await env.DB
+
       .prepare(
+
         `INSERT INTO portal_content
         (id, value, updated_at)
         VALUES ('main', ?, ?)
@@ -550,19 +941,31 @@ async function saveContent(
         DO UPDATE SET
           value = excluded.value,
           updated_at = excluded.updated_at`
+
       )
+
       .bind(
+
         "main",
-        JSON.stringify(data),
-        new Date().toISOString()
+
+        JSON.stringify(
+          data
+        ),
+
+        new Date()
+          .toISOString()
+
       )
+
       .run();
 
 
     return json({
-      ok: true
-    });
 
+      ok:
+        true
+
+    });
 
   } catch (error) {
 
@@ -570,7 +973,7 @@ async function saveContent(
       {
         error:
           error?.message ||
-          "Unable to save content."
+          "Unable to save website content."
       },
       500
     );
@@ -591,37 +994,56 @@ async function getSession(
 
   const token =
     getCookie(
-      request.headers.get("Cookie") || "",
+
+      request.headers.get(
+        "Cookie"
+      ) || "",
+
       "aegis_session"
+
     );
 
 
-  if (!token) {
+  if (
+    !token
+  ) {
+
     return null;
+
   }
 
 
-  const secret =
+  const sessionSecret =
     String(
-      env.SESSION_SECRET || ""
+
+      env.SESSION_SECRET ||
+        FALLBACK_SESSION_SECRET
+
     ).trim();
 
 
-  if (!secret) {
+  if (
+    !sessionSecret
+  ) {
+
     return null;
+
   }
 
 
   return verifySession(
+
     token,
-    secret
+
+    sessionSecret
+
   );
 
 }
 
 
 /* =========================================================
-   CREATE SESSION
+   CREATE SESSION SIGNATURE
 ========================================================= */
 
 async function signSession(
@@ -629,41 +1051,72 @@ async function signSession(
   secret
 ) {
 
-  if (!secret) {
+  if (
+    !secret
+  ) {
+
     throw new Error(
-      "SESSION_SECRET is not configured."
+      "No session secret available."
     );
+
   }
 
 
+  /*
+    Convert payload to Base64URL.
+  */
+
   const encoded =
     base64url(
-      new TextEncoder().encode(
-        JSON.stringify(payload)
-      )
+
+      new TextEncoder()
+        .encode(
+
+          JSON.stringify(
+            payload
+          )
+
+        )
+
     );
 
+
+  /*
+    Create HMAC key.
+  */
 
   const key =
     await crypto.subtle.importKey(
 
       "raw",
 
-      new TextEncoder().encode(
-        secret
-      ),
+      new TextEncoder()
+        .encode(
+          secret
+        ),
 
       {
-        name: "HMAC",
-        hash: "SHA-256"
+
+        name:
+          "HMAC",
+
+        hash:
+          "SHA-256"
+
       },
 
       false,
 
-      ["sign"]
+      [
+        "sign"
+      ]
 
     );
 
+
+  /*
+    Sign payload.
+  */
 
   const signature =
     await crypto.subtle.sign(
@@ -672,21 +1125,34 @@ async function signSession(
 
       key,
 
-      new TextEncoder().encode(
-        encoded
-      )
+      new TextEncoder()
+        .encode(
+          encoded
+        )
 
     );
 
 
+  /*
+    Return:
+
+    payload.signature
+  */
+
   return (
+
     encoded +
+
     "." +
+
     base64url(
+
       new Uint8Array(
         signature
       )
+
     )
+
   );
 
 }
@@ -707,7 +1173,9 @@ async function verifySession(
       !token ||
       !secret
     ) {
+
       return null;
+
     }
 
 
@@ -716,9 +1184,12 @@ async function verifySession(
 
 
     if (
-      parts.length !== 2
+      parts.length !==
+        2
     ) {
+
       return null;
+
     }
 
 
@@ -730,26 +1201,42 @@ async function verifySession(
       parts[1];
 
 
+    /*
+      Import HMAC key.
+    */
+
     const key =
       await crypto.subtle.importKey(
 
         "raw",
 
-        new TextEncoder().encode(
-          secret
-        ),
+        new TextEncoder()
+          .encode(
+            secret
+          ),
 
         {
-          name: "HMAC",
-          hash: "SHA-256"
+
+          name:
+            "HMAC",
+
+          hash:
+            "SHA-256"
+
         },
 
         false,
 
-        ["verify"]
+        [
+          "verify"
+        ]
 
       );
 
+
+    /*
+      Verify signature.
+    */
 
     const valid =
       await crypto.subtle.verify(
@@ -762,35 +1249,50 @@ async function verifySession(
           signaturePart
         ),
 
-        new TextEncoder().encode(
-          payloadPart
-        )
-
-      );
-
-
-    if (!valid) {
-      return null;
-    }
-
-
-    const payload =
-      JSON.parse(
-
-        new TextDecoder().decode(
-
-          fromBase64url(
+        new TextEncoder()
+          .encode(
             payloadPart
           )
-
-        )
 
       );
 
 
     if (
+      !valid
+    ) {
+
+      return null;
+
+    }
+
+
+    /*
+      Decode payload.
+    */
+
+    const payload =
+      JSON.parse(
+
+        new TextDecoder()
+          .decode(
+
+            fromBase64url(
+              payloadPart
+            )
+
+          )
+
+      );
+
+
+    /*
+      Check expiry.
+    */
+
+    if (
       !payload.exp ||
-      payload.exp < Date.now()
+      payload.exp <
+        Date.now()
     ) {
 
       return null;
@@ -817,18 +1319,22 @@ function logout() {
 
   return new Response(
 
-    JSON.stringify({
-      ok: true
-    }),
+    JSON.stringify(
+      {
+        ok:
+          true
+      }
+    ),
 
     {
 
-      status: 200,
+      status:
+        200,
 
       headers: {
 
         "Content-Type":
-          "application/json",
+          "application/json; charset=UTF-8",
 
         "Set-Cookie":
           "aegis_session=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0",
@@ -856,36 +1362,51 @@ function getCookie(
 
   const found =
     cookieString
+
       .split(";")
+
       .map(
-        x => x.trim()
+        value =>
+          value.trim()
       )
+
       .find(
-        x =>
-          x.startsWith(
+        value =>
+          value.startsWith(
             name + "="
           )
       );
 
 
-  return found
-    ? found.slice(
-        name.length + 1
-      )
-    : null;
+  if (
+    !found
+  ) {
+
+    return null;
+
+  }
+
+
+  return found.slice(
+
+    name.length +
+    1
+
+  );
 
 }
 
 
 /* =========================================================
-   BASE64 URL
+   BASE64URL ENCODE
 ========================================================= */
 
 function base64url(
   bytes
 ) {
 
-  let binary = "";
+  let binary =
+    "";
 
 
   for (
@@ -900,17 +1421,22 @@ function base64url(
   }
 
 
-  return btoa(binary)
+  return btoa(
+    binary
+  )
+
     .replace(
       /\+/g,
       "-"
     )
+
     .replace(
       /\//g,
       "_"
     )
+
     .replace(
-      /=+$/,
+      /=+$/g,
       ""
     );
 
@@ -918,7 +1444,7 @@ function base64url(
 
 
 /* =========================================================
-   FROM BASE64 URL
+   BASE64URL DECODE
 ========================================================= */
 
 function fromBase64url(
@@ -927,24 +1453,33 @@ function fromBase64url(
 
   const base64 =
     value
+
       .replace(
         /-/g,
         "+"
       )
+
       .replace(
         /_/g,
         "/"
       )
+
       .padEnd(
+
         Math.ceil(
-          value.length / 4
+          value.length /
+          4
         ) * 4,
+
         "="
+
       );
 
 
   const binary =
-    atob(base64);
+    atob(
+      base64
+    );
 
 
   const bytes =
@@ -955,12 +1490,15 @@ function fromBase64url(
 
   for (
     let i = 0;
-    i < binary.length;
+    i <
+      binary.length;
     i++
   ) {
 
     bytes[i] =
-      binary.charCodeAt(i);
+      binary.charCodeAt(
+        i
+      );
 
   }
 
@@ -987,12 +1525,14 @@ function json(
 
     {
 
-      status,
+      status:
+
+        status,
 
       headers: {
 
         "Content-Type":
-          "application/json",
+          "application/json; charset=UTF-8",
 
         "Cache-Control":
           "no-store"
