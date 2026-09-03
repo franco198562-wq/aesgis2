@@ -1,6 +1,6 @@
 name = "aegis-institute-portal"
 main = "worker.js"
-compatibility_date = "2026-09-01"
+compatibility_date = "2026-01-01"
 
 [assets]
 directory = "./public"
@@ -9,5 +9,5 @@ run_worker_first = ["/api/*"]
 
 [[d1_databases]]
 binding = "DB"
-database_name = "aegis-portal"
+database_name = "aegis-institute-db"
 database_id = "ea727e82-f0b7-4d11-a82d-2d3eae91bb7e"
