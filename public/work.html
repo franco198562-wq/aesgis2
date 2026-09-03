@@ -1,804 +1,278 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Our Work — The Aegis Institute</title>
-
-    <meta
-        name="description"
-        content="Explore the work and projects of The Aegis Institute."
-    >
-
-    <link rel="stylesheet" href="/portal.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Our work at The Aegis Institute.">
+  <title>Our Work | The Aegis Institute</title>
+  <link rel="stylesheet" href="/portal.css">
 </head>
 
-<body class="public-site">
+<body>
+  <header class="site-header">
+    <div class="container site-header-inner">
+      <a href="/" class="site-brand" aria-label="The Aegis Institute home">
+        <span class="site-brand-mark">A</span>
+        <span class="site-brand-text">
+          <strong data-content="site_name">The Aegis Institute</strong>
+          <small data-content="site_tagline">Knowledge. Preparation. Excellence.</small>
+        </span>
+      </a>
 
-    <!-- =========================
-         HEADER
-    ========================== -->
-    <header class="site-header">
-        <div class="container nav">
+      <button
+        class="mobile-menu-button"
+        id="mobileMenuButton"
+        type="button"
+        aria-label="Open navigation menu"
+        aria-expanded="false"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
 
-            <a href="/" class="brand">
-                <span class="brand-mark">A</span>
-
-                <span class="brand-text">
-                    <strong id="siteName">
-                        THE AEGIS INSTITUTE
-                    </strong>
-                </span>
-            </a>
-
-            <nav class="nav-links">
-                <a href="/">Home</a>
-
-                <a href="/services.html">
-                    Services
-                </a>
-
-                <a href="/work.html" class="active">
-                    Our Work
-                </a>
-
-                <a href="/contact.html">
-                    Contact
-                </a>
-
-                <a
-                    href="/staff-login.html"
-                    class="nav-login"
-                >
-                    Staff Login
-                </a>
-            </nav>
-
-        </div>
-    </header>
-
-
-    <!-- =========================
-         ANNOUNCEMENT
-    ========================== -->
-    <div
-        id="announcementBar"
-        class="announcement-bar hidden"
-    >
-
-        <div class="container announcement-inner">
-
-            <div>
-
-                <strong id="announcementTitle">
-                    Announcement
-                </strong>
-
-                <span id="announcementText"></span>
-
-            </div>
-
-            <a
-                id="announcementLink"
-                href="#"
-                class="announcement-link"
-            >
-                Learn more
-            </a>
-
-        </div>
-
+      <nav class="site-navigation" id="siteNavigation" aria-label="Main navigation">
+        <a href="/">Home</a>
+        <a href="/services.html">Services</a>
+        <a href="/work.html" class="active">Our Work</a>
+        <a href="/contact.html">Contact</a>
+        <a href="/staff-login.html" class="nav-login">Staff Login</a>
+      </nav>
     </div>
-
-
-    <!-- =========================
-         PAGE
-    ========================== -->
-    <main>
-
-        <!-- PAGE HERO -->
-        <section class="page-hero">
-
-            <div class="container">
-
-                <div
-                    class="eyebrow"
-                    id="workKicker"
-                >
-                    OUR WORK
-                </div>
-
-                <h1 id="workTitle">
-                    Practical work.
-                    Meaningful outcomes.
-                </h1>
-
-                <p id="workIntro">
-                    Explore examples of the projects, initiatives and
-                    professional work delivered through The Aegis Institute.
-                </p>
-
-            </div>
-
-        </section>
-
-
-        <!-- =========================
-             PROJECTS
-        ========================== -->
-        <section class="section">
-
-            <div class="container">
-
-                <div class="section-heading">
-
-                    <div class="eyebrow">
-                        SELECTED WORK
-                    </div>
-
-                    <h2>
-                        What we've been working on.
-                    </h2>
-
-                    <p>
-                        Our work is focused on creating practical,
-                        professional and useful outcomes.
-                    </p>
-
-                </div>
-
-
-                <div class="work-grid">
-
-                    <!-- PROJECT 1 -->
-                    <article class="work-card">
-
-                        <div class="work-card-top">
-
-                            <span class="work-number">
-                                01
-                            </span>
-
-                            <span class="work-label">
-                                EDUCATION
-                            </span>
-
-                        </div>
-
-
-                        <div class="work-card-content">
-
-                            <h3 id="workProject1Title">
-                                Professional Development
-                            </h3>
-
-                            <p id="workProject1Text">
-                                Developing structured learning and
-                                professional development opportunities
-                                focused on practical capability.
-                            </p>
-
-                        </div>
-
-
-                        <div class="work-card-footer">
-
-                            <span>
-                                AEGIS INSTITUTE
-                            </span>
-
-                            <span>
-                                →
-                            </span>
-
-                        </div>
-
-                    </article>
-
-
-                    <!-- PROJECT 2 -->
-                    <article class="work-card">
-
-                        <div class="work-card-top">
-
-                            <span class="work-number">
-                                02
-                            </span>
-
-                            <span class="work-label">
-                                CONSULTING
-                            </span>
-
-                        </div>
-
-
-                        <div class="work-card-content">
-
-                            <h3 id="workProject2Title">
-                                Organisational Consulting
-                            </h3>
-
-                            <p id="workProject2Text">
-                                Providing practical guidance and
-                                consulting support to help organisations
-                                identify opportunities and improve
-                                performance.
-                            </p>
-
-                        </div>
-
-
-                        <div class="work-card-footer">
-
-                            <span>
-                                AEGIS INSTITUTE
-                            </span>
-
-                            <span>
-                                →
-                            </span>
-
-                        </div>
-
-                    </article>
-
-
-                    <!-- PROJECT 3 -->
-                    <article class="work-card">
-
-                        <div class="work-card-top">
-
-                            <span class="work-number">
-                                03
-                            </span>
-
-                            <span class="work-label">
-                                SUPPORT
-                            </span>
-
-                        </div>
-
-
-                        <div class="work-card-content">
-
-                            <h3 id="workProject3Title">
-                                Professional Support
-                            </h3>
-
-                            <p id="workProject3Text">
-                                Supporting people and teams with clear,
-                                reliable and practical professional
-                                assistance.
-                            </p>
-
-                        </div>
-
-
-                        <div class="work-card-footer">
-
-                            <span>
-                                AEGIS INSTITUTE
-                            </span>
-
-                            <span>
-                                →
-                            </span>
-
-                        </div>
-
-                    </article>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =========================
-             VALUES
-        ========================== -->
-        <section class="section section-soft">
-
-            <div class="container">
-
-                <div class="split-section">
-
-                    <div class="split-content">
-
-                        <div class="eyebrow">
-                            OUR FOCUS
-                        </div>
-
-                        <h2>
-                            Work that makes
-                            a difference.
-                        </h2>
-
-                        <p>
-                            We believe professional work should have a
-                            clear purpose and a practical outcome.
-                        </p>
-
-                        <p>
-                            That's why we focus on understanding the
-                            challenge, developing an appropriate approach
-                            and delivering something that can genuinely
-                            be used.
-                        </p>
-
-                        <a
-                            href="/contact.html"
-                            class="btn btn-primary"
-                        >
-                            Discuss a project
-                        </a>
-
-                    </div>
-
-
-                    <div class="feature-panel">
-
-                        <div class="feature-panel-header">
-
-                            <span>
-                                AEGIS PRINCIPLES
-                            </span>
-
-                            <span>
-                                03
-                            </span>
-
-                        </div>
-
-
-                        <div class="feature-panel-main">
-
-                            <div class="feature-symbol">
-                                A
-                            </div>
-
-                            <h3>
-                                Purpose.
-                                Precision.
-                                Progress.
-                            </h3>
-
-                            <p>
-                                Three principles that guide the way we
-                                approach our work and professional
-                                relationships.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =========================
-             CTA
-        ========================== -->
-        <section class="section">
-
-            <div class="container">
-
-                <div class="cta">
-
-                    <div>
-
-                        <div class="eyebrow">
-                            WORK WITH US
-                        </div>
-
-                        <h2>
-                            Have something
-                            you'd like to build?
-                        </h2>
-
-                        <p>
-                            Get in touch and let's discuss what The Aegis
-                            Institute can do for you.
-                        </p>
-
-                    </div>
-
-
-                    <a
-                        href="/contact.html"
-                        class="btn btn-primary"
-                    >
-                        Contact us
-                    </a>
-
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- =========================
-         FOOTER
-    ========================== -->
-    <footer class="site-footer">
-
-        <div class="container footer-grid">
-
-            <div>
-
-                <a
-                    href="/"
-                    class="brand footer-brand"
-                >
-
-                    <span class="brand-mark">
-                        A
-                    </span>
-
-                    <span class="brand-text">
-
-                        <strong id="footerSiteName">
-                            THE AEGIS INSTITUTE
-                        </strong>
-
-                    </span>
-
-                </a>
-
-
-                <p id="footerText">
-                    Professional education, consulting and support.
-                </p>
-
-            </div>
-
-
-            <div class="footer-links">
-
-                <div>
-
-                    <strong>
-                        Explore
-                    </strong>
-
-                    <a href="/">
-                        Home
-                    </a>
-
-                    <a href="/services.html">
-                        Services
-                    </a>
-
-                    <a href="/work.html">
-                        Our Work
-                    </a>
-
-                </div>
-
-
-                <div>
-
-                    <strong>
-                        Connect
-                    </strong>
-
-                    <a href="/contact.html">
-                        Contact
-                    </a>
-
-                    <a href="/staff-login.html">
-                        Staff Login
-                    </a>
-
-                </div>
-
-            </div>
-
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container narrow-container">
+        <p class="eyebrow" data-content="work_kicker">Our Work</p>
+        <h1 data-content="work_title">What We Do</h1>
+        <p class="hero-description" data-content="work_intro">
+          Discover the approach, standards, and outcomes behind our work.
+        </p>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Our approach</p>
+          <h2>Built around people and progress</h2>
+          <p>
+            The Aegis Institute focuses on practical knowledge, clear
+            communication, and dependable support.
+          </p>
         </div>
 
+        <div class="content-card-grid">
+          <article class="content-card">
+            <div class="card-icon" aria-hidden="true">01</div>
+            <h3 data-content="work_project_one_title">Knowledge</h3>
+            <p data-content="work_project_one_text">
+              We make information easier to understand and apply through
+              clear, structured learning.
+            </p>
+          </article>
 
-        <div class="container footer-bottom">
+          <article class="content-card">
+            <div class="card-icon" aria-hidden="true">02</div>
+            <h3 data-content="work_project_two_title">Preparation</h3>
+            <p data-content="work_project_two_text">
+              We help people prepare for challenges with practical guidance,
+              planning, and useful resources.
+            </p>
+          </article>
 
-            <span id="footerCopyright">
-                © The Aegis Institute. All rights reserved.
-            </span>
+          <article class="content-card">
+            <div class="card-icon" aria-hidden="true">03</div>
+            <h3 data-content="work_project_three_title">Excellence</h3>
+            <p data-content="work_project_three_text">
+              We aim for high standards, continuous improvement, and positive
+              long-term outcomes.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
 
+    <section class="content-section section-muted">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">How we work</p>
+          <h2 data-content="work_process_title">A clear and reliable process</h2>
+          <p data-content="work_process_text">
+            Every project begins with understanding the goal, identifying the
+            right approach, and delivering useful results.
+          </p>
         </div>
 
-    </footer>
-
-
-    <!-- =========================
-         CONTENT LOADER
-    ========================== -->
-    <script>
-
-        const fallbackContent = {
-
-            site_name:
-                "THE AEGIS INSTITUTE",
-
-            footer_text:
-                "Professional education, consulting and support.",
-
-
-            work_kicker:
-                "OUR WORK",
-
-            work_title:
-                "Practical work. Meaningful outcomes.",
-
-            work_intro:
-                "Explore examples of the projects, initiatives and professional work delivered through The Aegis Institute.",
-
-
-            work_project_1_title:
-                "Professional Development",
-
-            work_project_1_text:
-                "Developing structured learning and professional development opportunities focused on practical capability.",
-
-
-            work_project_2_title:
-                "Organisational Consulting",
-
-            work_project_2_text:
-                "Providing practical guidance and consulting support to help organisations identify opportunities and improve performance.",
-
-
-            work_project_3_title:
-                "Professional Support",
-
-            work_project_3_text:
-                "Supporting people and teams with clear, reliable and practical professional assistance.",
-
-
-            announcement_enabled:
-                "false",
-
-            announcement_title:
-                "Announcement",
-
-            announcement_text:
-                "",
-
-            announcement_link_text:
-                "Learn more",
-
-            announcement_link:
-                "#"
-        };
-
-
-        function applyContent(content) {
-
-            const get = (key) => {
-
-                if (
-                    content &&
-                    content[key] !== undefined &&
-                    content[key] !== null &&
-                    content[key] !== ""
-                ) {
-                    return content[key];
-                }
-
-                return fallbackContent[key] || "";
-
-            };
-
-
-            /* PAGE TITLE */
-
-            document.title =
-                "Our Work — " +
-                get("site_name");
-
-
-            /* SITE NAME */
-
-            document
-                .querySelectorAll(
-                    "#siteName, #footerSiteName"
-                )
-                .forEach(element => {
-
-                    element.textContent =
-                        get("site_name");
-
-                });
-
-
-            /* HERO */
-
-            document.getElementById(
-                "workKicker"
-            ).textContent =
-                get("work_kicker");
-
-
-            document.getElementById(
-                "workTitle"
-            ).textContent =
-                get("work_title");
-
-
-            document.getElementById(
-                "workIntro"
-            ).textContent =
-                get("work_intro");
-
-
-            /* PROJECT 1 */
-
-            document.getElementById(
-                "workProject1Title"
-            ).textContent =
-                get("work_project_1_title");
-
-
-            document.getElementById(
-                "workProject1Text"
-            ).textContent =
-                get("work_project_1_text");
-
-
-            /* PROJECT 2 */
-
-            document.getElementById(
-                "workProject2Title"
-            ).textContent =
-                get("work_project_2_title");
-
-
-            document.getElementById(
-                "workProject2Text"
-            ).textContent =
-                get("work_project_2_text");
-
-
-            /* PROJECT 3 */
-
-            document.getElementById(
-                "workProject3Title"
-            ).textContent =
-                get("work_project_3_title");
-
-
-            document.getElementById(
-                "workProject3Text"
-            ).textContent =
-                get("work_project_3_text");
-
-
-            /* FOOTER */
-
-            document.getElementById(
-                "footerText"
-            ).textContent =
-                get("footer_text");
-
-
-            document.getElementById(
-                "footerCopyright"
-            ).textContent =
-                "© " +
-                get("site_name") +
-                ". All rights reserved.";
-
-
-            /* ANNOUNCEMENT */
-
-            const enabled =
-                String(
-                    get("announcement_enabled")
-                ).toLowerCase() === "true";
-
-
-            const announcementBar =
-                document.getElementById(
-                    "announcementBar"
-                );
-
-
-            if (enabled) {
-
-                announcementBar.classList.remove(
-                    "hidden"
-                );
-
-
-                document.getElementById(
-                    "announcementTitle"
-                ).textContent =
-                    get("announcement_title");
-
-
-                document.getElementById(
-                    "announcementText"
-                ).textContent =
-                    " " +
-                    get("announcement_text");
-
-
-                const announcementLink =
-                    document.getElementById(
-                        "announcementLink"
-                    );
-
-
-                announcementLink.textContent =
-                    get("announcement_link_text");
-
-
-                announcementLink.href =
-                    get("announcement_link");
-
-            } else {
-
-                announcementBar.classList.add(
-                    "hidden"
-                );
-
-            }
-
+        <div class="content-card-grid">
+          <article class="content-card">
+            <div class="card-icon" aria-hidden="true">01</div>
+            <h3>Understand</h3>
+            <p>
+              We begin by listening carefully and understanding the needs,
+              priorities, and intended outcomes.
+            </p>
+          </article>
+
+          <article class="content-card">
+            <div class="card-icon" aria-hidden="true">02</div>
+            <h3>Develop</h3>
+            <p>
+              We create a clear plan and develop the resources or support
+              required for the situation.
+            </p>
+          </article>
+
+          <article class="content-card">
+            <div class="card-icon" aria-hidden="true">03</div>
+            <h3>Deliver</h3>
+            <p>
+              We deliver the work professionally and remain focused on quality,
+              clarity, and practical value.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-card">
+          <div>
+            <p class="eyebrow">Work with us</p>
+            <h2>Have a project or question?</h2>
+            <p>
+              Get in touch with The Aegis Institute to discuss how we can help.
+            </p>
+          </div>
+
+          <a href="/contact.html" class="button button-primary">
+            Contact Us
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer-inner">
+      <div class="footer-brand">
+        <strong data-content="site_name">The Aegis Institute</strong>
+        <p data-content="footer_text">
+          Professional education, guidance, and support.
+        </p>
+      </div>
+
+      <div class="footer-links">
+        <a href="/">Home</a>
+        <a href="/services.html">Services</a>
+        <a href="/work.html">Our Work</a>
+        <a href="/contact.html">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const mobileMenuButton = document.getElementById("mobileMenuButton");
+    const siteNavigation = document.getElementById("siteNavigation");
+
+    mobileMenuButton.addEventListener("click", () => {
+      const isOpen = siteNavigation.classList.toggle("open");
+
+      mobileMenuButton.setAttribute("aria-expanded", String(isOpen));
+      mobileMenuButton.setAttribute(
+        "aria-label",
+        isOpen ? "Close navigation menu" : "Open navigation menu"
+      );
+    });
+
+    function setText(key, value) {
+      if (value === undefined || value === null || value === "") return;
+
+      document.querySelectorAll(`[data-content="${key}"]`).forEach((element) => {
+        element.textContent = value;
+      });
+    }
+
+    function applyDesignVariables(content) {
+      const designVariables = {
+        design_primary: "--primary",
+        design_primary_dark: "--primary-dark",
+        design_accent: "--accent",
+        design_background: "--background",
+        design_surface: "--surface",
+        design_surface_alt: "--surface-alt",
+        design_text: "--text",
+        design_muted: "--muted",
+        design_border: "--border",
+        design_header_bg: "--header-bg",
+        design_footer_bg: "--footer-bg",
+        design_footer_text: "--footer-text",
+        design_font_family: "--font-family",
+        design_heading_weight: "--heading-weight",
+        design_body_size: "--body-size",
+        design_h1_size: "--h1-size",
+        design_h2_size: "--h2-size",
+        design_h3_size: "--h3-size",
+        design_line_height: "--line-height",
+        design_letter_spacing: "--letter-spacing",
+        design_content_width: "--content-width",
+        design_section_spacing: "--section-spacing",
+        design_card_gap: "--card-gap",
+        design_card_radius: "--card-radius",
+        design_button_radius: "--button-radius",
+        design_card_shadow: "--card-shadow",
+        design_header_height: "--header-height",
+        design_button_padding_x: "--button-padding-x",
+        design_button_padding_y: "--button-padding-y",
+        design_mobile_section_spacing: "--mobile-section-spacing",
+        design_mobile_body_size: "--mobile-body-size",
+        design_nav_text_size: "--nav-text-size",
+        design_hero_title_size: "--hero-title-size",
+        design_hero_text_size: "--hero-text-size"
+      };
+
+      Object.entries(designVariables).forEach(([contentKey, cssVariable]) => {
+        if (
+          content[contentKey] !== undefined &&
+          content[contentKey] !== null &&
+          content[contentKey] !== ""
+        ) {
+          document.documentElement.style.setProperty(
+            cssVariable,
+            content[contentKey]
+          );
+        }
+      });
+    }
+
+    async function loadContent() {
+      try {
+        const response = await fetch("/api/content", {
+          headers: {
+            Accept: "application/json"
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error("Unable to load website content.");
         }
 
+        const result = await response.json();
+        const content = result.content || result || {};
 
-        async function loadWebsiteContent() {
+        Object.entries(content).forEach(([key, value]) => {
+          setText(key, value);
+        });
 
-            try {
+        applyDesignVariables(content);
+      } catch (error) {
+        console.warn("Using default work page content:", error);
+      }
+    }
 
-                const response =
-                    await fetch(
-                        "/api/content"
-                    );
-
-
-                if (!response.ok) {
-
-                    throw new Error(
-                        "Content request failed"
-                    );
-
-                }
-
-
-                const content =
-                    await response.json();
-
-
-                applyContent(content);
-
-            } catch (error) {
-
-                console.warn(
-                    "Using default work content:",
-                    error
-                );
-
-
-                applyContent(
-                    fallbackContent
-                );
-
-            }
-
-        }
-
-
-        loadWebsiteContent();
-
-    </script>
-
+    loadContent();
+  </script>
 </body>
 </html>
