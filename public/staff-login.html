@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
   <meta charset="UTF-8">
@@ -10,9 +9,7 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>
-    Staff Login — The Aegis Institute
-  </title>
+  <title>Staff Login — The Aegis Institute</title>
 
   <link
     rel="stylesheet"
@@ -21,455 +18,334 @@
 
 </head>
 
+<body class="portal-body">
 
-<body class="portal-page login-page">
+  <div class="login-page">
 
+    <div class="login-card">
 
-  <main class="login-shell">
-
-
-    <a
-      class="portal-brand"
-      href="/"
-    >
-
-      <span class="brand-mark">
-        A
-      </span>
-
-      <span>
-        THE AEGIS INSTITUTE
-      </span>
-
-    </a>
-
-
-    <section class="login-card">
-
-
-      <div class="login-icon">
+      <div class="login-logo">
         A
       </div>
 
+      <div class="login-brand">
+        THE AEGIS INSTITUTE
+      </div>
 
-      <div class="eyebrow">
+      <div class="login-kicker">
         STAFF PORTAL
       </div>
 
-
       <h1>
-        Welcome back.
+        Sign in.
       </h1>
 
-
-      <p class="login-intro">
-
-        Enter your staff access code
-        to continue to the Aegis
-        Institute staff portal.
-
+      <p class="login-description">
+        Use your administrator password or staff access code to continue.
       </p>
 
 
-      <form id="loginForm">
+      <!-- MAIN ADMIN -->
 
+      <div class="login-section">
 
-        <label for="code">
-          Staff access code
-        </label>
+        <div class="login-section-title">
+          Administrator
+        </div>
 
+        <form id="adminLoginForm">
 
-        <div class="input-wrap">
+          <label for="adminPassword">
+            Administrator Password
+          </label>
 
           <input
-            id="code"
-            name="code"
+            id="adminPassword"
             type="password"
-            autocomplete="off"
-            placeholder="Enter your access code"
+            placeholder="Enter administrator password"
+            autocomplete="current-password"
             required
           >
 
-
           <button
-            type="button"
-            class="show-btn"
-            id="showCode"
+            type="submit"
+            class="primary-button full-width"
           >
-            Show
+            Administrator Login
           </button>
 
-        </div>
-
-
-        <button
-          class="primary-btn full-btn"
-          type="submit"
-          id="loginButton"
-        >
-          Sign in
-        </button>
-
-
-        <div
-          id="loginMessage"
-          class="form-message"
-          aria-live="polite"
-        ></div>
-
-
-      </form>
-
-
-      <div class="login-divider">
-
-        <span>
-          ADMINISTRATOR
-        </span>
+        </form>
 
       </div>
 
 
-      <button
-        type="button"
-        class="secondary-btn full-btn"
-        id="adminLoginButton"
+      <div class="login-divider">
+        <span>OR</span>
+      </div>
+
+
+      <!-- STAFF -->
+
+      <div class="login-section">
+
+        <div class="login-section-title">
+          Staff Member
+        </div>
+
+        <form id="staffLoginForm">
+
+          <label for="staffCode">
+            Staff Access Code
+          </label>
+
+          <input
+            id="staffCode"
+            type="text"
+            placeholder="AEGIS-XXXX-XXXX"
+            autocomplete="off"
+            autocapitalize="characters"
+            required
+          >
+
+          <button
+            type="submit"
+            class="secondary-button full-width"
+          >
+            Staff Login
+          </button>
+
+        </form>
+
+      </div>
+
+
+      <div
+        id="loginMessage"
+        class="login-message"
+      ></div>
+
+
+      <a
+        href="/"
+        class="back-link"
       >
-        Main Administrator Login
-      </button>
+        ← Return to website
+      </a>
+
+    </div>
+
+  </div>
 
 
-      <form
-        id="adminForm"
-        class="hidden admin-form"
-      >
+<script>
+
+const adminForm =
+  document.getElementById(
+    "adminLoginForm"
+  );
+
+const staffForm =
+  document.getElementById(
+    "staffLoginForm"
+  );
+
+const message =
+  document.getElementById(
+    "loginMessage"
+  );
 
 
-        <label for="adminPassword">
-          Administrator password
-        </label>
+function showMessage(
+  text,
+  type = "error"
+) {
+
+  message.textContent =
+    text;
+
+  message.className =
+    "login-message " +
+    type;
+
+}
 
 
-        <input
-          id="adminPassword"
-          type="password"
-          autocomplete="current-password"
-          placeholder="Enter administrator password"
-        >
+/* =========================================================
+   ADMIN LOGIN
+========================================================= */
 
+adminForm.addEventListener(
+  "submit",
+  async event => {
 
-        <button
-          class="primary-btn full-btn"
-          type="submit"
-        >
-          Continue as Administrator
-        </button>
+    event.preventDefault();
 
-
-        <div
-          id="adminMessage"
-          class="form-message"
-          aria-live="polite"
-        ></div>
-
-
-      </form>
-
-
-    </section>
-
-
-    <p class="login-footer">
-
-      © 2026 The Aegis Institute
-
-    </p>
-
-
-  </main>
-
-
-  <script>
-
-    const loginForm =
-      document.getElementById(
-        "loginForm"
-      );
-
-
-    const codeInput =
-      document.getElementById(
-        "code"
-      );
-
-
-    const loginButton =
-      document.getElementById(
-        "loginButton"
-      );
-
-
-    const loginMessage =
-      document.getElementById(
-        "loginMessage"
-      );
-
-
-    const showCode =
-      document.getElementById(
-        "showCode"
-      );
-
-
-    const adminLoginButton =
-      document.getElementById(
-        "adminLoginButton"
-      );
-
-
-    const adminForm =
-      document.getElementById(
-        "adminForm"
-      );
-
-
-    const adminMessage =
-      document.getElementById(
-        "adminMessage"
-      );
-
-
-    showCode.addEventListener(
-      "click",
-      () => {
-
-        const showing =
-          codeInput.type ===
-            "password";
-
-
-        codeInput.type =
-          showing
-            ? "text"
-            : "password";
-
-
-        showCode.textContent =
-          showing
-            ? "Hide"
-            : "Show";
-
-      }
+    showMessage(
+      "Signing in...",
+      "loading"
     );
 
 
-    loginForm.addEventListener(
-      "submit",
-      async event => {
-
-        event.preventDefault();
-
-
-        loginMessage.textContent =
-          "";
+    const password =
+      document
+        .getElementById(
+          "adminPassword"
+        )
+        .value;
 
 
-        loginButton.disabled =
-          true;
+    try {
 
+      const response =
+        await fetch(
+          "/api/auth/password",
+          {
 
-        loginButton.textContent =
-          "Signing in…";
+            method:
+              "POST",
 
+            headers: {
 
-        try {
+              "Content-Type":
+                "application/json"
 
-          const response =
-            await fetch(
-              "/api/auth/code",
-              {
+            },
 
-                method:
-                  "POST",
+            body:
+              JSON.stringify({
 
-                headers: {
+                password
 
-                  "Content-Type":
-                    "application/json"
-
-                },
-
-                body:
-                  JSON.stringify({
-
-                    code:
-                      codeInput.value
-
-                  })
-
-              }
-            );
-
-
-          const data =
-            await response.json();
-
-
-          if (
-            !response.ok
-          ) {
-
-            throw new Error(
-              data.error ||
-              "Unable to sign in."
-            );
+              })
 
           }
-
-
-          window.location.href =
-            data.redirect ||
-            "/staff.html";
-
-
-        } catch (
-          error
-        ) {
-
-          loginMessage.textContent =
-            error.message;
-
-
-          loginMessage.className =
-            "form-message error";
-
-
-          loginButton.disabled =
-            false;
-
-
-          loginButton.textContent =
-            "Sign in";
-
-        }
-
-      }
-    );
-
-
-    adminLoginButton.addEventListener(
-      "click",
-      () => {
-
-        adminForm.classList.toggle(
-          "hidden"
         );
 
 
-        if (
-          !adminForm.classList.contains(
-            "hidden"
-          )
-        ) {
+      const data =
+        await response.json();
 
-          document
-            .getElementById(
-              "adminPassword"
-            )
-            .focus();
 
-        }
+      if (
+        !response.ok ||
+        !data.success
+      ) {
+
+        showMessage(
+          data.error ||
+          "Unable to sign in."
+        );
+
+        return;
 
       }
+
+
+      window.location.href =
+        data.redirect ||
+        "/admin.html";
+
+    } catch {
+
+      showMessage(
+        "Unable to connect to the Aegis portal."
+      );
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   STAFF LOGIN
+========================================================= */
+
+staffForm.addEventListener(
+  "submit",
+  async event => {
+
+    event.preventDefault();
+
+    showMessage(
+      "Checking access code...",
+      "loading"
     );
 
 
-    adminForm.addEventListener(
-      "submit",
-      async event => {
-
-        event.preventDefault();
-
-
-        adminMessage.textContent =
-          "";
-
-
-        const password =
-          document
-            .getElementById(
-              "adminPassword"
-            )
-            .value;
+    const code =
+      document
+        .getElementById(
+          "staffCode"
+        )
+        .value
+        .trim()
+        .toUpperCase();
 
 
-        try {
+    try {
 
-          const response =
-            await fetch(
-              "/api/auth/password",
-              {
+      const response =
+        await fetch(
+          "/api/auth/code",
+          {
 
-                method:
-                  "POST",
+            method:
+              "POST",
 
-                headers: {
+            headers: {
 
-                  "Content-Type":
-                    "application/json"
+              "Content-Type":
+                "application/json"
 
-                },
+            },
 
-                body:
-                  JSON.stringify({
+            body:
+              JSON.stringify({
 
-                    password
+                code
 
-                  })
-
-              }
-            );
-
-
-          const data =
-            await response.json();
-
-
-          if (
-            !response.ok
-          ) {
-
-            throw new Error(
-              data.error ||
-              "Administrator login failed."
-            );
+              })
 
           }
+        );
 
 
-          window.location.href =
-            data.redirect ||
-            "/admin.html";
+      const data =
+        await response.json();
 
 
-        } catch (
-          error
-        ) {
+      if (
+        !response.ok ||
+        !data.success
+      ) {
 
-          adminMessage.textContent =
-            error.message;
+        showMessage(
+          data.error ||
+          "Invalid staff code."
+        );
 
-
-          adminMessage.className =
-            "form-message error";
-
-        }
+        return;
 
       }
-    );
 
-  </script>
+
+      window.location.href =
+        data.redirect ||
+        "/staff.html";
+
+    } catch {
+
+      showMessage(
+        "Unable to connect to the Aegis portal."
+      );
+
+    }
+
+  }
+);
+
+</script>
 
 </body>
-
 </html>
