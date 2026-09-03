@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
   <meta charset="UTF-8">
@@ -10,9 +9,7 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>
-    Staff Portal — The Aegis Institute
-  </title>
+  <title>Admin Portal — The Aegis Institute</title>
 
   <link
     rel="stylesheet"
@@ -21,479 +18,2241 @@
 
 </head>
 
+<body class="portal-body">
 
-<body class="portal-page">
+<header class="portal-header">
+
+  <div class="portal-brand">
+
+    <div class="portal-logo">
+      A
+    </div>
+
+    <div>
+      <div class="portal-brand-name">
+        THE AEGIS INSTITUTE
+      </div>
+
+      <div class="portal-brand-subtitle">
+        ADMINISTRATION
+      </div>
+    </div>
+
+  </div>
 
 
-  <header class="portal-header">
+  <div class="portal-header-right">
+
+    <span id="adminName">
+      Aegis Administrator
+    </span>
+
+    <button
+      id="logoutButton"
+      class="header-button"
+    >
+      Log out
+    </button>
+
+  </div>
+
+</header>
 
 
-    <a
-      class="portal-brand"
-      href="/"
+<div class="admin-layout">
+
+
+  <!-- SIDEBAR -->
+
+  <aside class="admin-sidebar">
+
+    <div class="sidebar-title">
+      ADMINISTRATION
+    </div>
+
+    <button
+      class="sidebar-button active"
+      data-section="dashboard"
+    >
+      Dashboard
+    </button>
+
+    <button
+      class="sidebar-button"
+      data-section="codes"
+    >
+      Staff Login Codes
+    </button>
+
+    <button
+      class="sidebar-button"
+      data-section="documents"
+    >
+      Documents & Resources
+    </button>
+
+  </aside>
+
+
+  <!-- MAIN -->
+
+  <main class="admin-main">
+
+
+    <!-- DASHBOARD -->
+
+    <section
+      id="section-dashboard"
+      class="admin-section active"
     >
 
-      <span class="brand-mark">
-        A
-      </span>
+      <div class="page-heading">
 
-      <span>
-        THE AEGIS INSTITUTE
-      </span>
+        <div>
 
-    </a>
+          <div class="section-kicker">
+            ADMINISTRATION
+          </div>
 
+          <h1>
+            Welcome back.
+          </h1>
 
-    <div class="header-actions">
+          <p>
+            Manage The Aegis Institute staff portal from here.
+          </p>
 
-
-      <div class="user-info">
-
-        <span class="user-label">
-          SIGNED IN AS
-        </span>
-
-        <strong id="staffName">
-          Staff Member
-        </strong>
+        </div>
 
       </div>
 
 
-      <button
-        class="secondary-btn small-btn"
-        id="logoutButton"
-      >
-        Log out
-      </button>
+      <div class="stats-grid">
 
+        <div class="stat-card">
+
+          <div class="stat-number" id="statCodes">
+            0
+          </div>
+
+          <div class="stat-label">
+            Staff Codes
+          </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <div class="stat-number" id="statActive">
+            0
+          </div>
+
+          <div class="stat-label">
+            Active Codes
+          </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <div class="stat-number" id="statDocuments">
+            0
+          </div>
+
+          <div class="stat-label">
+            Documents
+          </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <div class="stat-number">
+            6
+          </div>
+
+          <div class="stat-label">
+            Permissions
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="admin-card">
+
+        <div class="card-heading">
+          Quick actions
+        </div>
+
+        <div class="quick-actions">
+
+          <button
+            class="primary-button"
+            onclick="openSection('codes')"
+          >
+            + Create Staff Code
+          </button>
+
+          <button
+            class="secondary-button"
+            onclick="openSection('documents')"
+          >
+            + Create Document
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div class="admin-card">
+
+        <div class="card-heading">
+          Available Permissions
+        </div>
+
+        <div class="permission-info-grid">
+
+          <div>
+            <strong>
+              Staff Handbook
+            </strong>
+            <span>
+              Access to handbook content.
+            </span>
+          </div>
+
+          <div>
+            <strong>
+              General Documents
+            </strong>
+            <span>
+              General internal documents.
+            </span>
+          </div>
+
+          <div>
+            <strong>
+              Training
+            </strong>
+            <span>
+              Training resources.
+            </span>
+          </div>
+
+          <div>
+            <strong>
+              Staff Resources
+            </strong>
+            <span>
+              Internal staff resources.
+            </span>
+          </div>
+
+          <div>
+            <strong>
+              Staff Directory
+            </strong>
+            <span>
+              Staff directory information.
+            </span>
+          </div>
+
+          <div>
+            <strong>
+              Staff Announcements
+            </strong>
+            <span>
+              Internal announcements.
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- STAFF CODES -->
+
+    <section
+      id="section-codes"
+      class="admin-section"
+    >
+
+      <div class="page-heading">
+
+        <div>
+
+          <div class="section-kicker">
+            ACCESS MANAGEMENT
+          </div>
+
+          <h1>
+            Staff Login Codes
+          </h1>
+
+          <p>
+            Create access codes and decide exactly what each staff member can access.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="admin-card">
+
+        <div class="card-heading">
+          Create a new staff code
+        </div>
+
+        <form id="createCodeForm">
+
+          <div class="form-grid">
+
+            <div class="form-group">
+
+              <label>
+                Staff Member
+              </label>
+
+              <input
+                id="codeName"
+                type="text"
+                placeholder="e.g. John Smith"
+                required
+              >
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label>
+                Expiry
+              </label>
+
+              <input
+                id="codeExpiry"
+                type="datetime-local"
+              >
+
+              <small>
+                Leave empty for no expiry.
+              </small>
+
+            </div>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>
+              Permissions
+            </label>
+
+            <div class="checkbox-grid">
+
+              <label class="checkbox-card">
+
+                <input
+                  type="checkbox"
+                  name="codePermission"
+                  value="handbook"
+                >
+
+                <span>
+                  <strong>
+                    Staff Handbook
+                  </strong>
+
+                  <small>
+                    Handbook access
+                  </small>
+                </span>
+
+              </label>
+
+
+              <label class="checkbox-card">
+
+                <input
+                  type="checkbox"
+                  name="codePermission"
+                  value="documents"
+                >
+
+                <span>
+                  <strong>
+                    General Documents
+                  </strong>
+
+                  <small>
+                    General documents
+                  </small>
+                </span>
+
+              </label>
+
+
+              <label class="checkbox-card">
+
+                <input
+                  type="checkbox"
+                  name="codePermission"
+                  value="training"
+                >
+
+                <span>
+                  <strong>
+                    Training
+                  </strong>
+
+                  <small>
+                    Training material
+                  </small>
+
+                </span>
+
+              </label>
+
+
+              <label class="checkbox-card">
+
+                <input
+                  type="checkbox"
+                  name="codePermission"
+                  value="resources"
+                >
+
+                <span>
+
+                  <strong>
+                    Staff Resources
+                  </strong>
+
+                  <small>
+                    Staff resources
+                  </small>
+
+                </span>
+
+              </label>
+
+
+              <label class="checkbox-card">
+
+                <input
+                  type="checkbox"
+                  name="codePermission"
+                  value="staff_directory"
+                >
+
+                <span>
+
+                  <strong>
+                    Staff Directory
+                  </strong>
+
+                  <small>
+                    Staff directory
+                  </small>
+
+                </span>
+
+              </label>
+
+
+              <label class="checkbox-card">
+
+                <input
+                  type="checkbox"
+                  name="codePermission"
+                  value="announcements"
+                >
+
+                <span>
+
+                  <strong>
+                    Staff Announcements
+                  </strong>
+
+                  <small>
+                    Announcements
+                  </small>
+
+                </span>
+
+              </label>
+
+            </div>
+
+          </div>
+
+
+          <button
+            type="submit"
+            class="primary-button"
+          >
+            Generate Staff Code
+          </button>
+
+        </form>
+
+      </div>
+
+
+      <div
+        id="newCodeResult"
+        class="new-code-result hidden"
+      >
+
+        <div class="new-code-title">
+          Staff code created
+        </div>
+
+        <p>
+          Give this code to the staff member. It will only be shown here.
+        </p>
+
+        <div
+          id="generatedCode"
+          class="generated-code"
+        ></div>
+
+        <button
+          id="copyCodeButton"
+          class="secondary-button"
+        >
+          Copy Code
+        </button>
+
+      </div>
+
+
+      <div class="admin-card">
+
+        <div class="card-heading">
+          Existing Staff Codes
+        </div>
+
+        <div
+          id="codesList"
+          class="data-list"
+        >
+
+          <div class="loading-state">
+            Loading staff codes...
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- DOCUMENTS -->
+
+    <section
+      id="section-documents"
+      class="admin-section"
+    >
+
+      <div class="page-heading">
+
+        <div>
+
+          <div class="section-kicker">
+            STAFF CONTENT
+          </div>
+
+          <h1>
+            Documents & Resources
+          </h1>
+
+          <p>
+            Create private resources and decide which staff permission can see each one.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="admin-card">
+
+        <div class="card-heading">
+          Create Document
+        </div>
+
+        <form id="createDocumentForm">
+
+          <div class="form-group">
+
+            <label>
+              Document Title
+            </label>
+
+            <input
+              id="documentTitle"
+              type="text"
+              placeholder="e.g. Staff Handbook"
+              required
+            >
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>
+              Short Description
+            </label>
+
+            <input
+              id="documentDescription"
+              type="text"
+              placeholder="Brief description of this resource"
+            >
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>
+              Access Permission
+            </label>
+
+            <select
+              id="documentPermission"
+              required
+            >
+
+              <option value="">
+                Select permission
+              </option>
+
+              <option value="handbook">
+                Staff Handbook
+              </option>
+
+              <option value="documents">
+                General Documents
+              </option>
+
+              <option value="training">
+                Training
+              </option>
+
+              <option value="resources">
+                Staff Resources
+              </option>
+
+              <option value="staff_directory">
+                Staff Directory
+              </option>
+
+              <option value="announcements">
+                Staff Announcements
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>
+              Document Content
+            </label>
+
+            <textarea
+              id="documentContent"
+              rows="14"
+              placeholder="Write your document here..."
+            ></textarea>
+
+          </div>
+
+
+          <button
+            type="submit"
+            class="primary-button"
+          >
+            Create Document
+          </button>
+
+        </form>
+
+      </div>
+
+
+      <div class="admin-card">
+
+        <div class="card-heading">
+          Existing Documents
+        </div>
+
+        <div
+          id="documentsList"
+          class="document-admin-list"
+        >
+
+          <div class="loading-state">
+            Loading documents...
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+</div>
+
+
+<!-- EDIT DOCUMENT MODAL -->
+
+<div
+  id="editModal"
+  class="modal hidden"
+>
+
+  <div class="modal-card">
+
+    <div class="modal-header">
+
+      <div>
+
+        <div class="section-kicker">
+          EDIT DOCUMENT
+        </div>
+
+        <h2>
+          Edit Resource
+        </h2>
+
+      </div>
+
+      <button
+        id="closeModal"
+        class="modal-close"
+      >
+        ×
+      </button>
 
     </div>
 
 
-  </header>
+    <form id="editDocumentForm">
+
+      <input
+        id="editDocumentId"
+        type="hidden"
+      >
 
 
-  <main class="portal-container">
+      <div class="form-group">
 
+        <label>
+          Title
+        </label>
 
-    <section class="page-heading">
-
-
-      <div>
-
-        <div class="eyebrow">
-          STAFF PORTAL
-        </div>
-
-
-        <h1>
-          Welcome to Aegis.
-        </h1>
-
-
-        <p>
-
-          Your available resources
-          are shown below. What you
-          can access is determined by
-          your staff login code.
-
-        </p>
+        <input
+          id="editTitle"
+          type="text"
+          required
+        >
 
       </div>
 
 
-    </section>
+      <div class="form-group">
 
+        <label>
+          Description
+        </label>
 
-    <section
-      id="emptyState"
-      class="empty-state hidden"
-    >
+        <input
+          id="editDescription"
+          type="text"
+        >
 
-
-      <div class="empty-icon">
-        A
       </div>
 
 
-      <h2>
-        No staff resources yet.
-      </h2>
+      <div class="form-group">
+
+        <label>
+          Access Permission
+        </label>
+
+        <select
+          id="editPermission"
+          required
+        >
+
+          <option value="handbook">
+            Staff Handbook
+          </option>
+
+          <option value="documents">
+            General Documents
+          </option>
+
+          <option value="training">
+            Training
+          </option>
+
+          <option value="resources">
+            Staff Resources
+          </option>
+
+          <option value="staff_directory">
+            Staff Directory
+          </option>
+
+          <option value="announcements">
+            Staff Announcements
+          </option>
+
+        </select>
+
+      </div>
 
 
-      <p>
+      <div class="form-group">
 
-        Your account is active,
-        but no documents have been
-        assigned to your access code
-        yet.
+        <label>
+          Content
+        </label>
 
-      </p>
+        <textarea
+          id="editContent"
+          rows="15"
+        ></textarea>
 
-
-    </section>
-
-
-    <section
-      id="documentsGrid"
-      class="staff-document-grid"
-    ></section>
+      </div>
 
 
-  </main>
+      <div class="modal-actions">
+
+        <button
+          type="button"
+          id="cancelEdit"
+          class="secondary-button"
+        >
+          Cancel
+        </button>
+
+        <button
+          type="submit"
+          class="primary-button"
+        >
+          Save Changes
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
 
 
-  <script>
+<script>
 
-    const permissionNames = {
-
-      handbook:
-        "Staff Handbook",
-
-      documents:
-        "General Documents",
-
-      training:
-        "Training",
-
-      resources:
-        "Staff Resources",
-
-      staff_directory:
-        "Staff Directory",
-
-      announcements:
-        "Staff Announcements"
-
-    };
+let documents = [];
 
 
-    function escapeHtml(
-      value
-    ) {
+/* =========================================================
+   SESSION CHECK
+========================================================= */
 
-      return String(
-        value ?? ""
-      )
+async function checkAdmin() {
 
-        .replaceAll(
-          "&",
-          "&amp;"
-        )
+  try {
 
-        .replaceAll(
-          "<",
-          "&lt;"
-        )
-
-        .replaceAll(
-          ">",
-          "&gt;"
-        )
-
-        .replaceAll(
-          '"',
-          "&quot;"
-        )
-
-        .replaceAll(
-          "'",
-          "&#039;"
-        );
-
-    }
-
-
-    function formatDate(
-      value
-    ) {
-
-      if (
-        !value
-      ) {
-
-        return "";
-
-      }
-
-
-      const date =
-        new Date(
-          value
-        );
-
-
-      if (
-        Number.isNaN(
-          date.getTime()
-        )
-      ) {
-
-        return "";
-
-      }
-
-
-      return date.toLocaleDateString(
-        undefined,
-        {
-
-          day:
-            "numeric",
-
-          month:
-            "long",
-
-          year:
-            "numeric"
-
-        }
+    const response =
+      await fetch(
+        "/api/auth/me"
       );
 
-    }
+
+    const data =
+      await response.json();
 
 
-    async function api(
-      url,
-      options = {}
+    if (
+      !data.authenticated ||
+      data.role !==
+        "main_admin"
     ) {
 
-      const response =
-        await fetch(
-          url,
-          {
+      window.location.href =
+        "/staff-login.html";
 
-            ...options,
-
-            headers: {
-
-              "Content-Type":
-                "application/json",
-
-              ...(options.headers || {})
-
-            }
-
-          }
-        );
-
-
-      let data = {};
-
-
-      try {
-
-        data =
-          await response.json();
-
-      } catch {}
-
-
-      if (
-        !response.ok
-      ) {
-
-        throw new Error(
-          data.error ||
-          "Request failed."
-        );
-
-      }
-
-
-      return data;
-
-    }
-
-
-    async function loadPortal() {
-
-
-      const me =
-        await api(
-          "/api/auth/me"
-        );
-
-
-      if (
-        !me.authenticated ||
-        !me.authorized
-      ) {
-
-        window.location.href =
-          "/staff-login.html";
-
-        return;
-
-      }
-
-
-      document.getElementById(
-        "staffName"
-      ).textContent =
-        me.username ||
-        "Staff Member";
-
-
-      const data =
-        await api(
-          "/api/staff/documents"
-        );
-
-
-      const grid =
-        document.getElementById(
-          "documentsGrid"
-        );
-
-
-      if (
-        !data.documents.length
-      ) {
-
-        document
-          .getElementById(
-            "emptyState"
-          )
-          .classList
-          .remove(
-            "hidden"
-          );
-
-        return;
-
-      }
-
-
-      grid.innerHTML =
-        data.documents
-          .map(
-            doc => `
-
-              <article
-                class="staff-document-card"
-              >
-
-                <div
-                  class="document-card-header"
-                >
-
-                  <span
-                    class="document-icon"
-                  >
-                    A
-                  </span>
-
-                  <span
-                    class="tag"
-                  >
-                    ${escapeHtml(
-                      permissionNames[
-                        doc.permission
-                      ] ||
-                      doc.permission
-                    )}
-                  </span>
-
-                </div>
-
-
-                <h2>
-                  ${escapeHtml(
-                    doc.title
-                  )}
-                </h2>
-
-
-                <p
-                  class="document-description"
-                >
-                  ${escapeHtml(
-                    doc.description
-                  )}
-                </p>
-
-
-                <div
-                  class="document-divider"
-                ></div>
-
-
-                <div
-                  class="document-content"
-                >
-                  ${escapeHtml(
-                    doc.content
-                  )}
-                </div>
-
-
-                <div
-                  class="document-footer"
-                >
-
-                  Updated
-                  ${escapeHtml(
-                    formatDate(
-                      doc.updated_at
-                    )
-                  )}
-
-                </div>
-
-
-              </article>
-
-            `
-          )
-          .join("");
+      return;
 
     }
 
 
     document
       .getElementById(
-        "logoutButton"
+        "adminName"
       )
-      .addEventListener(
-        "click",
-        async () => {
+      .textContent =
+        data.username ||
+        "Aegis Administrator";
 
+
+    await Promise.all([
+
+      loadCodes(),
+
+      loadDocuments()
+
+    ]);
+
+  } catch {
+
+    window.location.href =
+      "/staff-login.html";
+
+  }
+
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+document
+  .querySelectorAll(
+    ".sidebar-button"
+  )
+  .forEach(
+    button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          openSection(
+            button.dataset.section
+          );
+
+        }
+      );
+
+    }
+  );
+
+
+function openSection(
+  section
+) {
+
+  document
+    .querySelectorAll(
+      ".sidebar-button"
+    )
+    .forEach(
+      button => {
+
+        button.classList.toggle(
+
+          "active",
+
+          button.dataset.section ===
+            section
+
+        );
+
+      }
+    );
+
+
+  document
+    .querySelectorAll(
+      ".admin-section"
+    )
+    .forEach(
+      element => {
+
+        element.classList.toggle(
+
+          "active",
+
+          element.id ===
+            "section-" +
+            section
+
+        );
+
+      }
+    );
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+document
+  .getElementById(
+    "logoutButton"
+  )
+  .addEventListener(
+    "click",
+    async () => {
+
+      await fetch(
+        "/api/auth/logout",
+        {
+          method:
+            "POST"
+        }
+      );
+
+
+      window.location.href =
+        "/staff-login.html";
+
+    }
+  );
+
+
+/* =========================================================
+   LOAD CODES
+========================================================= */
+
+async function loadCodes() {
+
+  const container =
+    document.getElementById(
+      "codesList"
+    );
+
+
+  try {
+
+    const response =
+      await fetch(
+        "/api/admin/login-codes"
+      );
+
+
+    if (
+      !response.ok
+    ) {
+
+      throw new Error();
+
+    }
+
+
+    const data =
+      await response.json();
+
+
+    const codes =
+      data.codes ||
+      [];
+
+
+    document
+      .getElementById(
+        "statCodes"
+      )
+      .textContent =
+        codes.length;
+
+
+    document
+      .getElementById(
+        "statActive"
+      )
+      .textContent =
+        codes.filter(
+          code =>
+            code.active
+        ).length;
+
+
+    if (
+      codes.length ===
+        0
+    ) {
+
+      container.innerHTML = `
+
+        <div class="empty-state">
+
+          <strong>
+            No staff codes yet.
+          </strong>
+
+          <span>
+            Create your first staff login code above.
+          </span>
+
+        </div>
+
+      `;
+
+      return;
+
+    }
+
+
+    container.innerHTML =
+      codes
+        .map(
+          code =>
+            renderCode(
+              code
+            )
+        )
+        .join("");
+
+
+  } catch {
+
+    container.innerHTML = `
+
+      <div class="error-state">
+        Unable to load staff codes.
+      </div>
+
+    `;
+
+  }
+
+}
+
+
+/* =========================================================
+   RENDER CODE
+========================================================= */
+
+function renderCode(
+  code
+) {
+
+  const permissionNames =
+    (code.permissions || [])
+      .map(
+        permission =>
+          permissionName(
+            permission
+          )
+      );
+
+
+  const expires =
+    code.expires_at
+      ? formatDate(
+          code.expires_at
+        )
+      : "Never";
+
+
+  const lastUsed =
+    code.last_used_at
+      ? formatDate(
+          code.last_used_at
+        )
+      : "Never";
+
+
+  return `
+
+    <div class="data-row">
+
+      <div class="data-main">
+
+        <strong>
+          ${escapeHtml(
+            code.name
+          )}
+        </strong>
+
+        <span>
+          Created:
+          ${formatDate(
+            code.created_at
+          )}
+        </span>
+
+      </div>
+
+
+      <div class="data-details">
+
+        <div class="status-badge ${
+          code.active
+            ? "status-active"
+            : "status-disabled"
+        }">
+
+          ${
+            code.active
+              ? "ACTIVE"
+              : "DISABLED"
+          }
+
+        </div>
+
+        <div>
+          Permissions:
+          ${
+            permissionNames.length
+              ? permissionNames.join(
+                  ", "
+                )
+              : "None"
+          }
+        </div>
+
+        <div>
+          Expires:
+          ${expires}
+        </div>
+
+        <div>
+          Last used:
+          ${lastUsed}
+        </div>
+
+      </div>
+
+
+      <button
+        class="danger-button"
+        onclick="deleteCode(${code.id})"
+      >
+        Delete
+      </button>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   CREATE CODE
+========================================================= */
+
+document
+  .getElementById(
+    "createCodeForm"
+  )
+  .addEventListener(
+    "submit",
+    async event => {
+
+      event.preventDefault();
+
+
+      const name =
+        document
+          .getElementById(
+            "codeName"
+          )
+          .value
+          .trim();
+
+
+      const expiry =
+        document
+          .getElementById(
+            "codeExpiry"
+          )
+          .value;
+
+
+      const permissions =
+        Array
+          .from(
+            document.querySelectorAll(
+              'input[name="codePermission"]:checked'
+            )
+          )
+          .map(
+            checkbox =>
+              checkbox.value
+          );
+
+
+      try {
+
+        const response =
           await fetch(
-            "/api/auth/logout",
+            "/api/admin/login-codes",
             {
+
               method:
-                "POST"
+                "POST",
+
+              headers: {
+
+                "Content-Type":
+                  "application/json"
+
+              },
+
+              body:
+                JSON.stringify({
+
+                  name,
+
+                  expires_at:
+                    expiry
+                      ? new Date(
+                          expiry
+                        ).toISOString()
+                      : null,
+
+                  permissions
+
+                })
+
             }
           );
 
 
-          window.location.href =
-            "/staff-login.html";
+        const data =
+          await response.json();
+
+
+        if (
+          !response.ok ||
+          !data.success
+        ) {
+
+          alert(
+            data.error ||
+            "Unable to create code."
+          );
+
+          return;
 
         }
-      );
 
 
-    loadPortal()
-      .catch(
-        error => {
+        document
+          .getElementById(
+            "generatedCode"
+          )
+          .textContent =
+            data.code;
 
-          console.error(
-            error
+
+        document
+          .getElementById(
+            "newCodeResult"
+          )
+          .classList.remove(
+            "hidden"
           );
 
 
-          window.location.href =
-            "/staff-login.html";
+        document
+          .getElementById(
+            "createCodeForm"
+          )
+          .reset();
 
+
+        await loadCodes();
+
+      } catch {
+
+        alert(
+          "Unable to connect to the server."
+        );
+
+      }
+
+    }
+  );
+
+
+/* =========================================================
+   COPY CODE
+========================================================= */
+
+document
+  .getElementById(
+    "copyCodeButton"
+  )
+  .addEventListener(
+    "click",
+    async () => {
+
+      const code =
+        document
+          .getElementById(
+            "generatedCode"
+          )
+          .textContent;
+
+
+      try {
+
+        await navigator.clipboard.writeText(
+          code
+        );
+
+
+        document
+          .getElementById(
+            "copyCodeButton"
+          )
+          .textContent =
+            "Copied!";
+
+
+        setTimeout(
+          () => {
+
+            document
+              .getElementById(
+                "copyCodeButton"
+              )
+              .textContent =
+                "Copy Code";
+
+          },
+          1500
+        );
+
+      } catch {
+
+        alert(
+          "Unable to copy code."
+        );
+
+      }
+
+    }
+  );
+
+
+/* =========================================================
+   DELETE CODE
+========================================================= */
+
+async function deleteCode(
+  id
+) {
+
+  if (
+    !confirm(
+      "Delete this staff login code?"
+    )
+  ) {
+
+    return;
+
+  }
+
+
+  try {
+
+    const response =
+      await fetch(
+
+        "/api/admin/login-codes?id=" +
+        encodeURIComponent(
+          id
+        ),
+
+        {
+          method:
+            "DELETE"
         }
+
       );
 
-  </script>
+
+    const data =
+      await response.json();
+
+
+    if (
+      !response.ok ||
+      !data.success
+    ) {
+
+      alert(
+        data.error ||
+        "Unable to delete code."
+      );
+
+      return;
+
+    }
+
+
+    await loadCodes();
+
+  } catch {
+
+    alert(
+      "Unable to connect to the server."
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   LOAD DOCUMENTS
+========================================================= */
+
+async function loadDocuments() {
+
+  const container =
+    document.getElementById(
+      "documentsList"
+    );
+
+
+  try {
+
+    const response =
+      await fetch(
+        "/api/admin/documents"
+      );
+
+
+    if (
+      !response.ok
+    ) {
+
+      throw new Error();
+
+    }
+
+
+    const data =
+      await response.json();
+
+
+    documents =
+      data.documents ||
+      [];
+
+
+    document
+      .getElementById(
+        "statDocuments"
+      )
+      .textContent =
+        documents.length;
+
+
+    if (
+      documents.length ===
+        0
+    ) {
+
+      container.innerHTML = `
+
+        <div class="empty-state">
+
+          <strong>
+            No documents yet.
+          </strong>
+
+          <span>
+            Create your first staff resource above.
+          </span>
+
+        </div>
+
+      `;
+
+      return;
+
+    }
+
+
+    container.innerHTML =
+      documents
+        .map(
+          document =>
+            renderDocument(
+              document
+            )
+        )
+        .join("");
+
+
+  } catch {
+
+    container.innerHTML = `
+
+      <div class="error-state">
+        Unable to load documents.
+      </div>
+
+    `;
+
+  }
+
+}
+
+
+/* =========================================================
+   RENDER DOCUMENT
+========================================================= */
+
+function renderDocument(
+  document
+) {
+
+  return `
+
+    <div class="document-admin-row">
+
+      <div class="document-admin-info">
+
+        <div class="document-admin-title">
+          ${escapeHtml(
+            document.title
+          )}
+        </div>
+
+        <div class="document-admin-description">
+          ${escapeHtml(
+            document.description ||
+            "No description."
+          )}
+        </div>
+
+        <div class="document-admin-meta">
+
+          <span class="permission-tag">
+            ${escapeHtml(
+              permissionName(
+                document.permission
+              )
+            )}
+          </span>
+
+          <span>
+            Updated:
+            ${formatDate(
+              document.updated_at
+            )}
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="document-admin-actions">
+
+        <button
+          class="secondary-button small-button"
+          onclick="editDocument(${document.id})"
+        >
+          Edit
+        </button>
+
+        <button
+          class="danger-button"
+          onclick="deleteDocument(${document.id})"
+        >
+          Delete
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   CREATE DOCUMENT
+========================================================= */
+
+document
+  .getElementById(
+    "createDocumentForm"
+  )
+  .addEventListener(
+    "submit",
+    async event => {
+
+      event.preventDefault();
+
+
+      const payload = {
+
+        title:
+          document
+            .getElementById(
+              "documentTitle"
+            )
+            .value
+            .trim(),
+
+        description:
+          document
+            .getElementById(
+              "documentDescription"
+            )
+            .value
+            .trim(),
+
+        permission:
+          document
+            .getElementById(
+              "documentPermission"
+            )
+            .value,
+
+        content:
+          document
+            .getElementById(
+              "documentContent"
+            )
+            .value
+
+      };
+
+
+      try {
+
+        const response =
+          await fetch(
+            "/api/admin/documents",
+            {
+
+              method:
+                "POST",
+
+              headers: {
+
+                "Content-Type":
+                  "application/json"
+
+              },
+
+              body:
+                JSON.stringify(
+                  payload
+                )
+
+            }
+          );
+
+
+        const data =
+          await response.json();
+
+
+        if (
+          !response.ok ||
+          !data.success
+        ) {
+
+          alert(
+            data.error ||
+            "Unable to create document."
+          );
+
+          return;
+
+        }
+
+
+        document
+          .getElementById(
+            "createDocumentForm"
+          )
+          .reset();
+
+
+        await loadDocuments();
+
+
+        alert(
+          "Document created successfully."
+        );
+
+      } catch {
+
+        alert(
+          "Unable to connect to the server."
+        );
+
+      }
+
+    }
+  );
+
+
+/* =========================================================
+   OPEN EDIT MODAL
+========================================================= */
+
+function editDocument(
+  id
+) {
+
+  const document =
+    documents.find(
+      item =>
+        Number(item.id) ===
+        Number(id)
+    );
+
+
+  if (
+    !document
+  ) {
+
+    return;
+
+  }
+
+
+  document
+    .getElementById(
+      "editDocumentId"
+    )
+    .value =
+      document.id;
+
+
+  document
+    .getElementById(
+      "editTitle"
+    )
+    .value =
+      document.title;
+
+
+  document
+    .getElementById(
+      "editDescription"
+    )
+    .value =
+      document.description ||
+      "";
+
+
+  document
+    .getElementById(
+      "editPermission"
+    )
+    .value =
+      document.permission;
+
+
+  document
+    .getElementById(
+      "editContent"
+    )
+    .value =
+      document.content ||
+      "";
+
+
+  document
+    .getElementById(
+      "editModal"
+    )
+    .classList.remove(
+      "hidden"
+    );
+
+}
+
+
+/* =========================================================
+   CLOSE MODAL
+========================================================= */
+
+function closeEditModal() {
+
+  document
+    .getElementById(
+      "editModal"
+    )
+    .classList.add(
+      "hidden"
+    );
+
+}
+
+
+document
+  .getElementById(
+    "closeModal"
+  )
+  .addEventListener(
+    "click",
+    closeEditModal
+  );
+
+
+document
+  .getElementById(
+    "cancelEdit"
+  )
+  .addEventListener(
+    "click",
+    closeEditModal
+  );
+
+
+/* =========================================================
+   SAVE EDITED DOCUMENT
+========================================================= */
+
+document
+  .getElementById(
+    "editDocumentForm"
+  )
+  .addEventListener(
+    "submit",
+    async event => {
+
+      event.preventDefault();
+
+
+      const id =
+        document
+          .getElementById(
+            "editDocumentId"
+          )
+          .value;
+
+
+      const payload = {
+
+        title:
+          document
+            .getElementById(
+              "editTitle"
+            )
+            .value
+            .trim(),
+
+        description:
+          document
+            .getElementById(
+              "editDescription"
+            )
+            .value
+            .trim(),
+
+        permission:
+          document
+            .getElementById(
+              "editPermission"
+            )
+            .value,
+
+        content:
+          document
+            .getElementById(
+              "editContent"
+            )
+            .value
+
+      };
+
+
+      try {
+
+        const response =
+          await fetch(
+
+            "/api/admin/documents?id=" +
+            encodeURIComponent(
+              id
+            ),
+
+            {
+
+              method:
+                "PUT",
+
+              headers: {
+
+                "Content-Type":
+                  "application/json"
+
+              },
+
+              body:
+                JSON.stringify(
+                  payload
+                )
+
+            }
+
+          );
+
+
+        const data =
+          await response.json();
+
+
+        if (
+          !response.ok ||
+          !data.success
+        ) {
+
+          alert(
+            data.error ||
+            "Unable to save document."
+          );
+
+          return;
+
+        }
+
+
+        closeEditModal();
+
+        await loadDocuments();
+
+
+        alert(
+          "Document updated successfully."
+        );
+
+      } catch {
+
+        alert(
+          "Unable to connect to the server."
+        );
+
+      }
+
+    }
+  );
+
+
+/* =========================================================
+   DELETE DOCUMENT
+========================================================= */
+
+async function deleteDocument(
+  id
+) {
+
+  if (
+    !confirm(
+      "Delete this document? This cannot be undone."
+    )
+  ) {
+
+    return;
+
+  }
+
+
+  try {
+
+    const response =
+      await fetch(
+
+        "/api/admin/documents?id=" +
+        encodeURIComponent(
+          id
+        ),
+
+        {
+
+          method:
+            "DELETE"
+
+        }
+
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if (
+      !response.ok ||
+      !data.success
+    ) {
+
+      alert(
+        data.error ||
+        "Unable to delete document."
+      );
+
+      return;
+
+    }
+
+
+    await loadDocuments();
+
+  } catch {
+
+    alert(
+      "Unable to connect to the server."
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function permissionName(
+  permission
+) {
+
+  const names = {
+
+    handbook:
+      "Staff Handbook",
+
+    documents:
+      "General Documents",
+
+    training:
+      "Training",
+
+    resources:
+      "Staff Resources",
+
+    staff_directory:
+      "Staff Directory",
+
+    announcements:
+      "Staff Announcements"
+
+  };
+
+
+  return (
+    names[permission] ||
+    permission
+  );
+
+}
+
+
+function formatDate(
+  value
+) {
+
+  if (
+    !value
+  ) {
+
+    return "Never";
+
+  }
+
+
+  const date =
+    new Date(
+      value
+    );
+
+
+  if (
+    Number.isNaN(
+      date.getTime()
+    )
+  ) {
+
+    return value;
+
+  }
+
+
+  return date.toLocaleString();
+
+}
+
+
+function escapeHtml(
+  value
+) {
+
+  return String(
+    value ?? ""
+  )
+
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+
+    .replace(
+      /</g,
+      "&lt;"
+    )
+
+    .replace(
+      />/g,
+      "&gt;"
+    )
+
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+checkAdmin();
+
+</script>
 
 </body>
-
 </html>
