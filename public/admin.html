@@ -1,257 +1,499 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Staff Editor — The Aegis Institute</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-  <link rel="stylesheet" href="/styles.css">
+  <title>
+    Staff Portal — The Aegis Institute
+  </title>
+
+  <link
+    rel="stylesheet"
+    href="/portal.css"
+  >
 
 </head>
 
-<body class="admin-page">
 
-<header class="site-header">
-
-  <a href="/" class="brand">
-    <span class="brand-logo">A</span>
-
-    <span class="brand-text">
-      <strong>THE AEGIS INSTITUTE</strong>
-    </span>
-  </a>
-
-  <div class="admin-user">
-
-    <span id="adminUser">
-      Checking account...
-    </span>
-
-    <button id="logoutBtn" class="staff-login">
-      Log Out
-    </button>
-
-  </div>
-
-</header>
+<body class="portal-page">
 
 
-<main>
+  <header class="portal-header">
 
-  <section class="admin-header">
 
-    <div class="container">
+    <a
+      class="portal-brand"
+      href="/"
+    >
 
-      <span class="eyebrow">
-        STAFF PORTAL
+      <span class="brand-mark">
+        A
       </span>
 
-      <h1>
-        Website Editor
-      </h1>
+      <span>
+        THE AEGIS INSTITUTE
+      </span>
 
-      <p>
-        Edit published Aegis Institute content.
-        Changes are stored in the portal database.
-      </p>
-
-    </div>
-
-  </section>
+    </a>
 
 
-  <section class="section">
+    <div class="header-actions">
 
-    <div class="container">
 
-      <div id="accessDenied" class="admin-message hidden">
+      <div class="user-info">
 
-        <h2>
-          Access denied
-        </h2>
+        <span class="user-label">
+          SIGNED IN AS
+        </span>
 
-        <p>
-          Your Discord account is not authorised to edit this website.
-        </p>
-
-        <a href="/" class="button button-secondary">
-          Return to website
-        </a>
+        <strong id="staffName">
+          Staff Member
+        </strong>
 
       </div>
 
 
-      <div id="editor" class="editor hidden">
+      <button
+        class="secondary-btn small-btn"
+        id="logoutButton"
+      >
+        Log out
+      </button>
 
-        <div class="editor-nav">
 
-          <button class="editor-tab active" data-tab="homepage">
-            Homepage
-          </button>
+    </div>
 
-          <button class="editor-tab" data-tab="services">
-            Services
-          </button>
 
-          <button class="editor-tab" data-tab="work">
-            Our Work
-          </button>
+  </header>
 
-          <button class="editor-tab" data-tab="contact">
-            Contact
-          </button>
 
+  <main class="portal-container">
+
+
+    <section class="page-heading">
+
+
+      <div>
+
+        <div class="eyebrow">
+          STAFF PORTAL
         </div>
 
 
-        <!-- HOMEPAGE -->
-
-        <section class="editor-panel active" id="tab-homepage">
-
-          <h2>
-            Homepage
-          </h2>
-
-          <div class="editor-card">
-
-            <label>
-              Hero title
-
-              <textarea id="editHeroTitle"></textarea>
-            </label>
+        <h1>
+          Welcome to Aegis.
+        </h1>
 
 
-            <label>
-              Hero description
+        <p>
 
-              <textarea id="editHeroText"></textarea>
-            </label>
+          Your available resources
+          are shown below. What you
+          can access is determined by
+          your staff login code.
 
-
-            <label>
-              Hero card title
-
-              <input id="editHeroCardTitle">
-            </label>
-
-
-            <label>
-              Hero card description
-
-              <textarea id="editHeroCardText"></textarea>
-            </label>
-
-
-            <button class="button button-primary" id="saveHomepage">
-              Save Homepage
-            </button>
-
-          </div>
-
-        </section>
-
-
-        <!-- SERVICES -->
-
-        <section class="editor-panel" id="tab-services">
-
-          <h2>
-            Services
-          </h2>
-
-          <div id="servicesEditor"></div>
-
-          <button
-            class="button button-primary"
-            id="addService"
-          >
-            Add Service
-          </button>
-
-          <button
-            class="button button-secondary"
-            id="saveServices"
-          >
-            Save Services
-          </button>
-
-        </section>
-
-
-        <!-- WORK -->
-
-        <section class="editor-panel" id="tab-work">
-
-          <h2>
-            Our Work
-          </h2>
-
-          <div id="workEditor"></div>
-
-          <button
-            class="button button-primary"
-            id="addWork"
-          >
-            Add Work Item
-          </button>
-
-          <button
-            class="button button-secondary"
-            id="saveWork"
-          >
-            Save Work
-          </button>
-
-        </section>
-
-
-        <!-- CONTACT -->
-
-        <section class="editor-panel" id="tab-contact">
-
-          <h2>
-            Contact
-          </h2>
-
-          <div class="editor-card">
-
-            <label>
-              Contact heading
-
-              <input id="editContactTitle">
-            </label>
-
-
-            <label>
-              Contact description
-
-              <textarea id="editContactText"></textarea>
-            </label>
-
-
-            <button
-              class="button button-primary"
-              id="saveContact"
-            >
-              Save Contact
-            </button>
-
-          </div>
-
-        </section>
+        </p>
 
       </div>
 
-    </div>
 
-  </section>
-
-</main>
+    </section>
 
 
-<script src="/app.js"></script>
+    <section
+      id="emptyState"
+      class="empty-state hidden"
+    >
+
+
+      <div class="empty-icon">
+        A
+      </div>
+
+
+      <h2>
+        No staff resources yet.
+      </h2>
+
+
+      <p>
+
+        Your account is active,
+        but no documents have been
+        assigned to your access code
+        yet.
+
+      </p>
+
+
+    </section>
+
+
+    <section
+      id="documentsGrid"
+      class="staff-document-grid"
+    ></section>
+
+
+  </main>
+
+
+  <script>
+
+    const permissionNames = {
+
+      handbook:
+        "Staff Handbook",
+
+      documents:
+        "General Documents",
+
+      training:
+        "Training",
+
+      resources:
+        "Staff Resources",
+
+      staff_directory:
+        "Staff Directory",
+
+      announcements:
+        "Staff Announcements"
+
+    };
+
+
+    function escapeHtml(
+      value
+    ) {
+
+      return String(
+        value ?? ""
+      )
+
+        .replaceAll(
+          "&",
+          "&amp;"
+        )
+
+        .replaceAll(
+          "<",
+          "&lt;"
+        )
+
+        .replaceAll(
+          ">",
+          "&gt;"
+        )
+
+        .replaceAll(
+          '"',
+          "&quot;"
+        )
+
+        .replaceAll(
+          "'",
+          "&#039;"
+        );
+
+    }
+
+
+    function formatDate(
+      value
+    ) {
+
+      if (
+        !value
+      ) {
+
+        return "";
+
+      }
+
+
+      const date =
+        new Date(
+          value
+        );
+
+
+      if (
+        Number.isNaN(
+          date.getTime()
+        )
+      ) {
+
+        return "";
+
+      }
+
+
+      return date.toLocaleDateString(
+        undefined,
+        {
+
+          day:
+            "numeric",
+
+          month:
+            "long",
+
+          year:
+            "numeric"
+
+        }
+      );
+
+    }
+
+
+    async function api(
+      url,
+      options = {}
+    ) {
+
+      const response =
+        await fetch(
+          url,
+          {
+
+            ...options,
+
+            headers: {
+
+              "Content-Type":
+                "application/json",
+
+              ...(options.headers || {})
+
+            }
+
+          }
+        );
+
+
+      let data = {};
+
+
+      try {
+
+        data =
+          await response.json();
+
+      } catch {}
+
+
+      if (
+        !response.ok
+      ) {
+
+        throw new Error(
+          data.error ||
+          "Request failed."
+        );
+
+      }
+
+
+      return data;
+
+    }
+
+
+    async function loadPortal() {
+
+
+      const me =
+        await api(
+          "/api/auth/me"
+        );
+
+
+      if (
+        !me.authenticated ||
+        !me.authorized
+      ) {
+
+        window.location.href =
+          "/staff-login.html";
+
+        return;
+
+      }
+
+
+      document.getElementById(
+        "staffName"
+      ).textContent =
+        me.username ||
+        "Staff Member";
+
+
+      const data =
+        await api(
+          "/api/staff/documents"
+        );
+
+
+      const grid =
+        document.getElementById(
+          "documentsGrid"
+        );
+
+
+      if (
+        !data.documents.length
+      ) {
+
+        document
+          .getElementById(
+            "emptyState"
+          )
+          .classList
+          .remove(
+            "hidden"
+          );
+
+        return;
+
+      }
+
+
+      grid.innerHTML =
+        data.documents
+          .map(
+            doc => `
+
+              <article
+                class="staff-document-card"
+              >
+
+                <div
+                  class="document-card-header"
+                >
+
+                  <span
+                    class="document-icon"
+                  >
+                    A
+                  </span>
+
+                  <span
+                    class="tag"
+                  >
+                    ${escapeHtml(
+                      permissionNames[
+                        doc.permission
+                      ] ||
+                      doc.permission
+                    )}
+                  </span>
+
+                </div>
+
+
+                <h2>
+                  ${escapeHtml(
+                    doc.title
+                  )}
+                </h2>
+
+
+                <p
+                  class="document-description"
+                >
+                  ${escapeHtml(
+                    doc.description
+                  )}
+                </p>
+
+
+                <div
+                  class="document-divider"
+                ></div>
+
+
+                <div
+                  class="document-content"
+                >
+                  ${escapeHtml(
+                    doc.content
+                  )}
+                </div>
+
+
+                <div
+                  class="document-footer"
+                >
+
+                  Updated
+                  ${escapeHtml(
+                    formatDate(
+                      doc.updated_at
+                    )
+                  )}
+
+                </div>
+
+
+              </article>
+
+            `
+          )
+          .join("");
+
+    }
+
+
+    document
+      .getElementById(
+        "logoutButton"
+      )
+      .addEventListener(
+        "click",
+        async () => {
+
+          await fetch(
+            "/api/auth/logout",
+            {
+              method:
+                "POST"
+            }
+          );
+
+
+          window.location.href =
+            "/staff-login.html";
+
+        }
+      );
+
+
+    loadPortal()
+      .catch(
+        error => {
+
+          console.error(
+            error
+          );
+
+
+          window.location.href =
+            "/staff-login.html";
+
+        }
+      );
+
+  </script>
 
 </body>
+
 </html>
