@@ -1,4 +1,4 @@
-const MAIN_PASSWORD = "PiZza@Cvc123";
+const MAIN_PASSWORD = "berzelia";
 
 const PERMISSIONS = {
     handbook: "Staff Handbook",
