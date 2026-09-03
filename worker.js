@@ -1,3 +1,4 @@
+const MAIN_PASSWORD = "berzelia";
 const DEFAULT_DATA = {
   hero: {
     title: "Training that sees the person behind every case.",
@@ -214,12 +215,7 @@ async function passwordLogin(
        Cloudflare Secret/Variable binding.
     */
 
-    const mainPassword =
-      String(
-        env.MAIN_PASSWORD ||
-        env.MAIN_PASSWORD_VALUE ||
-        ""
-      ).trim();
+const mainPassword = MAIN_PASSWORD;
 
 
     if (!mainPassword) {
