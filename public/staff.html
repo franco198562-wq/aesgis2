@@ -1,1276 +1,308 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>
-    Staff Portal | The Aegis Institute
-  </title>
-
-  <link
-    rel="stylesheet"
-    href="/portal.css"
-  >
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Staff Portal | The Aegis Institute</title>
+  <link rel="stylesheet" href="/portal.css">
 </head>
 
-
-<body class="portal-shell">
-
-
-  <!-- ========================================================
-       HEADER
-       ======================================================== -->
-
+<body>
   <header class="portal-header">
-
-    <div class="container header-inner">
-
-
-      <a
-        href="/"
-        class="brand"
-      >
-
-        <span class="brand-mark">
-          A
+    <div class="portal-header-inner">
+      <a href="/" class="portal-brand">
+        <span class="portal-brand-mark">A</span>
+        <span>
+          <strong>THE AEGIS INSTITUTE</strong>
+          <small>Staff Portal</small>
         </span>
-
-        <span class="brand-text">
-
-          THE AEGIS INSTITUTE
-
-          <span class="brand-subtext">
-            STAFF PORTAL
-          </span>
-
-        </span>
-
       </a>
 
-
-      <div class="portal-user">
-
-        <span
-          id="staffUserName"
-          class="portal-user-name"
-        >
-          Staff Member
-        </span>
-
-        <button
-          id="logoutButton"
-          class="logout-button"
-          type="button"
-        >
-          Log out
+      <div class="portal-header-actions">
+        <span id="staffName" class="portal-user-name">Staff Member</span>
+        <button id="logoutButton" class="button button-outline" type="button">
+          Log Out
         </button>
-
       </div>
-
     </div>
-
   </header>
 
+  <main class="portal-main">
+    <section class="portal-hero">
+      <div>
+        <span class="eyebrow">STAFF ACCESS</span>
+        <h1>Welcome to the Staff Portal.</h1>
+        <p>
+          Access the documents, resources, and information available to your
+          assigned permissions.
+        </p>
+      </div>
+    </section>
 
+    <section id="statusMessage" class="portal-alert hidden"></section>
 
-  <!-- ========================================================
-       MAIN
-       ======================================================== -->
-
-  <main class="admin-main">
-
-    <div
-      class="container"
-      style="
-        max-width:1200px;
-        margin:0 auto;
-      "
-    >
-
-
-      <!-- ====================================================
-           WELCOME
-           ==================================================== -->
-
-      <section
-        id="welcomeSection"
-        style="margin-bottom:30px;"
-      >
-
-        <div class="page-hero">
-
-          <div class="eyebrow">
-            AEGIS STAFF PORTAL
-          </div>
-
-          <h1
-            id="welcomeTitle"
-            class="admin-page-title"
-          >
-            Welcome to the Staff Portal
-          </h1>
-
-          <p
-            id="welcomeText"
-            class="admin-page-description"
-          >
-            Access your authorised Aegis Institute resources
-            and documents from this portal.
-          </p>
-
+    <section class="portal-section">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">YOUR ACCESS</span>
+          <h2>Available resources</h2>
         </div>
-
-      </section>
-
-
-
-      <!-- ====================================================
-           ACCESS SUMMARY
-           ==================================================== -->
-
-      <section
-        class="stats-grid"
-        style="margin-bottom:30px;"
-      >
-
-
-        <div class="stat-card">
-
-          <div class="stat-label">
-            Your Access
-          </div>
-
-          <div
-            id="permissionCount"
-            class="stat-value"
-          >
-            0
-          </div>
-
-        </div>
-
-
-        <div class="stat-card">
-
-          <div class="stat-label">
-            Available Documents
-          </div>
-
-          <div
-            id="documentCount"
-            class="stat-value"
-          >
-            0
-          </div>
-
-        </div>
-
-
-        <div class="stat-card">
-
-          <div class="stat-label">
-            Account
-          </div>
-
-          <div
-            class="stat-value"
-            style="font-size:18px;"
-          >
-            Staff
-          </div>
-
-        </div>
-
-
-        <div class="stat-card">
-
-          <div class="stat-label">
-            Session
-          </div>
-
-          <div
-            class="stat-value"
-            style="font-size:18px;"
-          >
-            Active
-          </div>
-
-        </div>
-
-
-      </section>
-
-
-
-      <!-- ====================================================
-           ERROR / MESSAGE
-           ==================================================== -->
-
-      <div
-        id="message"
-        class="alert hidden"
-        style="margin-bottom:25px;"
-      ></div>
-
-
-
-      <!-- ====================================================
-           PERMISSIONS
-           ==================================================== -->
-
-      <section
-        class="admin-panel"
-        style="margin-bottom:25px;"
-      >
-
-        <div class="admin-panel-header">
-
-          <div>
-
-            <h2>
-              Your Permissions
-            </h2>
-
-            <p>
-              These are the areas of the portal your login
-              code currently allows you to access.
-            </p>
-
-          </div>
-
-        </div>
-
-
-        <div
-          id="permissionsList"
-          class="permission-grid"
-        >
-
-          <div class="loading">
-            Loading permissions...
-          </div>
-
-        </div>
-
-      </section>
-
-
-
-      <!-- ====================================================
-           DOCUMENTS
-           ==================================================== -->
-
-      <section
-        class="admin-panel"
-        style="margin-bottom:25px;"
-      >
-
-        <div class="admin-panel-header">
-
-          <div>
-
-            <h2>
-              Your Documents
-            </h2>
-
-            <p>
-              Private documents available to your account.
-            </p>
-
-          </div>
-
-
-          <button
-            id="refreshButton"
-            class="btn btn-outline btn-small"
-            type="button"
-          >
-            Refresh
-          </button>
-
-        </div>
-
-
-        <div
-          id="documentsList"
-          class="card-grid"
-        >
-
-          <div class="loading">
-            Loading documents...
-          </div>
-
-        </div>
-
-      </section>
-
-
-
-      <!-- ====================================================
-           DOCUMENT VIEWER
-           ==================================================== -->
-
-      <section
-        id="documentViewer"
-        class="admin-panel hidden"
-        style="margin-bottom:25px;"
-      >
-
-        <div class="admin-panel-header">
-
-          <div>
-
-            <div
-              id="viewerPermission"
-              class="eyebrow"
-            >
-              STAFF DOCUMENT
-            </div>
-
-            <h2
-              id="viewerTitle"
-            >
-              Document
-            </h2>
-
-            <p
-              id="viewerDescription"
-            ></p>
-
-          </div>
-
-
-          <button
-            id="closeViewer"
-            class="btn btn-outline btn-small"
-            type="button"
-          >
-            Close
-          </button>
-
-        </div>
-
-
-        <div
-          id="viewerContent"
-          style="
-            white-space:pre-wrap;
-            line-height:1.8;
-            color:var(--text);
-            font-size:14px;
-            padding-top:10px;
-          "
-        ></div>
-
-      </section>
-
-
-
-      <!-- ====================================================
-           NO ACCESS
-           ==================================================== -->
-
-      <section
-        id="noAccessSection"
-        class="admin-panel hidden"
-      >
-
-        <div class="empty-state">
-
-          <h3>
-            No private resources are currently available.
-          </h3>
-
-          <p>
-            Your staff login is valid, but no documents have
-            been assigned to your current permissions.
-          </p>
-
-        </div>
-
-      </section>
-
-
-    </div>
-
-  </main>
-
-
-
-  <!-- ========================================================
-       FOOTER
-       ======================================================== -->
-
-  <footer class="site-footer">
-
-    <div class="container">
-
-      <div id="footerText">
-        The Aegis Institute.
+        <button id="refreshButton" class="button button-outline" type="button">
+          Refresh
+        </button>
       </div>
 
-    </div>
+      <div id="documentsGrid" class="portal-card-grid">
+        <article class="portal-card loading-card">
+          <div class="loading-spinner"></div>
+          <p>Loading your resources...</p>
+        </article>
+      </div>
+    </section>
 
+    <section class="portal-section portal-section-small">
+      <div class="portal-card portal-card-accent">
+        <span class="eyebrow">NEED HELP?</span>
+        <h2>Contact the administration team</h2>
+        <p>
+          If you cannot access a document or believe you need additional
+          permissions, contact an administrator.
+        </p>
+        <a href="/contact.html" class="button button-primary">
+          Contact Us
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="portal-footer">
+    <div class="portal-footer-inner">
+      <p id="footerText">
+        © 2026 The Aegis Institute. All rights reserved.
+      </p>
+      <a href="/" class="footer-link">Return to website</a>
+    </div>
   </footer>
 
-
-
-  <!-- ========================================================
-       JAVASCRIPT
-       ======================================================== -->
-
   <script>
+    const statusMessage = document.getElementById("statusMessage");
+    const documentsGrid = document.getElementById("documentsGrid");
+    const staffName = document.getElementById("staffName");
+    const logoutButton = document.getElementById("logoutButton");
+    const refreshButton = document.getElementById("refreshButton");
+    const footerText = document.getElementById("footerText");
 
-    // ========================================================
-    // STATE
-    // ========================================================
-
-    let currentUser = null;
-
-    let documents = [];
-
-    let websiteContent = {};
-
-    let permissionLabels = {};
-
-
-
-    // ========================================================
-    // HELPERS
-    // ========================================================
-
-    function $(id) {
-
-      return document.getElementById(id);
-
+    function showStatus(message, type = "error") {
+      statusMessage.textContent = message;
+      statusMessage.className = `portal-alert ${type}`;
     }
 
+    function hideStatus() {
+      statusMessage.textContent = "";
+      statusMessage.className = "portal-alert hidden";
+    }
 
     function escapeHtml(value) {
-
       return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
     }
 
-
-    function showMessage(
-      message,
-      type = "error"
-    ) {
-
-      const element =
-        $("message");
-
-
-      element.textContent =
-        message;
-
-
-      element.className =
-        `alert alert-${type}`;
-
-    }
-
-
-    function hideMessage() {
-
-      $("message")
-        .className =
-          "alert hidden";
-
-    }
-
-
-
-    // ========================================================
-    // AUTHENTICATION
-    // ========================================================
-
-    async function checkAuthentication() {
-
-      try {
-
-        const response =
-          await fetch(
-            "/api/auth/me",
-            {
-              credentials:
-                "same-origin",
-
-              cache:
-                "no-store"
-            }
-          );
-
-
-        if (!response.ok) {
-
-          window.location.href =
-            "/staff-login.html";
-
-          return false;
-
-        }
-
-
-        const data =
-          await response.json();
-
-
-        if (
-          !data.authenticated
-        ) {
-
-          window.location.href =
-            "/staff-login.html";
-
-          return false;
-
-        }
-
-
-        if (
-          data.role !== "staff"
-        ) {
-
-          if (
-            data.role ===
-            "main_admin"
-          ) {
-
-            window.location.href =
-              "/admin.html";
-
-            return false;
-
-          }
-
-
-          window.location.href =
-            "/staff-login.html";
-
-          return false;
-
-        }
-
-
-        currentUser =
-          data;
-
-
-        $("staffUserName")
-          .textContent =
-            data.username ||
-            data.name ||
-            "Staff Member";
-
-
-        return true;
-
-      } catch (error) {
-
-        console.error(
-          "Authentication error:",
-          error
-        );
-
-
-        window.location.href =
-          "/staff-login.html";
-
-        return false;
-
+    function renderDocuments(documents) {
+      if (!Array.isArray(documents) || documents.length === 0) {
+        documentsGrid.innerHTML = `
+          <article class="portal-card empty-card">
+            <div class="card-icon">i</div>
+            <h3>No resources available</h3>
+            <p>
+              No staff documents have been assigned to your account yet.
+            </p>
+          </article>
+        `;
+        return;
       }
 
-    }
+      documentsGrid.innerHTML = documents.map(document => `
+        <article class="portal-card document-card">
+          <div class="card-icon">↗</div>
+          <h3>${escapeHtml(document.title)}</h3>
+          <p>${escapeHtml(document.description || "Staff resource")}</p>
 
+          <div class="document-meta">
+            <span>
+              Permission: ${escapeHtml(document.permission)}
+            </span>
+          </div>
 
+          <button
+            class="button button-primary document-view-button"
+            type="button"
+            data-document-id="${escapeHtml(document.id)}"
+          >
+            View Document
+          </button>
+        </article>
+      `).join("");
 
-    // ========================================================
-    // LOGOUT
-    // ========================================================
-
-    $("logoutButton")
-      .addEventListener(
-        "click",
-        async () => {
-
-          try {
-
-            await fetch(
-              "/api/auth/logout",
-              {
-                method:
-                  "POST",
-
-                credentials:
-                  "same-origin"
-              }
-            );
-
-          } catch {
-
-          }
-
-
-          window.location.href =
-            "/staff-login.html";
-
-        }
-      );
-
-
-
-    // ========================================================
-    // LOAD CONTENT
-    // ========================================================
-
-    async function loadWebsiteContent() {
-
-      try {
-
-        const response =
-          await fetch(
-            "/api/content",
-            {
-              credentials:
-                "same-origin",
-
-              cache:
-                "no-store"
-            }
+      document.querySelectorAll(".document-view-button").forEach(button => {
+        button.addEventListener("click", () => {
+          const documentId = button.dataset.documentId;
+          const selectedDocument = documents.find(
+            document => String(document.id) === String(documentId)
           );
 
+          if (selectedDocument) {
+            openDocument(selectedDocument);
+          }
+        });
+      });
+    }
+
+    function openDocument(document) {
+      const modal = document.createElement("div");
+      modal.className = "portal-modal-backdrop";
+
+      modal.innerHTML = `
+        <div class="portal-modal" role="dialog" aria-modal="true">
+          <button class="portal-modal-close" type="button" aria-label="Close">
+            ×
+          </button>
+
+          <span class="eyebrow">STAFF DOCUMENT</span>
+          <h2>${escapeHtml(document.title)}</h2>
+
+          ${
+            document.description
+              ? `<p class="modal-description">${escapeHtml(document.description)}</p>`
+              : ""
+          }
+
+          <div class="modal-document-content">${escapeHtml(
+            document.content || "This document has no content yet."
+          ).replaceAll("\n", "<br>")}</div>
+        </div>
+      `;
+
+      document.body.appendChild(modal);
+
+      const closeModal = () => {
+        modal.remove();
+      };
+
+      modal.querySelector(".portal-modal-close")
+        .addEventListener("click", closeModal);
+
+      modal.addEventListener("click", event => {
+        if (event.target === modal) {
+          closeModal();
+        }
+      });
+    }
+
+    async function loadContent() {
+      try {
+        const response = await fetch("/api/content");
 
         if (!response.ok) {
+          throw new Error("Unable to load website content.");
+        }
+
+        const content = await response.json();
+
+        if (content.footer_text) {
+          footerText.textContent = content.footer_text;
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    async function loadStaffData() {
+      hideStatus();
+
+      documentsGrid.innerHTML = `
+        <article class="portal-card loading-card">
+          <div class="loading-spinner"></div>
+          <p>Loading your resources...</p>
+        </article>
+      `;
+
+      try {
+        const meResponse = await fetch("/api/auth/me");
+
+        if (!meResponse.ok) {
+          throw new Error("Unable to verify your session.");
+        }
+
+        const me = await meResponse.json();
+
+        if (!me.authenticated || me.type !== "staff") {
+          window.location.href = "/staff-login.html";
           return;
         }
 
-
-        const data =
-          await response.json();
-
-
-        if (
-          data.success
-        ) {
-
-          websiteContent =
-            data.content ||
-            {};
-
+        if (me.name) {
+          staffName.textContent = me.name;
         }
 
+        const documentsResponse = await fetch("/api/documents");
 
-      } catch (error) {
-
-        console.warn(
-          "Website content could not be loaded:",
-          error
-        );
-
-      }
-
-    }
-
-
-
-    // ========================================================
-    // APPLY WEBSITE CONTENT
-    // ========================================================
-
-    function applyWebsiteContent() {
-
-      const title =
-        websiteContent
-          .staff_welcome_title;
-
-
-      const text =
-        websiteContent
-          .staff_welcome_text;
-
-
-      const footer =
-        websiteContent
-          .footer_text;
-
-
-      if (title) {
-
-        $("welcomeTitle")
-          .textContent =
-            title;
-
-      }
-
-
-      if (text) {
-
-        $("welcomeText")
-          .textContent =
-            text;
-
-      }
-
-
-      if (footer) {
-
-        $("footerText")
-          .textContent =
-            footer;
-
-      }
-
-    }
-
-
-
-    // ========================================================
-    // LOAD STAFF DOCUMENTS
-    // ========================================================
-
-    async function loadDocuments() {
-
-      const container =
-        $("documentsList");
-
-
-      container.innerHTML =
-        `
-        <div class="loading">
-          Loading your documents...
-        </div>
-        `;
-
-
-      $("noAccessSection")
-        .classList.add(
-          "hidden"
-        );
-
-
-      try {
-
-        const response =
-          await fetch(
-            "/api/staff/documents",
-            {
-              credentials:
-                "same-origin",
-
-              cache:
-                "no-store"
-            }
-          );
-
-
-        const data =
-          await response.json();
-
-
-        if (
-          !response.ok ||
-          !data.success
-        ) {
+        if (!documentsResponse.ok) {
+          const errorData = await documentsResponse.json()
+            .catch(() => ({}));
 
           throw new Error(
-            data.error ||
-            "Unable to load staff documents."
+            errorData.error || "Unable to load staff resources."
           );
-
         }
 
+        const documents = await documentsResponse.json();
 
-        documents =
-          data.documents ||
-          [];
-
-
-        permissionLabels =
-          data.permissions ||
-          permissionLabels;
-
-
-        renderPermissions();
-
-        renderDocuments();
-
-        updateStats();
-
-
+        renderDocuments(documents);
       } catch (error) {
-
-        console.error(
-          error
-        );
-
-
-        container.innerHTML =
-          `
-          <div class="alert alert-error">
-            ${escapeHtml(
-              error.message ||
-              "Unable to load staff documents."
-            )}
-          </div>
-          `;
-
-      }
-
-    }
-
-
-
-    // ========================================================
-    // RENDER PERMISSIONS
-    // ========================================================
-
-    function renderPermissions() {
-
-      const container =
-        $("permissionsList");
-
-
-      let permissions = [];
-
-
-      if (
-        currentUser &&
-        Array.isArray(
-          currentUser.permissions
-        )
-      ) {
-
-        permissions =
-          currentUser.permissions;
-
-      }
-
-
-      $("permissionCount")
-        .textContent =
-          permissions.length;
-
-
-      if (
-        !permissions.length
-      ) {
-
-        container.innerHTML =
-          `
-          <div class="empty-state">
-
-            <h3>
-              No permissions assigned
-            </h3>
-
-            <p>
-              Contact an administrator if you believe
-              you should have access to staff resources.
-            </p>
-
-          </div>
-          `;
-
-        return;
-
-      }
-
-
-      container.innerHTML =
-        "";
-
-
-      permissions.forEach(
-        permission => {
-
-          const item =
-            document.createElement(
-              "div"
-            );
-
-
-          item.className =
-            "permission-option";
-
-
-          item.style.cursor =
-            "default";
-
-
-          item.innerHTML =
-            `
-            <span
-              style="
-                width:9px;
-                height:9px;
-                border-radius:50%;
-                background:var(--accent);
-                display:inline-block;
-                flex:none;
-              "
-            ></span>
-
-            <span>
-              ${escapeHtml(
-                permissionLabels[
-                  permission
-                ] ||
-                permission
-              )}
-            </span>
-            `;
-
-
-          container.appendChild(
-            item
-          );
-
-        }
-      );
-
-    }
-
-
-
-    // ========================================================
-    // RENDER DOCUMENTS
-    // ========================================================
-
-    function renderDocuments() {
-
-      const container =
-        $("documentsList");
-
-
-      $("documentCount")
-        .textContent =
-          documents.length;
-
-
-      if (
-        !documents.length
-      ) {
-
-        container.innerHTML =
-          `
-          <div class="empty-state">
-
-            <h3>
-              No documents available
-            </h3>
-
-            <p>
-              There are currently no private documents
-              available for your account.
-            </p>
-
-          </div>
-          `;
-
-
-        $("noAccessSection")
-          .classList.remove(
-            "hidden"
-          );
-
-
-        return;
-
-      }
-
-
-      $("noAccessSection")
-        .classList.add(
-          "hidden"
-        );
-
-
-      container.innerHTML =
-        "";
-
-
-      documents.forEach(
-        document => {
-
-          const card =
-            document.createElement(
-              "article"
-            );
-
-
-          card.className =
-            "card";
-
-
-          const permissionName =
-            permissionLabels[
-              document.permission
-            ] ||
-            document.permission ||
-            "Staff";
-
-
-          card.innerHTML =
-            `
-            <div
-              style="
-                display:flex;
-                justify-content:space-between;
-                align-items:flex-start;
-                gap:15px;
-                margin-bottom:15px;
-              "
-            >
-
-              <div
-                class="card-icon"
-              >
-                A
-              </div>
-
-              <span
-                class="badge badge-permission"
-              >
-                ${escapeHtml(
-                  permissionName
-                )}
-              </span>
-
-            </div>
-
-
-            <h3>
-              ${escapeHtml(
-                document.title
-              )}
-            </h3>
-
-
-            <p>
-              ${escapeHtml(
-                document.description ||
-                "Private Aegis Institute staff document."
-              )}
-            </p>
-
-
+        console.error(error);
+
+        documentsGrid.innerHTML = `
+          <article class="portal-card empty-card">
+            <div class="card-icon">!</div>
+            <h3>Unable to load resources</h3>
+            <p>${escapeHtml(error.message)}</p>
             <button
-              class="btn btn-primary btn-small"
+              id="retryButton"
+              class="button button-primary"
               type="button"
-              data-document-id="${document.id}"
-              style="margin-top:10px;"
             >
-              Open Document
+              Try Again
             </button>
-            `;
+          </article>
+        `;
 
-
-          const button =
-            card.querySelector(
-              "[data-document-id]"
-            );
-
-
-          button.addEventListener(
-            "click",
-            () => {
-
-              openDocument(
-                document.id
-              );
-
-            }
-          );
-
-
-          container.appendChild(
-            card
-          );
-
-        }
-      );
-
-    }
-
-
-
-    // ========================================================
-    // OPEN DOCUMENT
-    // ========================================================
-
-    function openDocument(id) {
-
-      const document =
-        documents.find(
-          item =>
-            Number(item.id) ===
-            Number(id)
-        );
-
-
-      if (!document) {
-        return;
+        document.getElementById("retryButton")
+          ?.addEventListener("click", loadStaffData);
       }
-
-
-      $("viewerPermission")
-        .textContent =
-          (
-            permissionLabels[
-              document.permission
-            ] ||
-            document.permission ||
-            "STAFF DOCUMENT"
-          )
-            .toUpperCase();
-
-
-      $("viewerTitle")
-        .textContent =
-          document.title ||
-          "Staff Document";
-
-
-      $("viewerDescription")
-        .textContent =
-          document.description ||
-          "";
-
-
-      $("viewerContent")
-        .textContent =
-          document.content ||
-          "";
-
-
-      $("documentViewer")
-        .classList.remove(
-          "hidden"
-        );
-
-
-      $("documentViewer")
-        .scrollIntoView(
-          {
-            behavior:
-              "smooth",
-            block:
-              "start"
-          }
-        );
-
     }
 
+    async function logout() {
+      logoutButton.disabled = true;
+      logoutButton.textContent = "Logging out...";
 
-
-    // ========================================================
-    // CLOSE DOCUMENT
-    // ========================================================
-
-    $("closeViewer")
-      .addEventListener(
-        "click",
-        () => {
-
-          $("documentViewer")
-            .classList.add(
-              "hidden"
-            );
-
-        }
-      );
-
-
-
-    // ========================================================
-    // UPDATE STATS
-    // ========================================================
-
-    function updateStats() {
-
-      $("documentCount")
-        .textContent =
-          documents.length;
-
-
-      const permissions =
-        currentUser &&
-        Array.isArray(
-          currentUser.permissions
-        )
-          ? currentUser.permissions
-          : [];
-
-
-      $("permissionCount")
-        .textContent =
-          permissions.length;
-
-    }
-
-
-
-    // ========================================================
-    // REFRESH
-    // ========================================================
-
-    $("refreshButton")
-      .addEventListener(
-        "click",
-        async () => {
-
-          hideMessage();
-
-          await loadDocuments();
-
-        }
-      );
-
-
-
-    // ========================================================
-    // INITIALISE
-    // ========================================================
-
-    async function initialise() {
-
-      const authenticated =
-        await checkAuthentication();
-
-
-      if (!authenticated) {
-        return;
+      try {
+        await fetch("/api/auth/logout", {
+          method: "POST"
+        });
+      } finally {
+        window.location.href = "/staff-login.html";
       }
-
-
-      await loadWebsiteContent();
-
-      applyWebsiteContent();
-
-      await loadDocuments();
-
     }
 
+    logoutButton.addEventListener("click", logout);
+    refreshButton.addEventListener("click", loadStaffData);
 
-    initialise();
-
+    loadContent();
+    loadStaffData();
   </script>
-
 </body>
-
 </html>
