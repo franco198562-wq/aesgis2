@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
   <meta charset="UTF-8">
@@ -10,9 +9,7 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>
-    Staff Portal — The Aegis Institute
-  </title>
+  <title>Staff Portal — The Aegis Institute</title>
 
   <link
     rel="stylesheet"
@@ -21,479 +18,681 @@
 
 </head>
 
-
-<body class="portal-page">
-
-
-  <header class="portal-header">
+<body class="portal-body">
 
 
-    <a
-      class="portal-brand"
-      href="/"
-    >
+<header class="portal-header">
 
-      <span class="brand-mark">
-        A
-      </span>
+  <div class="portal-brand">
 
-      <span>
+    <div class="portal-logo">
+      A
+    </div>
+
+    <div>
+
+      <div class="portal-brand-name">
         THE AEGIS INSTITUTE
+      </div>
+
+      <div class="portal-brand-subtitle">
+        STAFF PORTAL
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="portal-header-right">
+
+    <div class="staff-user">
+
+      <span class="staff-user-label">
+        SIGNED IN AS
       </span>
 
-    </a>
+      <strong id="staffName">
+        Staff Member
+      </strong>
+
+    </div>
+
+    <button
+      id="logoutButton"
+      class="header-button"
+    >
+      Log out
+    </button>
+
+  </div>
+
+</header>
 
 
-    <div class="header-actions">
+<main class="staff-main">
 
 
-      <div class="user-info">
+  <div class="staff-welcome">
 
-        <span class="user-label">
-          SIGNED IN AS
-        </span>
+    <div class="section-kicker">
+      STAFF PORTAL
+    </div>
 
-        <strong id="staffName">
-          Staff Member
-        </strong>
+    <h1>
+      Welcome.
+    </h1>
+
+    <p>
+      Your available resources are shown below.
+      What you can access is determined by your staff login code.
+    </p>
+
+  </div>
+
+
+  <div
+    id="permissionSummary"
+    class="permission-summary"
+  ></div>
+
+
+  <div
+    id="staffResources"
+    class="staff-resources"
+  >
+
+    <div class="loading-state">
+      Loading your resources...
+    </div>
+
+  </div>
+
+
+  <div
+    id="emptyResources"
+    class="empty-state hidden"
+  >
+
+    <strong>
+      No staff resources yet.
+    </strong>
+
+    <span>
+      Your account is active, but no documents have been assigned to your access code yet.
+    </span>
+
+    <small>
+      Contact an Aegis administrator if you believe you should have access to resources.
+    </small>
+
+  </div>
+
+</main>
+
+
+<!-- DOCUMENT VIEWER -->
+
+<div
+  id="documentModal"
+  class="modal hidden"
+>
+
+  <div class="modal-card document-modal-card">
+
+    <div class="modal-header">
+
+      <div>
+
+        <div
+          id="modalPermission"
+          class="section-kicker"
+        >
+          STAFF RESOURCE
+        </div>
+
+        <h2
+          id="modalTitle"
+        >
+          Document
+        </h2>
 
       </div>
 
-
       <button
-        class="secondary-btn small-btn"
-        id="logoutButton"
+        id="closeDocument"
+        class="modal-close"
       >
-        Log out
+        ×
       </button>
-
 
     </div>
 
 
-  </header>
+    <div
+      id="modalDescription"
+      class="document-viewer-description"
+    ></div>
 
 
-  <main class="portal-container">
+    <div
+      id="modalContent"
+      class="document-viewer-content"
+    ></div>
 
+  </div>
 
-    <section class="page-heading">
+</div>
 
 
-      <div>
+<script>
 
-        <div class="eyebrow">
-          STAFF PORTAL
-        </div>
+let currentDocuments = [];
 
 
-        <h1>
-          Welcome to Aegis.
-        </h1>
+/* =========================================================
+   CHECK SESSION
+========================================================= */
 
+async function checkSession() {
 
-        <p>
+  try {
 
-          Your available resources
-          are shown below. What you
-          can access is determined by
-          your staff login code.
-
-        </p>
-
-      </div>
-
-
-    </section>
-
-
-    <section
-      id="emptyState"
-      class="empty-state hidden"
-    >
-
-
-      <div class="empty-icon">
-        A
-      </div>
-
-
-      <h2>
-        No staff resources yet.
-      </h2>
-
-
-      <p>
-
-        Your account is active,
-        but no documents have been
-        assigned to your access code
-        yet.
-
-      </p>
-
-
-    </section>
-
-
-    <section
-      id="documentsGrid"
-      class="staff-document-grid"
-    ></section>
-
-
-  </main>
-
-
-  <script>
-
-    const permissionNames = {
-
-      handbook:
-        "Staff Handbook",
-
-      documents:
-        "General Documents",
-
-      training:
-        "Training",
-
-      resources:
-        "Staff Resources",
-
-      staff_directory:
-        "Staff Directory",
-
-      announcements:
-        "Staff Announcements"
-
-    };
-
-
-    function escapeHtml(
-      value
-    ) {
-
-      return String(
-        value ?? ""
-      )
-
-        .replaceAll(
-          "&",
-          "&amp;"
-        )
-
-        .replaceAll(
-          "<",
-          "&lt;"
-        )
-
-        .replaceAll(
-          ">",
-          "&gt;"
-        )
-
-        .replaceAll(
-          '"',
-          "&quot;"
-        )
-
-        .replaceAll(
-          "'",
-          "&#039;"
-        );
-
-    }
-
-
-    function formatDate(
-      value
-    ) {
-
-      if (
-        !value
-      ) {
-
-        return "";
-
-      }
-
-
-      const date =
-        new Date(
-          value
-        );
-
-
-      if (
-        Number.isNaN(
-          date.getTime()
-        )
-      ) {
-
-        return "";
-
-      }
-
-
-      return date.toLocaleDateString(
-        undefined,
-        {
-
-          day:
-            "numeric",
-
-          month:
-            "long",
-
-          year:
-            "numeric"
-
-        }
+    const response =
+      await fetch(
+        "/api/auth/me"
       );
 
-    }
+
+    const data =
+      await response.json();
 
 
-    async function api(
-      url,
-      options = {}
+    if (
+      !data.authenticated
     ) {
 
-      const response =
-        await fetch(
-          url,
-          {
+      window.location.href =
+        "/staff-login.html";
 
-            ...options,
-
-            headers: {
-
-              "Content-Type":
-                "application/json",
-
-              ...(options.headers || {})
-
-            }
-
-          }
-        );
-
-
-      let data = {};
-
-
-      try {
-
-        data =
-          await response.json();
-
-      } catch {}
-
-
-      if (
-        !response.ok
-      ) {
-
-        throw new Error(
-          data.error ||
-          "Request failed."
-        );
-
-      }
-
-
-      return data;
+      return;
 
     }
 
 
-    async function loadPortal() {
+    if (
+      data.role ===
+        "main_admin"
+    ) {
 
+      window.location.href =
+        "/admin.html";
 
-      const me =
-        await api(
-          "/api/auth/me"
-        );
-
-
-      if (
-        !me.authenticated ||
-        !me.authorized
-      ) {
-
-        window.location.href =
-          "/staff-login.html";
-
-        return;
-
-      }
-
-
-      document.getElementById(
-        "staffName"
-      ).textContent =
-        me.username ||
-        "Staff Member";
-
-
-      const data =
-        await api(
-          "/api/staff/documents"
-        );
-
-
-      const grid =
-        document.getElementById(
-          "documentsGrid"
-        );
-
-
-      if (
-        !data.documents.length
-      ) {
-
-        document
-          .getElementById(
-            "emptyState"
-          )
-          .classList
-          .remove(
-            "hidden"
-          );
-
-        return;
-
-      }
-
-
-      grid.innerHTML =
-        data.documents
-          .map(
-            doc => `
-
-              <article
-                class="staff-document-card"
-              >
-
-                <div
-                  class="document-card-header"
-                >
-
-                  <span
-                    class="document-icon"
-                  >
-                    A
-                  </span>
-
-                  <span
-                    class="tag"
-                  >
-                    ${escapeHtml(
-                      permissionNames[
-                        doc.permission
-                      ] ||
-                      doc.permission
-                    )}
-                  </span>
-
-                </div>
-
-
-                <h2>
-                  ${escapeHtml(
-                    doc.title
-                  )}
-                </h2>
-
-
-                <p
-                  class="document-description"
-                >
-                  ${escapeHtml(
-                    doc.description
-                  )}
-                </p>
-
-
-                <div
-                  class="document-divider"
-                ></div>
-
-
-                <div
-                  class="document-content"
-                >
-                  ${escapeHtml(
-                    doc.content
-                  )}
-                </div>
-
-
-                <div
-                  class="document-footer"
-                >
-
-                  Updated
-                  ${escapeHtml(
-                    formatDate(
-                      doc.updated_at
-                    )
-                  )}
-
-                </div>
-
-
-              </article>
-
-            `
-          )
-          .join("");
+      return;
 
     }
 
 
     document
       .getElementById(
-        "logoutButton"
+        "staffName"
       )
-      .addEventListener(
-        "click",
-        async () => {
-
-          await fetch(
-            "/api/auth/logout",
-            {
-              method:
-                "POST"
-            }
-          );
+      .textContent =
+        data.username ||
+        "Staff Member";
 
 
-          window.location.href =
-            "/staff-login.html";
+    renderPermissionSummary(
+      data.permissions ||
+      []
+    );
 
+
+    await loadResources();
+
+  } catch {
+
+    window.location.href =
+      "/staff-login.html";
+
+  }
+
+}
+
+
+/* =========================================================
+   LOAD RESOURCES
+========================================================= */
+
+async function loadResources() {
+
+  const container =
+    document.getElementById(
+      "staffResources"
+    );
+
+
+  try {
+
+    const response =
+      await fetch(
+        "/api/staff/documents"
+      );
+
+
+    if (
+      !response.ok
+    ) {
+
+      throw new Error();
+
+    }
+
+
+    const data =
+      await response.json();
+
+
+    currentDocuments =
+      data.documents ||
+      [];
+
+
+    if (
+      currentDocuments.length ===
+        0
+    ) {
+
+      container.innerHTML =
+        "";
+
+
+      document
+        .getElementById(
+          "emptyResources"
+        )
+        .classList.remove(
+          "hidden"
+        );
+
+
+      return;
+
+    }
+
+
+    document
+      .getElementById(
+        "emptyResources"
+      )
+      .classList.add(
+        "hidden"
+      );
+
+
+    container.innerHTML =
+      currentDocuments
+        .map(
+          document =>
+            renderResource(
+              document
+            )
+        )
+        .join("");
+
+
+  } catch {
+
+    container.innerHTML = `
+
+      <div class="error-state">
+
+        Unable to load your staff resources.
+
+      </div>
+
+    `;
+
+  }
+
+}
+
+
+/* =========================================================
+   RENDER RESOURCE
+========================================================= */
+
+function renderResource(
+  document
+) {
+
+  return `
+
+    <button
+      class="resource-card"
+      onclick="openDocument(${document.id})"
+    >
+
+      <div class="resource-card-top">
+
+        <span class="permission-tag">
+
+          ${escapeHtml(
+            permissionName(
+              document.permission
+            )
+          )}
+
+        </span>
+
+      </div>
+
+
+      <h2>
+        ${escapeHtml(
+          document.title
+        )}
+      </h2>
+
+
+      <p>
+        ${escapeHtml(
+          document.description ||
+          "Staff resource."
+        )}
+      </p>
+
+
+      <div class="resource-card-bottom">
+        Open resource →
+      </div>
+
+    </button>
+
+  `;
+
+}
+
+
+/* =========================================================
+   OPEN DOCUMENT
+========================================================= */
+
+function openDocument(
+  id
+) {
+
+  const document =
+    currentDocuments.find(
+      item =>
+        Number(item.id) ===
+        Number(id)
+    );
+
+
+  if (
+    !document
+  ) {
+
+    return;
+
+  }
+
+
+  document
+    .getElementById(
+      "modalPermission"
+    )
+    .textContent =
+      permissionName(
+        document.permission
+      );
+
+
+  document
+    .getElementById(
+      "modalTitle"
+    )
+    .textContent =
+      document.title;
+
+
+  document
+    .getElementById(
+      "modalDescription"
+    )
+    .textContent =
+      document.description ||
+      "";
+
+
+  document
+    .getElementById(
+      "modalContent"
+    )
+    .textContent =
+      document.content ||
+      "";
+
+
+  document
+    .getElementById(
+      "documentModal"
+    )
+    .classList.remove(
+      "hidden"
+    );
+
+}
+
+
+/* =========================================================
+   CLOSE DOCUMENT
+========================================================= */
+
+function closeDocument() {
+
+  document
+    .getElementById(
+      "documentModal"
+    )
+    .classList.add(
+      "hidden"
+    );
+
+}
+
+
+document
+  .getElementById(
+    "closeDocument"
+  )
+  .addEventListener(
+    "click",
+    closeDocument
+  );
+
+
+/* =========================================================
+   PERMISSION SUMMARY
+========================================================= */
+
+function renderPermissionSummary(
+  permissions
+) {
+
+  const container =
+    document.getElementById(
+      "permissionSummary"
+    );
+
+
+  if (
+    !permissions ||
+    permissions.length ===
+      0
+  ) {
+
+    container.innerHTML = `
+
+      <div class="permission-summary-empty">
+
+        No additional permissions assigned.
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  container.innerHTML = `
+
+    <div class="permission-summary-title">
+      YOUR ACCESS
+    </div>
+
+    <div class="permission-summary-list">
+
+      ${
+        permissions
+          .map(
+            permission => `
+
+              <span class="permission-tag">
+
+                ${escapeHtml(
+                  permissionName(
+                    permission
+                  )
+                )}
+
+              </span>
+
+            `
+          )
+          .join("")
+      }
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+document
+  .getElementById(
+    "logoutButton"
+  )
+  .addEventListener(
+    "click",
+    async () => {
+
+      await fetch(
+        "/api/auth/logout",
+        {
+          method:
+            "POST"
         }
       );
 
 
-    loadPortal()
-      .catch(
-        error => {
+      window.location.href =
+        "/staff-login.html";
 
-          console.error(
-            error
-          );
+    }
+  );
 
 
-          window.location.href =
-            "/staff-login.html";
+/* =========================================================
+   HELPERS
+========================================================= */
 
-        }
-      );
+function permissionName(
+  permission
+) {
 
-  </script>
+  const names = {
+
+    handbook:
+      "Staff Handbook",
+
+    documents:
+      "General Documents",
+
+    training:
+      "Training",
+
+    resources:
+      "Staff Resources",
+
+    staff_directory:
+      "Staff Directory",
+
+    announcements:
+      "Staff Announcements"
+
+  };
+
+
+  return (
+    names[permission] ||
+    permission
+  );
+
+}
+
+
+function escapeHtml(
+  value
+) {
+
+  return String(
+    value ?? ""
+  )
+
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+
+    .replace(
+      /</g,
+      "&lt;"
+    )
+
+    .replace(
+      />/g,
+      "&gt;"
+    )
+
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+checkSession();
+
+</script>
 
 </body>
-
 </html>
