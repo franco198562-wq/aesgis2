@@ -1,356 +1,104 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="The Aegis Institute">
-  <title>The Aegis Institute</title>
-  <link rel="stylesheet" href="/portal.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Aegis Institute</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-  <div id="announcement" class="announcement hidden">
-    <div class="container announcement-inner">
-      <div>
-        <strong id="announcementTitle"></strong>
-        <span id="announcementText"></span>
-      </div>
-      <a id="announcementLink" class="announcement-link hidden" href="#"></a>
-    </div>
-  </div>
-
-  <header class="site-header">
-    <div class="container site-header-inner">
-      <a href="/" class="site-brand">
-        <span class="site-brand-mark">A</span>
-        <span class="site-brand-text">
-          <strong id="siteName">THE AEGIS INSTITUTE</strong>
-          <small id="siteTagline">Education, consulting, and professional development.</small>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="side-brand" href="index.html">
+        <span class="logo">A</span>
+        <span>
+          <b>THE AEGIS</b>
+          <small>INSTITUTE</small>
         </span>
       </a>
 
-      <button
-        id="mobileMenuButton"
-        class="mobile-menu-button"
-        type="button"
-        aria-label="Open navigation"
-        aria-expanded="false"
-      >
-        ☰
-      </button>
+      <div class="side-label">Navigation</div>
 
-      <nav id="siteNavigation" class="site-navigation">
-        <a href="/" class="active">Home</a>
-        <a href="/services.html">Services</a>
-        <a href="/work.html">Our Work</a>
-        <a href="/contact.html">Contact</a>
-        <a href="/staff-login.html" class="nav-login">Staff Login</a>
+      <nav class="side-nav">
+        <a class="active" href="index.html">Overview</a>
+        <a href="#departments">Departments</a>
+        <a href="#tags">Tags</a>
+        <a href="#about">About</a>
       </nav>
-    </div>
-  </header>
 
-  <main>
-    <section class="hero-section">
-      <div class="container hero-grid">
-        <div class="hero-content">
-          <span id="heroKicker" class="eyebrow">THE AEGIS INSTITUTE</span>
-          <h1 id="heroTitle">
-            Building capability. Creating confidence. Delivering better outcomes.
-          </h1>
-          <p id="heroText">
-            The Aegis Institute provides practical education, consulting, and
-            support designed to help people and organisations perform with
-            clarity and confidence.
-          </p>
+      <div class="sidebar-bottom">
+        <a class="ghost" href="admin.html">Editor portal</a>
+      </div>
+    </aside>
 
-          <div class="hero-actions">
-            <a id="heroPrimaryButton" href="/services.html" class="button button-primary">
-              Explore Services
-            </a>
-            <a id="heroSecondaryButton" href="/contact.html" class="button button-outline">
-              Contact Us
-            </a>
-          </div>
+    <main class="main">
+      <header class="topbar">
+        <div class="search">
+          <span>⌕</span>
+          <input type="search" placeholder="Search the institute">
         </div>
 
-        <div id="heroVisual" class="hero-visual">
-          <div class="hero-visual-shape">
-            <div class="hero-floating-card">
-              <span class="floating-card-icon">A</span>
-              <div>
-                <strong>Capability first.</strong>
-                <span>Practical knowledge. Clear direction.</span>
-              </div>
-            </div>
-
-            <div class="hero-floating-card hero-floating-card-bottom">
-              <span class="floating-card-check">✓</span>
-              <div>
-                <strong>Built for real outcomes.</strong>
-                <span>Education and support that can be applied.</span>
-              </div>
-            </div>
-          </div>
+        <div class="top-actions">
+          <span id="authState">Not signed in</span>
+          <button id="accountBtn" class="primary">Sign in with Discord</button>
         </div>
-      </div>
-    </section>
+      </header>
 
-    <section class="content-section approach-section">
-      <div class="container narrow-container">
-        <span class="eyebrow">OUR APPROACH</span>
-        <h2 id="approachTitle">A practical approach</h2>
-        <p id="approachText">
-          We focus on useful knowledge, clear processes, and solutions that can
-          be applied in the real world.
-        </p>
-      </div>
-    </section>
-
-    <section id="servicesSection" class="content-section services-section">
-      <div class="container">
-        <div class="section-heading">
+      <section class="page">
+        <div class="hero-card">
           <div>
-            <span class="eyebrow">WHAT WE DO</span>
-            <h2>Education and consulting</h2>
+            <span class="kicker">THE AEGIS INSTITUTE</span>
+            <h1>Knowledge, structure, and operational excellence.</h1>
+            <p>
+              A central portal for departments, resources, standards,
+              procedures, and internal information.
+            </p>
+            <button id="heroLogin" class="primary">Sign in with Discord</button>
           </div>
-          <a href="/services.html" class="text-link">View all services →</a>
+
+          <div class="orb">
+            <span>A</span>
+          </div>
         </div>
 
-        <div class="content-card-grid">
-          <article class="content-card">
-            <div class="card-icon">01</div>
-            <h3 id="educationTitle">Education</h3>
-            <p id="educationText">
-              Structured learning designed to build knowledge, capability, and confidence.
-            </p>
-            <a href="/services.html" class="card-link">Learn more →</a>
-          </article>
+        <section id="departments" class="section-anchor">
+          <div class="section-head">
+            <div>
+              <span class="kicker">DIRECTORY</span>
+              <h2>Departments</h2>
+            </div>
+            <span id="editorBadge" class="badge hidden">Editor access</span>
+          </div>
 
-          <article class="content-card">
-            <div class="card-icon">02</div>
-            <h3 id="consultingTitle">Consulting</h3>
-            <p id="consultingText">
-              Practical guidance and support tailored to your goals and challenges.
-            </p>
-            <a href="/services.html" class="card-link">Learn more →</a>
-          </article>
-        </div>
-      </div>
-    </section>
+          <div id="departmentList" class="department-list"></div>
+        </section>
 
-    <section id="ctaSection" class="cta-section">
-      <div class="container">
-        <div class="cta-card">
-          <div>
-            <span class="eyebrow">GET STARTED</span>
-            <h2 id="ctaTitle">Ready to get started?</h2>
-            <p id="ctaText">
-              Get in touch with The Aegis Institute to discuss how we can help.
+        <section id="tags" class="section-anchor">
+          <div class="section-head">
+            <div>
+              <span class="kicker">CLASSIFICATION</span>
+              <h2>Available tags</h2>
+            </div>
+          </div>
+
+          <div id="tagList" class="tag-list"></div>
+        </section>
+
+        <section id="about" class="section-anchor">
+          <div class="panel about">
+            <span class="kicker">ABOUT</span>
+            <h2>A structured place for useful information.</h2>
+            <p>
+              The Aegis Institute portal provides a clean and centralised
+              location for departments, policies, resources, and operational
+              documentation.
             </p>
           </div>
-          <a id="ctaButton" href="/contact.html" class="button button-primary">
-            Contact Us
-          </a>
-        </div>
-      </div>
-    </section>
-  </main>
+        </section>
+      </section>
+    </main>
+  </div>
 
-  <footer class="site-footer">
-    <div class="container site-footer-inner">
-      <div>
-        <a href="/" class="footer-brand">THE AEGIS INSTITUTE</a>
-        <p id="footerText">© 2026 The Aegis Institute. All rights reserved.</p>
-      </div>
-
-      <div class="footer-links">
-        <a href="/services.html">Services</a>
-        <a href="/work.html">Our Work</a>
-        <a href="/contact.html">Contact</a>
-        <a href="/staff-login.html">Staff Login</a>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    const mobileMenuButton = document.getElementById("mobileMenuButton");
-    const siteNavigation = document.getElementById("siteNavigation");
-
-    mobileMenuButton.addEventListener("click", () => {
-      const isOpen = siteNavigation.classList.toggle("open");
-
-      mobileMenuButton.setAttribute(
-        "aria-expanded",
-        String(isOpen)
-      );
-
-      mobileMenuButton.setAttribute(
-        "aria-label",
-        isOpen ? "Close navigation" : "Open navigation"
-      );
-    });
-
-    function setText(id, value) {
-      const element = document.getElementById(id);
-
-      if (element && value !== undefined && value !== null) {
-        element.textContent = value;
-      }
-    }
-
-    function setLink(id, text, href) {
-      const element = document.getElementById(id);
-
-      if (!element) return;
-
-      if (text !== undefined && text !== null) {
-        element.textContent = text;
-      }
-
-      if (href !== undefined && href !== null && href !== "") {
-        element.href = href;
-      }
-    }
-
-    function isEnabled(value) {
-      return String(value).toLowerCase() === "true";
-    }
-
-    function applyContent(content) {
-      setText("siteName", content.site_name);
-      setText("siteTagline", content.site_tagline);
-      setText("footerText", content.footer_text);
-
-      setText("heroKicker", content.home_hero_kicker);
-      setText("heroTitle", content.home_hero_title);
-      setText("heroText", content.home_hero_text);
-
-      setLink(
-        "heroPrimaryButton",
-        content.home_hero_primary_button,
-        content.home_hero_primary_link
-      );
-
-      setLink(
-        "heroSecondaryButton",
-        content.home_hero_secondary_button,
-        content.home_hero_secondary_link
-      );
-
-      setText("approachTitle", content.home_approach_title);
-      setText("approachText", content.home_approach_text);
-
-      setText("educationTitle", content.home_education_title);
-      setText("educationText", content.home_education_text);
-
-      setText("consultingTitle", content.home_consulting_title);
-      setText("consultingText", content.home_consulting_text);
-
-      setText("ctaTitle", content.home_cta_title);
-      setText("ctaText", content.home_cta_text);
-
-      setLink(
-        "ctaButton",
-        content.home_cta_button,
-        content.home_cta_link
-      );
-
-      const announcement = document.getElementById("announcement");
-      const announcementTitle = document.getElementById("announcementTitle");
-      const announcementText = document.getElementById("announcementText");
-      const announcementLink = document.getElementById("announcementLink");
-
-      if (
-        isEnabled(content.announcement_enabled) &&
-        isEnabled(content.design_announcement_show) &&
-        content.announcement_text
-      ) {
-        announcement.classList.remove("hidden");
-        announcementTitle.textContent = content.announcement_title || "";
-        announcementText.textContent = content.announcement_text || "";
-
-        if (content.announcement_link) {
-          announcementLink.classList.remove("hidden");
-          announcementLink.textContent =
-            content.announcement_link_text || "Learn more";
-          announcementLink.href = content.announcement_link;
-        }
-      }
-
-      if (!isEnabled(content.design_hero_show_visual)) {
-        document.getElementById("heroVisual").style.display = "none";
-      }
-
-      if (!isEnabled(content.design_services_show)) {
-        document.getElementById("servicesSection").style.display = "none";
-      }
-
-      if (!isEnabled(content.design_cta_show)) {
-        document.getElementById("ctaSection").style.display = "none";
-      }
-
-      const root = document.documentElement;
-
-      const variables = {
-        "--primary": content.design_primary,
-        "--primary-dark": content.design_primary_dark,
-        "--accent": content.design_accent,
-        "--background": content.design_background,
-        "--surface": content.design_surface,
-        "--surface-alt": content.design_surface_alt,
-        "--text": content.design_text,
-        "--muted": content.design_muted,
-        "--border": content.design_border,
-        "--header-bg": content.design_header_bg,
-        "--footer-bg": content.design_footer_bg,
-        "--footer-text": content.design_footer_text,
-        "--font-family": content.design_font_family,
-        "--heading-weight": content.design_heading_weight,
-        "--body-size": content.design_body_size,
-        "--h1-size": content.design_h1_size,
-        "--h2-size": content.design_h2_size,
-        "--h3-size": content.design_h3_size,
-        "--line-height": content.design_line_height,
-        "--letter-spacing": content.design_letter_spacing,
-        "--content-width": content.design_content_width,
-        "--section-spacing": content.design_section_spacing,
-        "--card-gap": content.design_card_gap,
-        "--card-radius": content.design_card_radius,
-        "--button-radius": content.design_button_radius,
-        "--card-shadow": content.design_card_shadow,
-        "--header-height": content.design_header_height,
-        "--button-padding-x": content.design_button_padding_x,
-        "--button-padding-y": content.design_button_padding_y,
-        "--mobile-section-spacing": content.design_mobile_section_spacing,
-        "--mobile-body-size": content.design_mobile_body_size,
-        "--nav-text-size": content.design_nav_text_size,
-        "--hero-title-size": content.design_hero_title_size,
-        "--hero-text-size": content.design_hero_text_size
-      };
-
-      Object.entries(variables).forEach(([name, value]) => {
-        if (value) {
-          root.style.setProperty(name, value);
-        }
-      });
-    }
-
-    async function loadWebsiteContent() {
-      try {
-        const response = await fetch("/api/content");
-
-        if (!response.ok) {
-          throw new Error("Unable to load website content.");
-        }
-
-        const content = await response.json();
-        applyContent(content);
-      } catch (error) {
-        console.error("Website content error:", error);
-      }
-    }
-
-    loadWebsiteContent();
-  </script>
+  <script src="app.js"></script>
 </body>
 </html>
