@@ -67,41 +67,21 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
-    /* -----------------------------------------------------
-       DISCORD LOGIN
-    ----------------------------------------------------- */
-
     if (url.pathname === "/api/auth/discord") {
       return startDiscordLogin(env);
     }
-
-    /* -----------------------------------------------------
-       DISCORD CALLBACK
-    ----------------------------------------------------- */
 
     if (url.pathname === "/api/auth/callback") {
       return discordCallback(request, env);
     }
 
-    /* -----------------------------------------------------
-       CURRENT USER
-    ----------------------------------------------------- */
-
     if (url.pathname === "/api/auth/me") {
       return getMe(request, env);
     }
 
-    /* -----------------------------------------------------
-       LOGOUT
-    ----------------------------------------------------- */
-
     if (url.pathname === "/api/auth/logout") {
       return logout();
     }
-
-    /* -----------------------------------------------------
-       WEBSITE CONTENT
-    ----------------------------------------------------- */
 
     if (url.pathname === "/api/content") {
       if (request.method === "GET") {
@@ -119,10 +99,6 @@ export default {
         405
       );
     }
-
-    /* -----------------------------------------------------
-       STATIC WEBSITE
-    ----------------------------------------------------- */
 
     return env.ASSETS.fetch(request);
   }
@@ -142,36 +118,36 @@ function startDiscordLogin(env) {
   const redirectUri =
     String(env.DISCORD_REDIRECT_URI || "").trim();
 
-  /*
-    We intentionally do NOT return the previous
-    "Cloudflare is missing DISCORD_CLIENT_ID" message here.
-
-    If the variable is unavailable, Discord will return the
-    actual OAuth error, which is more useful for diagnosing
-    the configuration.
-  */
-
-  const params = new URLSearchParams();
-
-  params.set("client_id", clientId);
-  params.set("response_type", "code");
-  params.set("redirect_uri", redirectUri);
+  if (!clientId || !redirectUri) {
+    return new Response(
+      "Discord OAuth is not configured correctly on this Worker.",
+      {
+        status: 500,
+        headers: {
+          "Content-Type": "text/plain; charset=UTF-8"
+        }
+      }
+    );
+  }
 
   /*
-    identify:
-      Allows the application to identify the Discord user.
+    IMPORTANT:
 
-    guilds.members.read:
-      Allows the application to read the current user's
-      membership information in a guild.
+    We only request "identify".
+
+    We do NOT request guilds.members.read anymore.
+
+    The bot will check the user's server roles after
+    Discord returns the OAuth code.
   */
 
-  params.set(
-    "scope",
-    "identify guilds.members.read"
-  );
-
-  params.set("state", state);
+  const params = new URLSearchParams({
+    client_id: clientId,
+    response_type: "code",
+    redirect_uri: redirectUri,
+    scope: "identify",
+    state: state
+  });
 
   const discordUrl =
     "https://discord.com/oauth2/authorize?" +
@@ -181,7 +157,7 @@ function startDiscordLogin(env) {
     status: 302,
 
     headers: {
-      "Location": discordUrl,
+      Location: discordUrl,
 
       "Set-Cookie":
         `aegis_oauth_state=${state}; ` +
@@ -204,11 +180,6 @@ function startDiscordLogin(env) {
 async function discordCallback(request, env) {
   const url = new URL(request.url);
 
-  /*
-    If Discord returns an OAuth error, show the actual
-    Discord error instead of hiding it.
-  */
-
   const oauthError =
     url.searchParams.get("error");
 
@@ -226,9 +197,11 @@ async function discordCallback(request, env) {
       ),
       {
         status: 400,
+
         headers: {
           "Content-Type":
             "text/plain; charset=UTF-8",
+
           "Cache-Control":
             "no-store"
         }
@@ -251,10 +224,6 @@ async function discordCallback(request, env) {
       "aegis_oauth_state"
     );
 
-  /*
-    Validate OAuth state.
-  */
-
   if (
     !code ||
     !returnedState ||
@@ -265,9 +234,11 @@ async function discordCallback(request, env) {
       "Invalid OAuth state. Please try logging in again.",
       {
         status: 400,
+
         headers: {
           "Content-Type":
             "text/plain; charset=UTF-8",
+
           "Cache-Control":
             "no-store"
         }
@@ -277,8 +248,7 @@ async function discordCallback(request, env) {
 
   try {
     /*
-      Exchange Discord authorization code
-      for an access token.
+      Exchange the OAuth code for an access token.
     */
 
     const accessToken =
@@ -298,24 +268,17 @@ async function discordCallback(request, env) {
       );
 
     /*
-      Get the user's membership in the configured
-      Discord server.
-    */
+      Check this user's roles using the BOT.
 
-    const guildId =
-      String(
-        env.DISCORD_GUILD_ID || ""
-      ).trim();
+      This means we don't need to request
+      guilds.members.read from the user.
+    */
 
     const member =
-      await discordGet(
-        `https://discord.com/api/v10/users/@me/guilds/${guildId}/member`,
-        accessToken
+      await getGuildMemberUsingBot(
+        user.id,
+        env
       );
-
-    /*
-      Discord returns an array of role IDs.
-    */
 
     const roles =
       Array.isArray(member.roles)
@@ -323,11 +286,8 @@ async function discordCallback(request, env) {
         : [];
 
     /*
-      Read authorized roles from Cloudflare.
-
-      Example:
-
-      123456789012345678,987654321098765432
+      Get the role IDs that are allowed to edit
+      the Aegis website.
     */
 
     const allowedRoles =
@@ -339,8 +299,8 @@ async function discordCallback(request, env) {
         .filter(Boolean);
 
     /*
-      Check whether the Discord user has
-      at least one authorized role.
+      User is authorized if they have at least
+      one of the configured roles.
     */
 
     const authorized =
@@ -349,13 +309,19 @@ async function discordCallback(request, env) {
       );
 
     /*
-      Create our website session.
+      Create website session.
     */
 
     const sessionSecret =
       String(
         env.SESSION_SECRET || ""
       ).trim();
+
+    if (!sessionSecret) {
+      throw new Error(
+        "SESSION_SECRET is not configured."
+      );
+    }
 
     const payload = {
       userId: user.id,
@@ -377,13 +343,6 @@ async function discordCallback(request, env) {
         sessionSecret
       );
 
-    /*
-      Authorized users go to the editor.
-
-      Everyone else goes back to the
-      public website.
-    */
-
     const destination =
       authorized
         ? "/admin.html"
@@ -393,7 +352,7 @@ async function discordCallback(request, env) {
       status: 302,
 
       headers: {
-        "Location": destination,
+        Location: destination,
 
         "Set-Cookie": [
           `aegis_session=${session}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=28800`,
@@ -431,6 +390,93 @@ async function discordCallback(request, env) {
 
 
 /* =========================================================
+   GET GUILD MEMBER USING BOT
+========================================================= */
+
+async function getGuildMemberUsingBot(
+  userId,
+  env
+) {
+  const guildId =
+    String(
+      env.DISCORD_GUILD_ID || ""
+    ).trim();
+
+  const botToken =
+    String(
+      env.DISCORD_BOT_TOKEN || ""
+    ).trim();
+
+  if (!guildId) {
+    throw new Error(
+      "DISCORD_GUILD_ID is not configured."
+    );
+  }
+
+  if (!botToken) {
+    throw new Error(
+      "DISCORD_BOT_TOKEN is not configured."
+    );
+  }
+
+  const response =
+    await fetch(
+      `https://discord.com/api/v10/guilds/${guildId}/members/${userId}`,
+      {
+        method: "GET",
+
+        headers: {
+          "Authorization":
+            `Bot ${botToken}`,
+
+          "Accept":
+            "application/json",
+
+          "User-Agent":
+            "Aegis Institute/1.0"
+        }
+      }
+    );
+
+  if (!response.ok) {
+    let details = "";
+
+    try {
+      const errorData =
+        await response.json();
+
+      details =
+        errorData.message ||
+        errorData.error ||
+        "";
+
+    } catch {
+      details =
+        await response.text()
+          .catch(() => "");
+    }
+
+    if (response.status === 404) {
+      throw new Error(
+        "You are not a member of the Aegis Discord server."
+      );
+    }
+
+    throw new Error(
+      "Discord bot could not check your server membership" +
+      (
+        details
+          ? ": " + details
+          : ` (HTTP ${response.status})`
+      )
+    );
+  }
+
+  return response.json();
+}
+
+
+/* =========================================================
    DISCORD TOKEN EXCHANGE
 ========================================================= */
 
@@ -453,10 +499,23 @@ async function exchangeCode(
       env.DISCORD_REDIRECT_URI || ""
     ).trim();
 
-  /*
-    Send the values to Discord exactly as
-    application/x-www-form-urlencoded.
-  */
+  if (!clientId) {
+    throw new Error(
+      "DISCORD_CLIENT_ID is unavailable to this Worker."
+    );
+  }
+
+  if (!clientSecret) {
+    throw new Error(
+      "DISCORD_CLIENT_SECRET is unavailable to this Worker."
+    );
+  }
+
+  if (!redirectUri) {
+    throw new Error(
+      "DISCORD_REDIRECT_URI is unavailable to this Worker."
+    );
+  }
 
   const body =
     new URLSearchParams({
@@ -481,17 +540,16 @@ async function exchangeCode(
 
         headers: {
           "Content-Type":
-            "application/x-www-form-urlencoded"
+            "application/x-www-form-urlencoded",
+
+          "User-Agent":
+            "Aegis Institute/1.0"
         },
 
-        body: body.toString()
+        body:
+          body.toString()
       }
     );
-
-  /*
-    Discord may return JSON describing
-    exactly why the exchange failed.
-  */
 
   if (!response.ok) {
     let details = "";
@@ -557,7 +615,10 @@ async function discordGet(
             `Bearer ${token}`,
 
           "Accept":
-            "application/json"
+            "application/json",
+
+          "User-Agent":
+            "Aegis Institute/1.0"
         }
       }
     );
@@ -663,11 +724,6 @@ async function getMe(
 async function getContent(
   env
 ) {
-  /*
-    If D1 isn't connected, use the
-    default website content.
-  */
-
   if (!env.DB) {
     return json(
       DEFAULT_DATA
@@ -682,20 +738,11 @@ async function getContent(
         )
         .first();
 
-    /*
-      Nothing saved yet.
-    */
-
     if (!row) {
       return json(
         DEFAULT_DATA
       );
     }
-
-    /*
-      Convert stored JSON back into
-      an object.
-    */
 
     try {
       return json(
@@ -708,11 +755,6 @@ async function getContent(
     }
 
   } catch {
-    /*
-      If D1 has an issue, don't completely
-      break the public website.
-    */
-
     return json(
       DEFAULT_DATA
     );
@@ -728,20 +770,11 @@ async function saveContent(
   request,
   env
 ) {
-  /*
-    Check the website session.
-  */
-
   const session =
     await getSession(
       request,
       env
     );
-
-  /*
-    Only authorized Discord users
-    may edit the website.
-  */
 
   if (
     !session ||
@@ -755,10 +788,6 @@ async function saveContent(
       403
     );
   }
-
-  /*
-    D1 is required to save edits.
-  */
 
   if (!env.DB) {
     return json(
@@ -785,10 +814,6 @@ async function saveContent(
       400
     );
   }
-
-  /*
-    Save the website content.
-  */
 
   try {
     await env.DB
@@ -990,10 +1015,6 @@ async function verifySession(
           )
         )
       );
-
-    /*
-      Check session expiration.
-    */
 
     if (
       !payload.exp ||
