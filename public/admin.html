@@ -118,6 +118,7 @@
       max-width: 1500px;
       width: 100%;
       margin: 0 auto;
+      box-sizing: border-box;
     }
 
     .admin-page {
@@ -485,11 +486,12 @@
     }
 
     .preview-nav {
-      height: 55px;
+      min-height: 55px;
       display: flex;
       align-items: center;
       padding: 0 18px;
       justify-content: space-between;
+      gap: 12px;
       border-bottom: 1px solid #e2e8ec;
       background: white;
     }
@@ -505,6 +507,8 @@
       gap: 12px;
       font-size: 9px;
       color: #647988;
+      flex-wrap: wrap;
+      justify-content: flex-end;
     }
 
     .preview-hero {
@@ -625,6 +629,20 @@
 
       .save-bar {
         bottom: 8px;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .save-bar > div {
+        width: 100%;
+      }
+
+      .save-bar button {
+        flex: 1;
+      }
+
+      .preview-links {
+        display: none;
       }
     }
   </style>
@@ -644,10 +662,11 @@
     </div>
 
     <div class="admin-actions">
-      <button class="btn btn-secondary" onclick="window.open('/', '_blank')">
+      <button class="btn btn-secondary" type="button" onclick="window.open('/', '_blank')">
         View Website
       </button>
-      <button class="btn btn-danger" onclick="logout()">
+
+      <button class="btn btn-danger" type="button" onclick="logout()">
         Logout
       </button>
     </div>
@@ -659,47 +678,47 @@
 
       <div class="sidebar-label">Website</div>
 
-      <button class="side-btn active" data-page="overview">
+      <button class="side-btn active" type="button" data-page="overview">
         Overview
       </button>
 
-      <button class="side-btn" data-page="content">
+      <button class="side-btn" type="button" data-page="content">
         Website Content
       </button>
 
-      <button class="side-btn" data-page="design">
+      <button class="side-btn" type="button" data-page="design">
         Global Design
       </button>
 
-      <button class="side-btn" data-page="home">
+      <button class="side-btn" type="button" data-page="home">
         Home
       </button>
 
-      <button class="side-btn" data-page="services">
+      <button class="side-btn" type="button" data-page="services">
         Services
       </button>
 
-      <button class="side-btn" data-page="work">
+      <button class="side-btn" type="button" data-page="work">
         Our Work
       </button>
 
-      <button class="side-btn" data-page="contact">
+      <button class="side-btn" type="button" data-page="contact">
         Contact
       </button>
 
       <div class="sidebar-label">Staff</div>
 
-      <button class="side-btn" data-page="codes">
+      <button class="side-btn" type="button" data-page="codes">
         Login Codes
       </button>
 
-      <button class="side-btn" data-page="documents">
+      <button class="side-btn" type="button" data-page="documents">
         Documents
       </button>
 
       <div class="sidebar-label">System</div>
 
-      <button class="side-btn" data-page="announcement">
+      <button class="side-btn" type="button" data-page="announcement">
         Announcement
       </button>
 
@@ -707,7 +726,6 @@
 
     <main class="admin-main">
 
-      <!-- OVERVIEW -->
       <section class="admin-page active" id="page-overview">
 
         <div class="page-heading">
@@ -721,7 +739,7 @@
         <div class="stat-grid">
           <div class="stat">
             <span>Website</span>
-            <strong id="statWebsite">Ready</strong>
+            <strong id="statWebsite">Loading</strong>
           </div>
 
           <div class="stat">
@@ -779,8 +797,6 @@
 
       </section>
 
-
-      <!-- CONTENT -->
       <section class="admin-page" id="page-content">
 
         <div class="page-heading">
@@ -793,7 +809,6 @@
           <p>Core website information.</p>
 
           <div class="editor-grid">
-
             <div class="field">
               <label>Site Name</label>
               <input data-key="site_name">
@@ -808,7 +823,6 @@
               <label>Footer Text</label>
               <textarea data-key="footer_text"></textarea>
             </div>
-
           </div>
         </div>
 
@@ -817,7 +831,6 @@
           <p>Main headline displayed at the top of the homepage.</p>
 
           <div class="editor-grid">
-
             <div class="field">
               <label>Kicker</label>
               <input data-key="home_hero_kicker">
@@ -852,7 +865,6 @@
               <label>Secondary Button Link</label>
               <input data-key="home_hero_secondary_link">
             </div>
-
           </div>
         </div>
 
@@ -861,7 +873,6 @@
           <p>Edit the main homepage sections.</p>
 
           <div class="editor-grid">
-
             <div class="field">
               <label>Approach Title</label>
               <input data-key="home_approach_title">
@@ -911,14 +922,11 @@
               <label>CTA Link</label>
               <input data-key="home_cta_link">
             </div>
-
           </div>
         </div>
 
       </section>
 
-
-      <!-- DESIGN -->
       <section class="admin-page" id="page-design">
 
         <div class="page-heading">
@@ -1034,17 +1042,14 @@
           </div>
         </div>
 
-
         <div class="editor-card">
           <h2>Typography</h2>
           <p>Change text sizing and typography throughout the website.</p>
 
           <div class="editor-grid three">
-
             <div class="field">
               <label>Font Family</label>
-              <input data-key="design_font_family"
-                     placeholder="Inter, Arial, sans-serif">
+              <input data-key="design_font_family" placeholder="Inter, Arial, sans-serif">
             </div>
 
             <div class="field">
@@ -1102,17 +1107,14 @@
               <label>Hero Text Size</label>
               <input data-key="design_hero_text_size" placeholder="18px">
             </div>
-
           </div>
         </div>
-
 
         <div class="editor-card">
           <h2>Layout</h2>
           <p>Control spacing, widths, cards, buttons and overall proportions.</p>
 
           <div class="editor-grid three">
-
             <div class="field">
               <label>Content Width</label>
               <input data-key="design_content_width" placeholder="1200px">
@@ -1179,13 +1181,10 @@
 
             <div class="field">
               <label>Card Shadow</label>
-              <input data-key="design_card_shadow"
-                     placeholder="0 12px 40px rgba(0,0,0,.06)">
+              <input data-key="design_card_shadow" placeholder="0 12px 40px rgba(0,0,0,.06)">
             </div>
-
           </div>
         </div>
-
 
         <div class="editor-card">
           <h2>Website Sections</h2>
@@ -1270,8 +1269,22 @@
 
       </section>
 
+      <section class="admin-page" id="page-home">
+        <div class="page-heading">
+          <h1>Home</h1>
+          <p>Homepage content is managed in the Website Content and Global Design sections.</p>
+        </div>
 
-      <!-- SERVICES -->
+        <div class="editor-card">
+          <h2>Homepage management</h2>
+          <p>Use Website Content to edit homepage wording and Global Design to change its appearance.</p>
+
+          <button class="btn btn-primary" type="button" onclick="showPage('content')">
+            Open Website Content
+          </button>
+        </div>
+      </section>
+
       <section class="admin-page" id="page-services">
 
         <div class="page-heading">
@@ -1332,8 +1345,6 @@
 
       </section>
 
-
-      <!-- WORK -->
       <section class="admin-page" id="page-work">
 
         <div class="page-heading">
@@ -1368,12 +1379,12 @@
           <div class="editor-grid">
             <div class="field">
               <label>Title</label>
-              <input data-key="work_project_1_title">
+              <input data-key="work_project_one_title">
             </div>
 
             <div class="field full">
               <label>Description</label>
-              <textarea data-key="work_project_1_text"></textarea>
+              <textarea data-key="work_project_one_text"></textarea>
             </div>
           </div>
         </div>
@@ -1384,12 +1395,12 @@
           <div class="editor-grid">
             <div class="field">
               <label>Title</label>
-              <input data-key="work_project_2_title">
+              <input data-key="work_project_two_title">
             </div>
 
             <div class="field full">
               <label>Description</label>
-              <textarea data-key="work_project_2_text"></textarea>
+              <textarea data-key="work_project_two_text"></textarea>
             </div>
           </div>
         </div>
@@ -1400,20 +1411,18 @@
           <div class="editor-grid">
             <div class="field">
               <label>Title</label>
-              <input data-key="work_project_3_title">
+              <input data-key="work_project_three_title">
             </div>
 
             <div class="field full">
               <label>Description</label>
-              <textarea data-key="work_project_3_text"></textarea>
+              <textarea data-key="work_project_three_text"></textarea>
             </div>
           </div>
         </div>
 
       </section>
 
-
-      <!-- CONTACT -->
       <section class="admin-page" id="page-contact">
 
         <div class="page-heading">
@@ -1422,7 +1431,6 @@
         </div>
 
         <div class="editor-card">
-
           <div class="editor-grid">
 
             <div class="field">
@@ -1481,13 +1489,10 @@
             </div>
 
           </div>
-
         </div>
 
       </section>
 
-
-      <!-- ANNOUNCEMENT -->
       <section class="admin-page" id="page-announcement">
 
         <div class="page-heading">
@@ -1532,13 +1537,10 @@
             </div>
 
           </div>
-
         </div>
 
       </section>
 
-
-      <!-- LOGIN CODES -->
       <section class="admin-page" id="page-codes">
 
         <div class="page-heading">
@@ -1607,7 +1609,7 @@
           </div>
 
           <div style="margin-top:18px;">
-            <button class="btn btn-primary" onclick="createCode()">
+            <button class="btn btn-primary" type="button" onclick="createCode()">
               Generate Staff Code
             </button>
           </div>
@@ -1616,7 +1618,7 @@
             <div class="code-display" id="newCode"></div>
 
             <div style="display:flex;gap:8px;justify-content:center;margin-top:10px;">
-              <button class="btn btn-secondary btn-small" onclick="copyCode()">
+              <button class="btn btn-secondary btn-small" type="button" onclick="copyCode()">
                 Copy Code
               </button>
             </div>
@@ -1624,14 +1626,12 @@
 
         </div>
 
-
         <div class="editor-card">
 
           <h2>Existing Codes</h2>
           <p>Activate, deactivate or remove existing staff codes.</p>
 
           <div class="table-wrap">
-
             <table>
               <thead>
                 <tr>
@@ -1649,15 +1649,12 @@
                 </tr>
               </tbody>
             </table>
-
           </div>
 
         </div>
 
       </section>
 
-
-      <!-- DOCUMENTS -->
       <section class="admin-page" id="page-documents">
 
         <div class="page-heading">
@@ -1698,7 +1695,7 @@
           </div>
 
           <div style="margin-top:18px;">
-            <button class="btn btn-primary" onclick="createDocument()">
+            <button class="btn btn-primary" type="button" onclick="createDocument()">
               Create Document
             </button>
           </div>
@@ -1710,7 +1707,6 @@
           <h2>Existing Documents</h2>
 
           <div class="table-wrap">
-
             <table>
               <thead>
                 <tr>
@@ -1727,13 +1723,11 @@
                 </tr>
               </tbody>
             </table>
-
           </div>
 
         </div>
 
       </section>
-
 
       <div class="save-bar">
         <span class="save-status" id="saveStatus">
@@ -1741,11 +1735,11 @@
         </span>
 
         <div style="display:flex;gap:8px;">
-          <button class="btn btn-secondary" onclick="loadContent()">
+          <button class="btn btn-secondary" type="button" onclick="loadContent()">
             Reset
           </button>
 
-          <button class="btn btn-primary" onclick="saveContent()">
+          <button class="btn btn-primary" type="button" onclick="saveContent()">
             Save Changes
           </button>
         </div>
@@ -1759,20 +1753,20 @@
 
 <div class="toast" id="toast"></div>
 
-
 <script>
+"use strict";
 
 let content = {};
 let me = null;
 let codes = [];
 let documents = [];
+let toastTimer = null;
+let redirecting = false;
 
 const $ = selector => document.querySelector(selector);
 const $$ = selector => [...document.querySelectorAll(selector)];
 
-
 async function api(url, options = {}) {
-
   const response = await fetch(url, {
     credentials: "include",
     ...options,
@@ -1791,33 +1785,38 @@ async function api(url, options = {}) {
   }
 
   if (!response.ok) {
-    throw new Error(data.error || "Request failed");
+    throw new Error(data.error || data.message || `Request failed: ${response.status}`);
   }
 
   return data;
 }
 
-
 function toast(message) {
-
   const element = $("#toast");
+
+  if (!element) {
+    return;
+  }
 
   element.textContent = message;
   element.classList.add("show");
 
-  setTimeout(() => {
+  clearTimeout(toastTimer);
+
+  toastTimer = setTimeout(() => {
     element.classList.remove("show");
   }, 2600);
 }
 
-
 function setSaveStatus(message) {
-  $("#saveStatus").textContent = message;
+  const element = $("#saveStatus");
+
+  if (element) {
+    element.textContent = message;
+  }
 }
 
-
 function showPage(page) {
-
   $$(".admin-page").forEach(section => {
     section.classList.toggle(
       "active",
@@ -1841,47 +1840,30 @@ function showPage(page) {
   }
 }
 
-
 $$(".side-btn").forEach(button => {
-
   button.addEventListener("click", () => {
-
-    const page = button.dataset.page;
-
-    showPage(page);
-
+    showPage(button.dataset.page);
   });
-
 });
 
-
 function populateFields() {
-
   $$("[data-key]").forEach(input => {
-
     const key = input.dataset.key;
-
     input.value = content[key] ?? "";
-
   });
 
-
   $$("[data-toggle-key]").forEach(input => {
-
     const key = input.dataset.toggleKey;
 
     input.checked =
       content[key] === true ||
       content[key] === "true" ||
-      content[key] === "1";
-
+      content[key] === "1" ||
+      content[key] === 1;
   });
 
-
   $$("[data-color-for]").forEach(colorInput => {
-
     const key = colorInput.dataset.colorFor;
-
     let value = content[key] || "#000000";
 
     if (!/^#[0-9a-f]{6}$/i.test(value)) {
@@ -1889,81 +1871,52 @@ function populateFields() {
     }
 
     colorInput.value = value;
-
   });
-
 
   updatePreview();
-
 }
-
 
 function collectFields() {
-
   $$("[data-key]").forEach(input => {
-
     content[input.dataset.key] = input.value;
-
   });
-
 
   $$("[data-toggle-key]").forEach(input => {
-
     content[input.dataset.toggleKey] = input.checked;
-
   });
-
 }
 
-
 $$("[data-color-for]").forEach(colorInput => {
-
   colorInput.addEventListener("input", () => {
-
     const key = colorInput.dataset.colorFor;
-
-    const textInput =
-      document.querySelector(`[data-key="${key}"]`);
+    const textInput = document.querySelector(`[data-key="${key}"]`);
 
     if (textInput) {
       textInput.value = colorInput.value;
     }
 
+    setSaveStatus("Unsaved changes");
     updatePreview();
-
   });
-
 });
 
-
 $$("[data-key]").forEach(input => {
-
   input.addEventListener("input", () => {
-
     if (input.dataset.key.startsWith("design_")) {
       updatePreview();
     }
 
     setSaveStatus("Unsaved changes");
-
   });
-
 });
-
 
 $$("[data-toggle-key]").forEach(input => {
-
   input.addEventListener("change", () => {
-
     setSaveStatus("Unsaved changes");
-
   });
-
 });
 
-
 function updatePreview() {
-
   const primary =
     $('[data-key="design_primary"]')?.value || "#67e8e0";
 
@@ -2006,31 +1959,22 @@ function updatePreview() {
   $("#previewButton").textContent = button;
 
   $("#livePreview").style.fontFamily = font;
-
   $("#livePreview").style.background = background;
 
   $("#previewBrand").style.color = text;
-
   $("#previewKicker").style.color = primary;
-
   $("#previewTitle").style.color = text;
-
   $("#previewText").style.color = muted;
-
   $("#previewButton").style.background = primary;
 
   const heroAlign =
     $('[data-key="design_hero_alignment"]')?.value || "left";
 
   $(".preview-hero").style.textAlign = heroAlign;
-
 }
 
-
 async function loadContent() {
-
   try {
-
     setSaveStatus("Loading...");
 
     const data = await api("/api/content");
@@ -2041,28 +1985,18 @@ async function loadContent() {
 
     setSaveStatus("All changes are saved.");
 
-    $("#statFields").textContent =
-      Object.keys(content).length;
-
+    $("#statFields").textContent = Object.keys(content).length;
     $("#statWebsite").textContent = "Online";
-
   } catch (error) {
-
-    console.error(error);
+    console.error("Content loading error:", error);
 
     setSaveStatus("Unable to load website content.");
-
     toast(error.message);
-
   }
-
 }
 
-
 async function saveContent() {
-
   try {
-
     collectFields();
 
     setSaveStatus("Saving...");
@@ -2074,76 +2008,88 @@ async function saveContent() {
       })
     });
 
-    setSaveStatus(
-      "Saved successfully."
-    );
-
+    setSaveStatus("Saved successfully.");
     toast("Website changes saved.");
-
   } catch (error) {
+    console.error("Content saving error:", error);
 
-    console.error(error);
-
-    setSaveStatus(
-      "Save failed."
-    );
-
+    setSaveStatus("Save failed.");
     toast(error.message);
-
   }
-
 }
 
-
 async function checkAuth() {
-
   try {
-
     const data = await api("/api/auth/me");
 
     me = data;
 
-    if (!me.authorized) {
+    /*
+      The worker may return either:
+      {
+        authorized: true
+      }
 
-      window.location.href = "/staff-login.html";
+      or:
+      {
+        authenticated: true,
+        authorized: true
+      }
+
+      Only redirect when the response clearly says the session
+      is not authenticated or authorized.
+    */
+
+    const authenticated =
+      data.authenticated === true ||
+      data.loggedIn === true ||
+      data.authorized === true ||
+      data.user ||
+      data.staff ||
+      data.session;
+
+    const explicitlyDenied =
+      data.authenticated === false ||
+      data.loggedIn === false ||
+      data.authorized === false;
+
+    if (explicitlyDenied || !authenticated) {
+      if (!redirecting) {
+        redirecting = true;
+        window.location.href = "/staff-login.html";
+      }
 
       return false;
-
     }
 
     return true;
+  } catch (error) {
+    console.error("Authentication check error:", error);
 
-  } catch {
-
-    window.location.href = "/staff-login.html";
+    if (!redirecting) {
+      redirecting = true;
+      window.location.href = "/staff-login.html";
+    }
 
     return false;
-
   }
-
 }
 
-
 async function logout() {
-
   try {
-
     await api("/api/auth/logout", {
       method: "POST",
       body: "{}"
     });
-
-  } catch {}
+  } catch (error) {
+    console.warn("Logout request failed:", error);
+  }
 
   window.location.href = "/staff-login.html";
-
 }
 
-
 async function loadCodes() {
-
   try {
-
     const data = await api("/api/login-codes");
 
     codes = data.codes || [];
@@ -2151,22 +2097,16 @@ async function loadCodes() {
     $("#statCodes").textContent = codes.length;
 
     renderCodes();
-
   } catch (error) {
-
+    console.error("Code loading error:", error);
     toast(error.message);
-
   }
-
 }
 
-
 function renderCodes() {
-
   const table = $("#codesTable");
 
   if (!codes.length) {
-
     table.innerHTML = `
       <tr>
         <td colspan="5">No staff login codes have been created.</td>
@@ -2174,12 +2114,12 @@ function renderCodes() {
     `;
 
     return;
-
   }
 
   table.innerHTML = codes.map(code => {
-
-    const active = Number(code.active) === 1;
+    const active =
+      Number(code.active) === 1 ||
+      code.active === true;
 
     const permissions =
       Array.isArray(code.permissions)
@@ -2193,7 +2133,6 @@ function renderCodes() {
 
     return `
       <tr>
-
         <td>
           <strong>${escapeHtml(code.name)}</strong>
         </td>
@@ -2214,131 +2153,97 @@ function renderCodes() {
 
         <td>
           <div style="display:flex;gap:5px;flex-wrap:wrap;">
-
             <button
               class="btn btn-secondary btn-small"
-              onclick="toggleCode(${code.id}, ${active ? 0 : 1})">
+              type="button"
+              onclick="toggleCode(${Number(code.id)}, ${active ? 0 : 1})">
               ${active ? "Disable" : "Enable"}
             </button>
 
             <button
               class="btn btn-danger btn-small"
-              onclick="deleteCode(${code.id})">
+              type="button"
+              onclick="deleteCode(${Number(code.id)})">
               Delete
             </button>
-
           </div>
         </td>
-
       </tr>
     `;
-
   }).join("");
-
 }
 
-
 async function createCode() {
-
-  const name =
-    $("#codeName").value.trim();
+  const name = $("#codeName").value.trim();
 
   if (!name) {
-
     toast("Enter a staff name.");
-
     return;
-
   }
 
-  const permissions =
-    $$(".permission-check input:checked")
-      .map(input => input.value);
+  const permissions = $$(".permission-check input:checked")
+    .map(input => input.value);
 
   if (!permissions.length) {
-
     toast("Select at least one permission.");
-
     return;
-
   }
 
   let expiresAt = null;
 
   if ($("#codeExpiry").value) {
-
-    expiresAt =
-      new Date(
-        $("#codeExpiry").value
-      ).toISOString();
-
+    expiresAt = new Date(
+      $("#codeExpiry").value
+    ).toISOString();
   }
 
   try {
-
     const result = await api("/api/login-codes", {
-
       method: "POST",
-
       body: JSON.stringify({
         name,
         permissions,
         expires_at: expiresAt
       })
-
     });
 
-    $("#newCode").textContent =
-      result.code;
-
-    $("#newCodeBox").style.display =
-      "block";
+    $("#newCode").textContent = result.code;
+    $("#newCodeBox").style.display = "block";
 
     $("#codeName").value = "";
     $("#codeExpiry").value = "";
 
-    $$(".permission-check input")
-      .forEach(input => {
-        input.checked = false;
-      });
+    $$(".permission-check input").forEach(input => {
+      input.checked = false;
+    });
 
     toast("Staff code created.");
 
     await loadCodes();
-
   } catch (error) {
-
+    console.error("Code creation error:", error);
     toast(error.message);
-
   }
-
 }
 
-
-function copyCode() {
-
-  const code =
-    $("#newCode").textContent;
-
-  navigator.clipboard.writeText(code)
-    .then(() => toast("Code copied."))
-    .catch(() => toast("Unable to copy code."));
-
-}
-
-
-async function toggleCode(id, active) {
+async function copyCode() {
+  const code = $("#newCode").textContent;
 
   try {
+    await navigator.clipboard.writeText(code);
+    toast("Code copied.");
+  } catch {
+    toast("Unable to copy code.");
+  }
+}
 
+async function toggleCode(id, active) {
+  try {
     await api(`/api/login-codes/${id}`, {
-
       method: "PATCH",
-
       body: JSON.stringify({
         active: Boolean(active)
       })
-
     });
 
     await loadCodes();
@@ -2348,24 +2253,18 @@ async function toggleCode(id, active) {
         ? "Code enabled."
         : "Code disabled."
     );
-
   } catch (error) {
-
+    console.error("Code update error:", error);
     toast(error.message);
-
   }
-
 }
 
-
 async function deleteCode(id) {
-
   if (!confirm("Delete this login code? This cannot be undone.")) {
     return;
   }
 
   try {
-
     await api(`/api/login-codes/${id}`, {
       method: "DELETE"
     });
@@ -2373,47 +2272,31 @@ async function deleteCode(id) {
     await loadCodes();
 
     toast("Login code deleted.");
-
   } catch (error) {
-
+    console.error("Code deletion error:", error);
     toast(error.message);
-
   }
-
 }
-
 
 async function loadDocuments() {
-
   try {
+    const data = await api("/api/documents");
 
-    const data =
-      await api("/api/documents");
+    documents = data.documents || [];
 
-    documents =
-      data.documents || [];
-
-    $("#statDocuments").textContent =
-      documents.length;
+    $("#statDocuments").textContent = documents.length;
 
     renderDocuments();
-
   } catch (error) {
-
+    console.error("Document loading error:", error);
     toast(error.message);
-
   }
-
 }
 
-
 function renderDocuments() {
-
-  const table =
-    $("#documentsTable");
+  const table = $("#documentsTable");
 
   if (!documents.length) {
-
     table.innerHTML = `
       <tr>
         <td colspan="4">No documents have been created.</td>
@@ -2421,84 +2304,60 @@ function renderDocuments() {
     `;
 
     return;
-
   }
 
-  table.innerHTML =
-    documents.map(doc => `
+  table.innerHTML = documents.map(doc => `
+    <tr>
+      <td>
+        <strong>${escapeHtml(doc.title)}</strong>
+      </td>
 
-      <tr>
+      <td>
+        <span class="badge">
+          ${escapeHtml(doc.permission)}
+        </span>
+      </td>
 
-        <td>
-          <strong>${escapeHtml(doc.title)}</strong>
-        </td>
+      <td>
+        ${escapeHtml(
+          doc.updated_at
+            ? new Date(doc.updated_at).toLocaleString()
+            : "Unknown"
+        )}
+      </td>
 
-        <td>
-          <span class="badge">
-            ${escapeHtml(doc.permission)}
-          </span>
-        </td>
-
-        <td>
-          ${escapeHtml(
-            new Date(doc.updated_at).toLocaleString()
-          )}
-        </td>
-
-        <td>
-
-          <button
-            class="btn btn-danger btn-small"
-            onclick="deleteDocument(${doc.id})">
-            Delete
-          </button>
-
-        </td>
-
-      </tr>
-
-    `).join("");
-
+      <td>
+        <button
+          class="btn btn-danger btn-small"
+          type="button"
+          onclick="deleteDocument(${Number(doc.id)})">
+          Delete
+        </button>
+      </td>
+    </tr>
+  `).join("");
 }
 
-
 async function createDocument() {
-
-  const title =
-    $("#docTitle").value.trim();
-
-  const description =
-    $("#docDescription").value.trim();
-
-  const documentContent =
-    $("#docContent").value;
-
-  const permission =
-    $("#docPermission").value;
+  const title = $("#docTitle").value.trim();
+  const description = $("#docDescription").value.trim();
+  const documentContent = $("#docContent").value;
+  const permission = $("#docPermission").value;
 
   if (!title) {
-
     toast("Enter a document title.");
-
     return;
-
   }
 
   try {
-
     await api("/api/documents", {
-
       method: "POST",
-
       body: JSON.stringify({
-
         title,
         description,
         content: documentContent,
         permission
-
       })
-
     });
 
     $("#docTitle").value = "";
@@ -2508,24 +2367,18 @@ async function createDocument() {
     await loadDocuments();
 
     toast("Document created.");
-
   } catch (error) {
-
+    console.error("Document creation error:", error);
     toast(error.message);
-
   }
-
 }
 
-
 async function deleteDocument(id) {
-
   if (!confirm("Delete this document?")) {
     return;
   }
 
   try {
-
     await api(`/api/documents/${id}`, {
       method: "DELETE"
     });
@@ -2533,48 +2386,34 @@ async function deleteDocument(id) {
     await loadDocuments();
 
     toast("Document deleted.");
-
   } catch (error) {
-
+    console.error("Document deletion error:", error);
     toast(error.message);
-
   }
-
 }
 
-
 function escapeHtml(value) {
-
   return String(value ?? "")
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
-
 }
 
-
 async function start() {
-
-  const authenticated =
-    await checkAuth();
+  const authenticated = await checkAuth();
 
   if (!authenticated) {
     return;
   }
 
   await loadContent();
-
   await loadCodes();
-
   await loadDocuments();
-
 }
 
-
 start();
-
 </script>
 
 </body>
