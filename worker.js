@@ -83,19 +83,42 @@ export default {
 
 
     /* =====================================================
-   OLD DISCORD LOGIN REDIRECT
-===================================================== */
+       OLD DISCORD LOGIN
+       
+       If an old button/link still points to Discord,
+       send it to the new password login page.
+    ===================================================== */
 
-if (
-  url.pathname === "/api/auth/discord"
-) {
-  return new Response(null, {
-    status: 302,
-    headers: {
-      "Location": "/staff-login.html"
+    if (
+      url.pathname === "/api/auth/discord"
+    ) {
+      return new Response(null, {
+        status: 302,
+        headers: {
+          "Location": "/staff-login.html"
+        }
+      });
     }
-  });
-}
+
+
+    /* =====================================================
+       DISCORD CALLBACK
+
+       Kept as a harmless redirect in case an old Discord
+       callback is still accessed.
+    ===================================================== */
+
+    if (
+      url.pathname === "/api/auth/callback"
+    ) {
+      return new Response(null, {
+        status: 302,
+        headers: {
+          "Location": "/staff-login.html"
+        }
+      });
+    }
+
 
     /* =====================================================
        CURRENT SESSION
@@ -180,10 +203,23 @@ async function passwordLogin(
       );
 
 
+    /*
+       Primary source:
+       MAIN_PASSWORD
+
+       Fallback:
+       MAIN_PASSWORD_VALUE
+
+       This allows the Worker to work with either
+       Cloudflare Secret/Variable binding.
+    */
+
     const mainPassword =
       String(
-        env.MAIN_PASSWORD || ""
-      );
+        env.MAIN_PASSWORD ||
+        env.MAIN_PASSWORD_VALUE ||
+        ""
+      ).trim();
 
 
     if (!mainPassword) {
@@ -228,6 +264,13 @@ async function passwordLogin(
     }
 
 
+    /*
+       Successful login.
+
+       The password itself is NEVER placed
+       into the session.
+    */
+
     const sessionPayload = {
 
       authenticated: true,
@@ -243,6 +286,7 @@ async function passwordLogin(
       exp:
         Date.now() +
         8 * 60 * 60 * 1000
+
     };
 
 
@@ -271,7 +315,9 @@ async function passwordLogin(
 
           "Cache-Control":
             "no-store"
+
         }
+
       }
     );
 
@@ -317,10 +363,26 @@ async function getMe(
   }
 
 
+  const secret =
+    String(
+      env.SESSION_SECRET || ""
+    ).trim();
+
+
+  if (!secret) {
+
+    return json({
+      authenticated: false,
+      authorized: false
+    });
+
+  }
+
+
   const session =
     await verifySession(
       sessionToken,
-      env.SESSION_SECRET
+      secret
     );
 
 
@@ -338,7 +400,8 @@ async function getMe(
 
     authenticated: true,
 
-    authorized: true,
+    authorized:
+      !!session.authorized,
 
     username:
       session.username,
@@ -570,6 +633,13 @@ async function signSession(
   secret
 ) {
 
+  if (!secret) {
+    throw new Error(
+      "SESSION_SECRET is not configured."
+    );
+  }
+
+
   const encoded =
     base64url(
       new TextEncoder().encode(
@@ -595,6 +665,7 @@ async function signSession(
       false,
 
       ["sign"]
+
     );
 
 
@@ -608,6 +679,7 @@ async function signSession(
       new TextEncoder().encode(
         encoded
       )
+
     );
 
 
@@ -679,6 +751,7 @@ async function verifySession(
         false,
 
         ["verify"]
+
       );
 
 
@@ -696,6 +769,7 @@ async function verifySession(
         new TextEncoder().encode(
           payloadPart
         )
+
       );
 
 
@@ -722,7 +796,9 @@ async function verifySession(
       !payload.exp ||
       payload.exp < Date.now()
     ) {
+
       return null;
+
     }
 
 
@@ -763,9 +839,11 @@ function logout() {
 
         "Cache-Control":
           "no-store"
+
       }
 
     }
+
   );
 
 }
@@ -922,9 +1000,11 @@ function json(
 
         "Cache-Control":
           "no-store"
+
       }
 
     }
+
   );
 
 }
