@@ -1,26 +1,29 @@
 /*
 =========================================================
 THE AEGIS INSTITUTE
-Cloudflare Workers + Static Assets + D1
+Cloudflare Worker
+=========================================================
 
-AUTHENTICATION:
-- Main administrator password
-- Staff login codes
-- Permission-based staff access
-- Signed sessions
-- D1 storage for staff codes and documents
+SYSTEM:
+
+MAIN ADMIN
+    ↓
+ADMIN DASHBOARD
+    ├── Staff Login Codes
+    ├── Permissions
+    ├── Documents
+    └── Website Content
+
+STAFF
+    ↓
+STAFF PORTAL
+    └── Only resources allowed by their code
 =========================================================
 */
 
 
 /* =========================================================
-   MAIN ADMINISTRATOR PASSWORD
-=========================================================
-
-   IMPORTANT:
-   Replace the value below with your NEW main password.
-
-   Do NOT send the password to anyone.
+   MAIN ADMIN PASSWORD
 ========================================================= */
 
 const MAIN_PASSWORD =
@@ -28,20 +31,11 @@ const MAIN_PASSWORD =
 
 
 /* =========================================================
-   FALLBACK SESSION SECRET
-=========================================================
-
-   Cloudflare's SESSION_SECRET is preferred.
-
-   If it isn't configured, this fallback allows the
-   authentication system to continue working.
-
-   For best security, keep a real SESSION_SECRET configured
-   in Cloudflare.
+   SESSION SECRET
 ========================================================= */
 
 const FALLBACK_SESSION_SECRET =
-  "aegis-institute-session-secret-2026-change-this";
+  "aegis-institute-session-secret-change-this";
 
 
 /* =========================================================
@@ -50,23 +44,17 @@ const FALLBACK_SESSION_SECRET =
 
 const PERMISSIONS = {
 
-  handbook:
-    "Staff Handbook",
+  handbook: "Staff Handbook",
 
-  documents:
-    "General Documents",
+  documents: "General Documents",
 
-  training:
-    "Training",
+  training: "Training",
 
-  resources:
-    "Staff Resources",
+  resources: "Staff Resources",
 
-  staff_directory:
-    "Staff Directory",
+  staff_directory: "Staff Directory",
 
-  announcements:
-    "Staff Announcements"
+  announcements: "Staff Announcements"
 
 };
 
@@ -75,7 +63,7 @@ const ALL_PERMISSIONS =
 
 
 /* =========================================================
-   DEFAULT WEBSITE DATA
+   DEFAULT PUBLIC WEBSITE CONTENT
 ========================================================= */
 
 const DEFAULT_DATA = {
@@ -95,7 +83,6 @@ const DEFAULT_DATA = {
       "Consulting for communities that want clarity — education for staff and aspiring moderators who want to know where to start."
 
   },
-
 
   services: [
 
@@ -122,7 +109,6 @@ const DEFAULT_DATA = {
 
     },
 
-
     {
 
       label:
@@ -148,7 +134,6 @@ const DEFAULT_DATA = {
 
   ],
 
-
   work: [
 
     {
@@ -164,7 +149,6 @@ const DEFAULT_DATA = {
 
     },
 
-
     {
 
       label:
@@ -178,7 +162,6 @@ const DEFAULT_DATA = {
 
     },
 
-
     {
 
       label:
@@ -191,7 +174,6 @@ const DEFAULT_DATA = {
         "Honest feedback on systems, staff structures, training and community operations."
 
     },
-
 
     {
 
@@ -208,7 +190,6 @@ const DEFAULT_DATA = {
 
   ],
 
-
   contact: {
 
     title:
@@ -223,7 +204,7 @@ const DEFAULT_DATA = {
 
 
 /* =========================================================
-   MAIN WORKER
+   WORKER
 ========================================================= */
 
 export default {
@@ -235,13 +216,8 @@ export default {
 
 
     /* =====================================================
-       AUTHENTICATION
+       MAIN PASSWORD LOGIN
     ===================================================== */
-
-
-    /*
-      MAIN ADMIN PASSWORD LOGIN
-    */
 
     if (
       url.pathname ===
@@ -258,9 +234,9 @@ export default {
     }
 
 
-    /*
-      STAFF LOGIN CODE
-    */
+    /* =====================================================
+       STAFF CODE LOGIN
+    ===================================================== */
 
     if (
       url.pathname ===
@@ -277,13 +253,15 @@ export default {
     }
 
 
-    /*
-      CURRENT SESSION
-    */
+    /* =====================================================
+       CURRENT USER
+    ===================================================== */
 
     if (
       url.pathname ===
-        "/api/auth/me"
+        "/api/auth/me" &&
+      request.method ===
+        "GET"
     ) {
 
       return getMe(
@@ -294,9 +272,9 @@ export default {
     }
 
 
-    /*
-      LOGOUT
-    */
+    /* =====================================================
+       LOGOUT
+    ===================================================== */
 
     if (
       url.pathname ===
@@ -308,36 +286,13 @@ export default {
     }
 
 
-    /*
-      OLD DISCORD LOGIN
-
-      Kept so old links don't break.
-    */
+    /* =====================================================
+       OLD DISCORD ROUTES
+    ===================================================== */
 
     if (
       url.pathname ===
-        "/api/auth/discord"
-    ) {
-
-      return Response.redirect(
-
-        new URL(
-          "/staff-login.html",
-          request.url
-        ).toString(),
-
-        302
-
-      );
-
-    }
-
-
-    /*
-      OLD DISCORD CALLBACK
-    */
-
-    if (
+        "/api/auth/discord" ||
       url.pathname ===
         "/api/auth/callback"
     ) {
@@ -357,9 +312,8 @@ export default {
 
 
     /* =====================================================
-       ADMIN - STAFF LOGIN CODES
+       ADMIN LOGIN CODES
     ===================================================== */
-
 
     if (
       url.pathname ===
@@ -430,23 +384,19 @@ export default {
 
 
       return json(
-
         {
           error:
             "Method not allowed."
         },
-
         405
-
       );
 
     }
 
 
     /* =====================================================
-       ADMIN - DOCUMENTS
+       ADMIN DOCUMENTS
     ===================================================== */
-
 
     if (
       url.pathname ===
@@ -530,23 +480,19 @@ export default {
 
 
       return json(
-
         {
           error:
             "Method not allowed."
         },
-
         405
-
       );
 
     }
 
 
     /* =====================================================
-       STAFF - PERMITTED DOCUMENTS
+       STAFF DOCUMENTS
     ===================================================== */
-
 
     if (
       url.pathname ===
@@ -622,7 +568,6 @@ export default {
        WEBSITE CONTENT
     ===================================================== */
 
-
     if (
       url.pathname ===
         "/api/content"
@@ -654,23 +599,19 @@ export default {
 
 
       return json(
-
         {
           error:
             "Method not allowed."
         },
-
         405
-
       );
 
     }
 
 
     /* =====================================================
-       STATIC WEBSITE
+       STATIC FILES
     ===================================================== */
-
 
     if (
       !env.ASSETS
@@ -681,15 +622,11 @@ export default {
         "Static assets binding is not configured.",
 
         {
-
-          status:
-            500,
+          status: 500,
 
           headers: {
-
             "Content-Type":
               "text/plain; charset=UTF-8"
-
           }
 
         }
@@ -709,7 +646,7 @@ export default {
 
 
 /* =========================================================
-   MAIN ADMIN PASSWORD LOGIN
+   MAIN ADMIN LOGIN
 ========================================================= */
 
 async function passwordLogin(
@@ -734,7 +671,7 @@ async function passwordLogin(
           false,
 
         error:
-          "The login request was not valid JSON."
+          "Invalid login request."
 
       },
 
@@ -748,20 +685,12 @@ async function passwordLogin(
   const password =
     String(
       body?.password ||
-        ""
-    );
-
-
-  const configuredPassword =
-    String(
-      MAIN_PASSWORD ||
-        ""
+      ""
     );
 
 
   if (
-    !configuredPassword ||
-    configuredPassword ===
+    MAIN_PASSWORD ===
       "PASTE_YOUR_NEW_MAIN_PASSWORD_HERE"
   ) {
 
@@ -772,7 +701,7 @@ async function passwordLogin(
           false,
 
         error:
-          "MAIN_PASSWORD has not been configured in worker.js."
+          "The main password has not been configured."
 
       },
 
@@ -784,30 +713,8 @@ async function passwordLogin(
 
 
   if (
-    !password
-  ) {
-
-    return json(
-
-      {
-        success:
-          false,
-
-        error:
-          "Please enter the administrator password."
-
-      },
-
-      400
-
-    );
-
-  }
-
-
-  if (
     password !==
-      configuredPassword
+      MAIN_PASSWORD
   ) {
 
     return json(
@@ -828,35 +735,13 @@ async function passwordLogin(
   }
 
 
-  const sessionSecret =
+  const secret =
     getSessionSecret(
       env
     );
 
 
-  if (
-    !sessionSecret
-  ) {
-
-    return json(
-
-      {
-        success:
-          false,
-
-        error:
-          "Session system is not configured."
-
-      },
-
-      500
-
-    );
-
-  }
-
-
-  const session =
+  const token =
     await signSession(
 
       {
@@ -881,16 +766,11 @@ async function passwordLogin(
 
         exp:
           Date.now() +
-          (
-            8 *
-            60 *
-            60 *
-            1000
-          )
+          8 * 60 * 60 * 1000
 
       },
 
-      sessionSecret
+      secret
 
     );
 
@@ -900,6 +780,7 @@ async function passwordLogin(
     JSON.stringify(
 
       {
+
         success:
           true,
 
@@ -915,8 +796,7 @@ async function passwordLogin(
 
     {
 
-      status:
-        200,
+      status: 200,
 
       headers: {
 
@@ -925,7 +805,7 @@ async function passwordLogin(
 
         "Set-Cookie":
           makeSessionCookie(
-            session
+            token
           ),
 
         "Cache-Control":
@@ -988,7 +868,7 @@ async function staffCodeLogin(
           false,
 
         error:
-          "The login request was not valid JSON."
+          "Invalid login request."
 
       },
 
@@ -1001,8 +881,11 @@ async function staffCodeLogin(
 
   const code =
     String(
+
       body?.code ||
-        ""
+      body?.loginCode ||
+      ""
+
     )
       .trim()
       .toUpperCase();
@@ -1036,56 +919,28 @@ async function staffCodeLogin(
     );
 
 
-  let row;
+  const row =
+    await env.DB
 
+      .prepare(
 
-  try {
+        `SELECT
+          id,
+          name,
+          code_hash,
+          permissions,
+          active,
+          expires_at
+         FROM login_codes
+         WHERE code_hash = ?`
 
-    row =
-      await env.DB
+      )
 
-        .prepare(
+      .bind(
+        codeHash
+      )
 
-          `SELECT
-            id,
-            name,
-            code_hash,
-            permissions,
-            active,
-            expires_at
-           FROM login_codes
-           WHERE code_hash = ?`
-
-        )
-
-        .bind(
-          codeHash
-        )
-
-        .first();
-
-  } catch (error) {
-
-    return json(
-
-      {
-        success:
-          false,
-
-        error:
-          "Unable to check the login code: " +
-          (
-            error?.message ||
-            "Database error."
-          )
-
-      },
-
-      500
-
-    );
-
-  }
+      .first();
 
 
   if (
@@ -1121,7 +976,7 @@ async function staffCodeLogin(
           false,
 
         error:
-          "This staff login code has been disabled."
+          "This login code has been disabled."
 
       },
 
@@ -1139,8 +994,7 @@ async function staffCodeLogin(
     const expiry =
       new Date(
         row.expires_at
-      )
-        .getTime();
+      ).getTime();
 
 
     if (
@@ -1155,7 +1009,7 @@ async function staffCodeLogin(
             false,
 
           error:
-            "This staff login code has expired."
+            "This login code has expired."
 
         },
 
@@ -1188,7 +1042,9 @@ async function staffCodeLogin(
 
 
   if (
-    !Array.isArray(permissions)
+    !Array.isArray(
+      permissions
+    )
   ) {
 
     permissions =
@@ -1206,35 +1062,13 @@ async function staffCodeLogin(
     );
 
 
-  const sessionSecret =
+  const secret =
     getSessionSecret(
       env
     );
 
 
-  if (
-    !sessionSecret
-  ) {
-
-    return json(
-
-      {
-        success:
-          false,
-
-        error:
-          "Session system is not configured."
-
-      },
-
-      500
-
-    );
-
-  }
-
-
-  const session =
+  const token =
     await signSession(
 
       {
@@ -1253,7 +1087,7 @@ async function staffCodeLogin(
 
         userId:
           "staff-" +
-          String(row.id),
+          row.id,
 
         staffId:
           Number(row.id),
@@ -1263,48 +1097,35 @@ async function staffCodeLogin(
 
         exp:
           Date.now() +
-          (
-            8 *
-            60 *
-            60 *
-            1000
-          )
+          8 * 60 * 60 * 1000
 
       },
 
-      sessionSecret
+      secret
 
     );
 
 
-  try {
+  await env.DB
 
-    await env.DB
+    .prepare(
 
-      .prepare(
+      `UPDATE login_codes
+       SET last_used_at = ?
+       WHERE id = ?`
 
-        `UPDATE login_codes
-         SET last_used_at = ?
-         WHERE id = ?`
+    )
 
-      )
+    .bind(
 
-      .bind(
+      new Date()
+        .toISOString(),
 
-        new Date()
-          .toISOString(),
+      row.id
 
-        Number(row.id)
+    )
 
-      )
-
-      .run();
-
-  } catch {
-    /*
-      Don't prevent login if updating last_used_at fails.
-    */
-  }
+    .run();
 
 
   return new Response(
@@ -1322,6 +1143,9 @@ async function staffCodeLogin(
         username:
           row.name,
 
+        permissions:
+          permissions,
+
         redirect:
           "/staff.html"
 
@@ -1331,8 +1155,7 @@ async function staffCodeLogin(
 
     {
 
-      status:
-        200,
+      status: 200,
 
       headers: {
 
@@ -1341,7 +1164,7 @@ async function staffCodeLogin(
 
         "Set-Cookie":
           makeSessionCookie(
-            session
+            token
           ),
 
         "Cache-Control":
@@ -1357,7 +1180,7 @@ async function staffCodeLogin(
 
 
 /* =========================================================
-   CURRENT SESSION
+   CURRENT USER
 ========================================================= */
 
 async function getMe(
@@ -1377,130 +1200,45 @@ async function getMe(
     !session.authenticated
   ) {
 
-    return json(
-
-      {
-        authenticated:
-          false,
-
-        authorized:
-          false
-
-      }
-
-    );
-
-  }
-
-
-  return json(
-
-    {
+    return json({
 
       authenticated:
-        true,
+        false,
 
       authorized:
-        true,
+        false
 
-      role:
-        session.role ||
-        "staff",
-
-      username:
-        session.username ||
-        "Aegis Staff",
-
-      userId:
-        session.userId ||
-        null,
-
-      permissions:
-        Array.isArray(
-          session.permissions
-        )
-          ? session.permissions
-          : []
-
-    }
-
-  );
-
-}
-
-
-/* =========================================================
-   GET SESSION
-========================================================= */
-
-async function getSession(
-  request,
-  env
-) {
-
-  const token =
-    getCookie(
-
-      request.headers.get(
-        "Cookie"
-      ) || "",
-
-      "aegis_session"
-
-    );
-
-
-  if (
-    !token
-  ) {
-
-    return null;
+    });
 
   }
 
 
-  const sessionSecret =
-    getSessionSecret(
-      env
-    );
+  return json({
 
+    authenticated:
+      true,
 
-  if (
-    !sessionSecret
-  ) {
+    authorized:
+      true,
 
-    return null;
+    role:
+      session.role,
 
-  }
+    username:
+      session.username,
 
+    userId:
+      session.userId,
 
-  return verifySession(
+    staffId:
+      session.staffId ||
+      null,
 
-    token,
+    permissions:
+      session.permissions ||
+      []
 
-    sessionSecret
-
-  );
-
-}
-
-
-/* =========================================================
-   CHECK MAIN ADMIN
-========================================================= */
-
-function isMainAdmin(
-  session
-) {
-
-  return !!(
-
-    session &&
-    session.authenticated &&
-    session.role ===
-      "main_admin"
-
-  );
+  });
 
 }
 
@@ -1513,126 +1251,88 @@ async function getLoginCodes(
   env
 ) {
 
-  if (
-    !env.DB
-  ) {
+  const result =
+    await env.DB
 
-    return json(
+      .prepare(
 
-      {
-        error:
-          "D1 is not configured."
-      },
+        `SELECT
+          id,
+          name,
+          permissions,
+          active,
+          expires_at,
+          created_at,
+          last_used_at
+         FROM login_codes
+         ORDER BY id DESC`
 
-      500
+      )
 
-    );
-
-  }
+      .all();
 
 
-  try {
+  const codes =
+    (result.results || [])
+      .map(row => {
 
-    const result =
-      await env.DB
+        let permissions;
 
-        .prepare(
 
-          `SELECT
-            id,
-            name,
+        try {
+
+          permissions =
+            JSON.parse(
+              row.permissions ||
+              "[]"
+            );
+
+        } catch {
+
+          permissions =
+            [];
+
+        }
+
+
+        return {
+
+          id:
+            Number(row.id),
+
+          name:
+            row.name,
+
+          permissions:
             permissions,
-            active,
-            expires_at,
-            created_at,
-            last_used_at
-           FROM login_codes
-           ORDER BY id DESC`
 
-        )
+          active:
+            !!Number(
+              row.active
+            ),
 
-        .all();
+          expires_at:
+            row.expires_at,
 
+          created_at:
+            row.created_at,
 
-    const codes =
-      (result.results || [])
-        .map(row => {
+          last_used_at:
+            row.last_used_at
 
-          let permissions;
+        };
 
-          try {
-
-            permissions =
-              JSON.parse(
-                row.permissions ||
-                "[]"
-              );
-
-          } catch {
-
-            permissions =
-              [];
-
-          }
+      });
 
 
-          return {
+  return json({
 
-            id:
-              Number(row.id),
+    codes,
 
-            name:
-              row.name,
+    permissions:
+      PERMISSIONS
 
-            permissions:
-              Array.isArray(
-                permissions
-              )
-                ? permissions
-                : [],
-
-            active:
-              !!Number(
-                row.active
-              ),
-
-            expires_at:
-              row.expires_at,
-
-            created_at:
-              row.created_at,
-
-            last_used_at:
-              row.last_used_at
-
-          };
-
-        });
-
-
-    return json(
-
-      {
-        codes
-      }
-
-    );
-
-  } catch (error) {
-
-    return json(
-
-      {
-        error:
-          error?.message ||
-          "Unable to load login codes."
-      },
-
-      500
-
-    );
-
-  }
+  });
 
 }
 
@@ -1645,24 +1345,6 @@ async function createLoginCode(
   request,
   env
 ) {
-
-  if (
-    !env.DB
-  ) {
-
-    return json(
-
-      {
-        error:
-          "D1 is not configured."
-      },
-
-      500
-
-    );
-
-  }
-
 
   let body;
 
@@ -1678,7 +1360,7 @@ async function createLoginCode(
 
       {
         error:
-          "Invalid JSON data."
+          "Invalid JSON."
       },
 
       400
@@ -1691,9 +1373,8 @@ async function createLoginCode(
   const name =
     String(
       body?.name ||
-        ""
-    )
-      .trim();
+      ""
+    ).trim();
 
 
   if (
@@ -1704,26 +1385,7 @@ async function createLoginCode(
 
       {
         error:
-          "A staff name is required."
-      },
-
-      400
-
-    );
-
-  }
-
-
-  if (
-    name.length >
-      100
-  ) {
-
-    return json(
-
-      {
-        error:
-          "Staff name is too long."
+          "Staff member name is required."
       },
 
       400
@@ -1744,12 +1406,14 @@ async function createLoginCode(
   permissions =
     [
       ...new Set(
+
         permissions.filter(
           permission =>
             ALL_PERMISSIONS.includes(
               permission
             )
         )
+
       )
     ];
 
@@ -1778,7 +1442,7 @@ async function createLoginCode(
 
         {
           error:
-            "The expiry date is invalid."
+            "Invalid expiry date."
         },
 
         400
@@ -1797,7 +1461,7 @@ async function createLoginCode(
 
         {
           error:
-            "The expiry date must be in the future."
+            "Expiry date must be in the future."
         },
 
         400
@@ -1813,91 +1477,104 @@ async function createLoginCode(
   }
 
 
-  const readableCode =
-    generateLoginCode();
+  let code;
 
 
-  const codeHash =
-    await sha256(
-      readableCode
-    );
+  let hash;
 
 
-  try {
-
-    const result =
-      await env.DB
-
-        .prepare(
-
-          `INSERT INTO login_codes
-           (
-             name,
-             code_hash,
-             permissions,
-             active,
-             expires_at,
-             created_at
-           )
-           VALUES (?, ?, ?, 1, ?, ?)`
-
-        )
-
-        .bind(
-
-          name,
-
-          codeHash,
-
-          JSON.stringify(
-            permissions
-          ),
-
-          expiresAt,
-
-          new Date()
-            .toISOString()
-
-        )
-
-        .run();
+  let inserted =
+    false;
 
 
-    return json(
+  for (
+    let attempt = 0;
+    attempt < 5;
+    attempt++
+  ) {
 
-      {
+    code =
+      generateLoginCode();
 
-        success:
-          true,
 
-        id:
-          result.meta?.last_row_id ||
-          null,
+    hash =
+      await sha256(
+        code
+      );
 
-        name:
-          name,
 
-        code:
-          readableCode,
+    try {
 
-        permissions:
-          permissions,
+      const result =
+        await env.DB
 
-        expires_at:
-          expiresAt
+          .prepare(
+
+            `INSERT INTO login_codes
+             (
+               name,
+               code_hash,
+               permissions,
+               active,
+               expires_at,
+               created_at
+             )
+             VALUES (?, ?, ?, 1, ?, ?)`
+
+          )
+
+          .bind(
+
+            name,
+
+            hash,
+
+            JSON.stringify(
+              permissions
+            ),
+
+            expiresAt,
+
+            new Date()
+              .toISOString()
+
+          )
+
+          .run();
+
+
+      if (
+        result.success !==
+          false
+      ) {
+
+        inserted =
+          true;
+
+        break;
 
       }
 
-    );
+    } catch {
 
-  } catch (error) {
+      /*
+        Try another generated code.
+      */
+
+    }
+
+  }
+
+
+  if (
+    !inserted
+  ) {
 
     return json(
 
       {
         error:
-          error?.message ||
-          "Unable to create login code."
+          "Unable to generate a unique login code."
       },
 
       500
@@ -1905,6 +1582,26 @@ async function createLoginCode(
     );
 
   }
+
+
+  return json({
+
+    success:
+      true,
+
+    code:
+      code,
+
+    name:
+      name,
+
+    permissions:
+      permissions,
+
+    expires_at:
+      expiresAt
+
+  });
 
 }
 
@@ -1917,24 +1614,6 @@ async function deleteLoginCode(
   request,
   env
 ) {
-
-  if (
-    !env.DB
-  ) {
-
-    return json(
-
-      {
-        error:
-          "D1 is not configured."
-      },
-
-      500
-
-    );
-
-  }
-
 
   const url =
     new URL(
@@ -1959,7 +1638,7 @@ async function deleteLoginCode(
 
       {
         error:
-          "A valid login code ID is required."
+          "Invalid login code ID."
       },
 
       400
@@ -1969,154 +1648,78 @@ async function deleteLoginCode(
   }
 
 
-  try {
+  await env.DB
 
-    await env.DB
+    .prepare(
 
-      .prepare(
+      "DELETE FROM login_codes WHERE id = ?"
 
-        "DELETE FROM login_codes WHERE id = ?"
+    )
 
-      )
+    .bind(
+      id
+    )
 
-      .bind(
-        id
-      )
-
-      .run();
+    .run();
 
 
-    return json(
+  return json({
 
-      {
-        success:
-          true
-      }
+    success:
+      true
 
-    );
-
-  } catch (error) {
-
-    return json(
-
-      {
-        error:
-          error?.message ||
-          "Unable to delete login code."
-      },
-
-      500
-
-    );
-
-  }
+  });
 
 }
 
 
 /* =========================================================
-   GET ADMIN DOCUMENTS
+   ADMIN DOCUMENTS
 ========================================================= */
 
 async function getAdminDocuments(
   env
 ) {
 
-  if (
-    !env.DB
-  ) {
+  const result =
+    await env.DB
 
-    return json(
+      .prepare(
 
-      {
-        error:
-          "D1 is not configured."
-      },
+        `SELECT
+          id,
+          title,
+          description,
+          content,
+          permission,
+          created_at,
+          updated_at
+         FROM staff_documents
+         ORDER BY id DESC`
 
-      500
+      )
 
-    );
-
-  }
-
-
-  try {
-
-    const result =
-      await env.DB
-
-        .prepare(
-
-          `SELECT
-            id,
-            title,
-            description,
-            content,
-            permission,
-            created_at,
-            updated_at
-           FROM staff_documents
-           ORDER BY id DESC`
-
-        )
-
-        .all();
+      .all();
 
 
-    return json(
+  return json({
 
-      {
-        documents:
-          result.results || []
-      }
+    documents:
+      result.results || []
 
-    );
-
-  } catch (error) {
-
-    return json(
-
-      {
-        error:
-          error?.message ||
-          "Unable to load documents."
-      },
-
-      500
-
-    );
-
-  }
+  });
 
 }
 
 
 /* =========================================================
-   GET STAFF DOCUMENTS
+   STAFF DOCUMENTS
 ========================================================= */
 
 async function getStaffDocuments(
   session,
   env
 ) {
-
-  if (
-    !env.DB
-  ) {
-
-    return json(
-
-      {
-        error:
-          "D1 is not configured."
-      },
-
-      500
-
-    );
-
-  }
-
 
   const permissions =
     Array.isArray(
@@ -2131,14 +1734,12 @@ async function getStaffDocuments(
       0
   ) {
 
-    return json(
+    return json({
 
-      {
-        documents:
-          []
-      }
+      documents:
+        []
 
-    );
+    });
 
   }
 
@@ -2151,58 +1752,38 @@ async function getStaffDocuments(
       .join(",");
 
 
-  try {
+  const result =
+    await env.DB
 
-    const result =
-      await env.DB
+      .prepare(
 
-        .prepare(
+        `SELECT
+          id,
+          title,
+          description,
+          content,
+          permission,
+          created_at,
+          updated_at
+         FROM staff_documents
+         WHERE permission IN (${placeholders})
+         ORDER BY id DESC`
 
-          `SELECT
-            id,
-            title,
-            description,
-            content,
-            permission,
-            created_at,
-            updated_at
-           FROM staff_documents
-           WHERE permission IN (${placeholders})
-           ORDER BY id DESC`
+      )
 
-        )
+      .bind(
+        ...permissions
+      )
 
-        .bind(
-          ...permissions
-        )
-
-        .all();
+      .all();
 
 
-    return json(
+  return json({
 
-      {
-        documents:
-          result.results || []
-      }
+    documents:
+      result.results || []
 
-    );
-
-  } catch (error) {
-
-    return json(
-
-      {
-        error:
-          error?.message ||
-          "Unable to load staff resources."
-      },
-
-      500
-
-    );
-
-  }
+  });
 
 }
 
@@ -2216,24 +1797,6 @@ async function createDocument(
   env
 ) {
 
-  if (
-    !env.DB
-  ) {
-
-    return json(
-
-      {
-        error:
-          "D1 is not configured."
-      },
-
-      500
-
-    );
-
-  }
-
-
   let body;
 
 
@@ -2248,7 +1811,7 @@ async function createDocument(
 
       {
         error:
-          "Invalid JSON data."
+          "Invalid JSON."
       },
 
       400
@@ -2261,32 +1824,29 @@ async function createDocument(
   const title =
     String(
       body?.title ||
-        ""
-    )
-      .trim();
+      ""
+    ).trim();
 
 
   const description =
     String(
       body?.description ||
-        ""
-    )
-      .trim();
+      ""
+    ).trim();
 
 
   const content =
     String(
       body?.content ||
-        ""
+      ""
     );
 
 
   const permission =
     String(
       body?.permission ||
-        ""
-    )
-      .trim();
+      ""
+    ).trim();
 
 
   if (
@@ -2297,7 +1857,7 @@ async function createDocument(
 
       {
         error:
-          "A document title is required."
+          "Document title is required."
       },
 
       400
@@ -2317,7 +1877,7 @@ async function createDocument(
 
       {
         error:
-          "A valid document permission is required."
+          "Please select a valid permission."
       },
 
       400
@@ -2327,251 +1887,26 @@ async function createDocument(
   }
 
 
-  try {
+  const now =
+    new Date()
+      .toISOString();
 
-    const now =
-      new Date()
-        .toISOString();
 
-
-    const result =
-      await env.DB
-
-        .prepare(
-
-          `INSERT INTO staff_documents
-           (
-             title,
-             description,
-             content,
-             permission,
-             created_at,
-             updated_at
-           )
-           VALUES (?, ?, ?, ?, ?, ?)`
-
-        )
-
-        .bind(
-
-          title,
-
-          description,
-
-          content,
-
-          permission,
-
-          now,
-
-          now
-
-        )
-
-        .run();
-
-
-    return json(
-
-      {
-
-        success:
-          true,
-
-        id:
-          result.meta?.last_row_id ||
-          null
-
-      }
-
-    );
-
-  } catch (error) {
-
-    return json(
-
-      {
-        error:
-          error?.message ||
-          "Unable to create document."
-      },
-
-      500
-
-    );
-
-  }
-
-}
-
-
-/* =========================================================
-   UPDATE DOCUMENT
-========================================================= */
-
-async function updateDocument(
-  request,
-  env
-) {
-
-  if (
-    !env.DB
-  ) {
-
-    return json(
-
-      {
-        error:
-          "D1 is not configured."
-      },
-
-      500
-
-    );
-
-  }
-
-
-  const url =
-    new URL(
-      request.url
-    );
-
-
-  const id =
-    Number(
-      url.searchParams.get(
-        "id"
-      )
-    );
-
-
-  if (
-    !Number.isInteger(id) ||
-    id <= 0
-  ) {
-
-    return json(
-
-      {
-        error:
-          "A valid document ID is required."
-      },
-
-      400
-
-    );
-
-  }
-
-
-  let body;
-
-
-  try {
-
-    body =
-      await request.json();
-
-  } catch {
-
-    return json(
-
-      {
-        error:
-          "Invalid JSON data."
-      },
-
-      400
-
-    );
-
-  }
-
-
-  const title =
-    String(
-      body?.title ||
-        ""
-    )
-      .trim();
-
-
-  const description =
-    String(
-      body?.description ||
-        ""
-    )
-      .trim();
-
-
-  const content =
-    String(
-      body?.content ||
-        ""
-    );
-
-
-  const permission =
-    String(
-      body?.permission ||
-        ""
-    )
-      .trim();
-
-
-  if (
-    !title
-  ) {
-
-    return json(
-
-      {
-        error:
-          "A document title is required."
-      },
-
-      400
-
-    );
-
-  }
-
-
-  if (
-    !ALL_PERMISSIONS.includes(
-      permission
-    )
-  ) {
-
-    return json(
-
-      {
-        error:
-          "A valid document permission is required."
-      },
-
-      400
-
-    );
-
-  }
-
-
-  try {
-
+  const result =
     await env.DB
 
       .prepare(
 
-        `UPDATE staff_documents
-         SET
-           title = ?,
-           description = ?,
-           content = ?,
-           permission = ?,
-           updated_at = ?
-         WHERE id = ?`
+        `INSERT INTO staff_documents
+         (
+           title,
+           description,
+           content,
+           permission,
+           created_at,
+           updated_at
+         )
+         VALUES (?, ?, ?, ?, ?, ?)`
 
       )
 
@@ -2585,70 +1920,37 @@ async function updateDocument(
 
         permission,
 
-        new Date()
-          .toISOString(),
+        now,
 
-        id
+        now
 
       )
 
       .run();
 
 
-    return json(
+  return json({
 
-      {
-        success:
-          true
-      }
+    success:
+      true,
 
-    );
+    id:
+      result.meta?.last_row_id ||
+      null
 
-  } catch (error) {
-
-    return json(
-
-      {
-        error:
-          error?.message ||
-          "Unable to update document."
-      },
-
-      500
-
-    );
-
-  }
+  });
 
 }
 
 
 /* =========================================================
-   DELETE DOCUMENT
+   UPDATE DOCUMENT
 ========================================================= */
 
-async function deleteDocument(
+async function updateDocument(
   request,
   env
 ) {
-
-  if (
-    !env.DB
-  ) {
-
-    return json(
-
-      {
-        error:
-          "D1 is not configured."
-      },
-
-      500
-
-    );
-
-  }
-
 
   const url =
     new URL(
@@ -2673,7 +1975,7 @@ async function deleteDocument(
 
       {
         error:
-          "A valid document ID is required."
+          "Invalid document ID."
       },
 
       400
@@ -2683,53 +1985,210 @@ async function deleteDocument(
   }
 
 
+  let body;
+
+
   try {
 
-    await env.DB
+    body =
+      await request.json();
 
-      .prepare(
-
-        "DELETE FROM staff_documents WHERE id = ?"
-
-      )
-
-      .bind(
-        id
-      )
-
-      .run();
-
-
-    return json(
-
-      {
-        success:
-          true
-      }
-
-    );
-
-  } catch (error) {
+  } catch {
 
     return json(
 
       {
         error:
-          error?.message ||
-          "Unable to delete document."
+          "Invalid JSON."
       },
 
-      500
+      400
 
     );
 
   }
 
+
+  const title =
+    String(
+      body?.title ||
+      ""
+    ).trim();
+
+
+  const description =
+    String(
+      body?.description ||
+      ""
+    ).trim();
+
+
+  const content =
+    String(
+      body?.content ||
+      ""
+    );
+
+
+  const permission =
+    String(
+      body?.permission ||
+      ""
+    ).trim();
+
+
+  if (
+    !title
+  ) {
+
+    return json(
+
+      {
+        error:
+          "Document title is required."
+      },
+
+      400
+
+    );
+
+  }
+
+
+  if (
+    !ALL_PERMISSIONS.includes(
+      permission
+    )
+  ) {
+
+    return json(
+
+      {
+        error:
+          "Invalid permission."
+      },
+
+      400
+
+    );
+
+  }
+
+
+  await env.DB
+
+    .prepare(
+
+      `UPDATE staff_documents
+       SET
+         title = ?,
+         description = ?,
+         content = ?,
+         permission = ?,
+         updated_at = ?
+       WHERE id = ?`
+
+    )
+
+    .bind(
+
+      title,
+
+      description,
+
+      content,
+
+      permission,
+
+      new Date()
+        .toISOString(),
+
+      id
+
+    )
+
+    .run();
+
+
+  return json({
+
+    success:
+      true
+
+  });
+
 }
 
 
 /* =========================================================
-   GET WEBSITE CONTENT
+   DELETE DOCUMENT
+========================================================= */
+
+async function deleteDocument(
+  request,
+  env
+) {
+
+  const url =
+    new URL(
+      request.url
+    );
+
+
+  const id =
+    Number(
+      url.searchParams.get(
+        "id"
+      )
+    );
+
+
+  if (
+    !Number.isInteger(id) ||
+    id <= 0
+  ) {
+
+    return json(
+
+      {
+        error:
+          "Invalid document ID."
+      },
+
+      400
+
+    );
+
+  }
+
+
+  await env.DB
+
+    .prepare(
+
+      "DELETE FROM staff_documents WHERE id = ?"
+
+    )
+
+    .bind(
+      id
+    )
+
+    .run();
+
+
+  return json({
+
+    success:
+      true
+
+  });
+
+}
+
+
+/* =========================================================
+   PUBLIC WEBSITE CONTENT
 ========================================================= */
 
 async function getContent(
@@ -2754,7 +2213,9 @@ async function getContent(
 
         .prepare(
 
-          "SELECT value FROM portal_content WHERE id = 'main'"
+          `SELECT value
+           FROM portal_content
+           WHERE id = 'main'`
 
         )
 
@@ -2803,7 +2264,7 @@ async function getContent(
 
 
 /* =========================================================
-   SAVE WEBSITE CONTENT
+   SAVE PUBLIC WEBSITE CONTENT
 ========================================================= */
 
 async function saveContent(
@@ -2826,28 +2287,10 @@ async function saveContent(
 
       {
         error:
-          "You must be logged in as the Aegis administrator to edit the website."
+          "Administrator access required."
       },
 
       403
-
-    );
-
-  }
-
-
-  if (
-    !env.DB
-  ) {
-
-    return json(
-
-      {
-        error:
-          "D1 is not configured."
-      },
-
-      500
 
     );
 
@@ -2868,7 +2311,7 @@ async function saveContent(
 
       {
         error:
-          "Invalid JSON data."
+          "Invalid JSON."
       },
 
       400
@@ -2878,82 +2321,67 @@ async function saveContent(
   }
 
 
-  try {
-
-    await env.DB
-
-      .prepare(
-
-        `INSERT INTO portal_content
-         (
-           id,
-           value,
-           updated_at
-         )
-         VALUES ('main', ?, ?)
-         ON CONFLICT(id)
-         DO UPDATE SET
-           value = excluded.value,
-           updated_at = excluded.updated_at`
-
-      )
-
-      .bind(
-
-        JSON.stringify(
-          data
-        ),
-
-        new Date()
-          .toISOString()
-
-      )
-
-      .run();
+  const now =
+    new Date()
+      .toISOString();
 
 
-    return json(
+  await env.DB
 
-      {
-        ok:
-          true
-      }
+    .prepare(
 
-    );
+      `INSERT INTO portal_content
+       (
+         id,
+         value,
+         updated_at
+       )
+       VALUES ('main', ?, ?)
+       ON CONFLICT(id)
+       DO UPDATE SET
+         value = excluded.value,
+         updated_at = excluded.updated_at`
 
-  } catch (error) {
+    )
 
-    return json(
+    .bind(
 
-      {
-        error:
-          error?.message ||
-          "Unable to save website content."
-      },
+      JSON.stringify(
+        data
+      ),
 
-      500
+      now
 
-    );
+    )
 
-  }
+    .run();
+
+
+  return json({
+
+    success:
+      true
+
+  });
 
 }
 
 
 /* =========================================================
-   GENERATE STAFF LOGIN CODE
+   GENERATE LOGIN CODE
 ========================================================= */
 
 function generateLoginCode() {
 
-  const chars =
+  const characters =
     "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 
 
-  function segment(length) {
+  function part(length) {
 
-    let result =
+    let output =
       "";
+
 
     for (
       let i = 0;
@@ -2961,40 +2389,41 @@ function generateLoginCode() {
       i++
     ) {
 
-      result +=
-        chars[
+      output +=
+        characters[
           Math.floor(
             Math.random() *
-            chars.length
+            characters.length
           )
         ];
 
     }
 
-    return result;
+
+    return output;
 
   }
 
 
   return (
     "AEGIS-" +
-    segment(4) +
+    part(4) +
     "-" +
-    segment(4)
+    part(4)
   );
 
 }
 
 
 /* =========================================================
-   HASH STRING
+   SHA256
 ========================================================= */
 
 async function sha256(
   value
 ) {
 
-  const data =
+  const bytes =
     new TextEncoder()
       .encode(
         value
@@ -3003,8 +2432,11 @@ async function sha256(
 
   const hash =
     await crypto.subtle.digest(
+
       "SHA-256",
-      data
+
+      bytes
+
     );
 
 
@@ -3039,8 +2471,7 @@ function getSessionSecret(
   return String(
 
     env.SESSION_SECRET ||
-    FALLBACK_SESSION_SECRET ||
-    ""
+    FALLBACK_SESSION_SECRET
 
   ).trim();
 
@@ -3048,24 +2479,13 @@ function getSessionSecret(
 
 
 /* =========================================================
-   CREATE SESSION
+   SIGN SESSION
 ========================================================= */
 
 async function signSession(
   payload,
   secret
 ) {
-
-  if (
-    !secret
-  ) {
-
-    throw new Error(
-      "No session secret available."
-    );
-
-  }
-
 
   const encoded =
     base64url(
@@ -3093,13 +2513,11 @@ async function signSession(
         ),
 
       {
-
         name:
           "HMAC",
 
         hash:
           "SHA-256"
-
       },
 
       false,
@@ -3152,16 +2570,6 @@ async function verifySession(
 
   try {
 
-    if (
-      !token ||
-      !secret
-    ) {
-
-      return null;
-
-    }
-
-
     const parts =
       token.split(".");
 
@@ -3195,13 +2603,11 @@ async function verifySession(
           ),
 
         {
-
           name:
             "HMAC",
 
           hash:
             "SHA-256"
-
         },
 
         false,
@@ -3258,7 +2664,7 @@ async function verifySession(
 
     if (
       !payload.exp ||
-      payload.exp <
+      payload.exp <=
         Date.now()
     ) {
 
@@ -3279,17 +2685,84 @@ async function verifySession(
 
 
 /* =========================================================
-   SESSION COOKIE
+   GET SESSION
+========================================================= */
+
+async function getSession(
+  request,
+  env
+) {
+
+  const cookieHeader =
+    request.headers.get(
+      "Cookie"
+    ) || "";
+
+
+  const token =
+    getCookie(
+
+      cookieHeader,
+
+      "aegis_session"
+
+    );
+
+
+  if (
+    !token
+  ) {
+
+    return null;
+
+  }
+
+
+  return verifySession(
+
+    token,
+
+    getSessionSecret(
+      env
+    )
+
+  );
+
+}
+
+
+/* =========================================================
+   ADMIN CHECK
+========================================================= */
+
+function isMainAdmin(
+  session
+) {
+
+  return !!(
+
+    session &&
+    session.authenticated &&
+    session.role ===
+      "main_admin"
+
+  );
+
+}
+
+
+/* =========================================================
+   COOKIE
 ========================================================= */
 
 function makeSessionCookie(
-  session
+  token
 ) {
 
   return (
 
     "aegis_session=" +
-    session +
+    token +
     "; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=28800"
 
   );
@@ -3305,14 +2778,12 @@ function logout() {
 
   return new Response(
 
-    JSON.stringify(
+    JSON.stringify({
 
-      {
-        ok:
-          true
-      }
+      success:
+        true
 
-    ),
+    }),
 
     {
 
@@ -3340,7 +2811,7 @@ function logout() {
 
 
 /* =========================================================
-   COOKIE HELPER
+   COOKIE READER
 ========================================================= */
 
 function getCookie(
@@ -3348,45 +2819,41 @@ function getCookie(
   name
 ) {
 
-  const found =
+  const cookies =
     cookieString
-
-      .split(";")
-
-      .map(
-        value =>
-          value.trim()
-      )
-
-      .find(
-        value =>
-          value.startsWith(
-            name + "="
-          )
-      );
+      .split(";");
 
 
-  if (
-    !found
+  for (
+    const cookie of cookies
   ) {
 
-    return null;
+    const trimmed =
+      cookie.trim();
+
+
+    if (
+      trimmed.startsWith(
+        name + "="
+      )
+    ) {
+
+      return trimmed.slice(
+        name.length + 1
+      );
+
+    }
 
   }
 
 
-  return found.slice(
-
-    name.length +
-    1
-
-  );
+  return null;
 
 }
 
 
 /* =========================================================
-   BASE64URL ENCODE
+   BASE64URL
 ========================================================= */
 
 function base64url(
@@ -3424,7 +2891,7 @@ function base64url(
     )
 
     .replace(
-      /=+$/g,
+      /=+$/,
       ""
     );
 
@@ -3450,23 +2917,22 @@ function fromBase64url(
       .replace(
         /_/g,
         "/"
-      )
-
-      .padEnd(
-
-        Math.ceil(
-          value.length /
-          4
-        ) * 4,
-
-        "="
-
       );
+
+
+  const padded =
+    base64 +
+    "=".repeat(
+      (
+        4 -
+        base64.length % 4
+      ) % 4
+    );
 
 
   const binary =
     atob(
-      base64
+      padded
     );
 
 
@@ -3512,9 +2978,7 @@ function json(
 
     {
 
-      status:
-
-        status,
+      status,
 
       headers: {
 
