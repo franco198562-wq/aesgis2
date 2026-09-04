@@ -1,205 +1,246 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Contact The Aegis Institute.">
-  <title>Contact | The Aegis Institute</title>
-  <link rel="stylesheet" href="/portal.css">
+
+  <title>Contact — The Aegis Institute</title>
+
+  <link rel="stylesheet" href="/styles.css">
+
 </head>
 
 <body>
-  <header class="site-header">
-    <div class="container site-header-inner">
-      <a href="/" class="site-brand" aria-label="The Aegis Institute home">
-        <span class="site-brand-mark">A</span>
-        <span class="site-brand-text">
-          <strong data-content="site_name">The Aegis Institute</strong>
-          <small data-content="site_tagline">Knowledge. Preparation. Excellence.</small>
-        </span>
-      </a>
 
-      <button
-        class="mobile-menu-button"
-        id="mobileMenuButton"
-        type="button"
-        aria-label="Open navigation menu"
-        aria-expanded="false"
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+<header class="site-header">
 
-      <nav class="site-navigation" id="siteNavigation" aria-label="Main navigation">
-        <a href="/">Home</a>
-        <a href="/services.html">Services</a>
-        <a href="/work.html">Our Work</a>
-        <a href="/contact.html" class="active">Contact</a>
-        <a href="/staff-login.html" class="nav-login">Staff Login</a>
-      </nav>
+  <a href="/" class="brand">
+    <img
+      class="brand-logo"
+      src="https://cdn.discordapp.com/emojis/1481802757005508700.png"
+      alt="The Aegis Institute logo"
+    >
+
+    <span class="brand-text">
+      <strong>THE AEGIS INSTITUTE</strong>
+    </span>
+  </a>
+
+  <nav class="main-nav">
+    <a href="/">Home</a>
+    <a href="/services.html">Services</a>
+    <a href="/work.html">Our Work</a>
+    <a href="/contact.html" class="active">Contact</a>
+
+    <a href="/api/auth/discord" class="staff-login">
+      Staff Login
+    </a>
+  </nav>
+
+</header>
+
+
+<main>
+
+  <section class="contact-hero">
+
+    <div class="container">
+
+      <span class="eyebrow">
+        CONTACT
+      </span>
+
+      <h1>
+        Let's talk about what your community needs.
+      </h1>
+
+      <p>
+        Have a question, project idea, or training requirement?
+        Send a message and the Aegis team can help.
+      </p>
+
     </div>
-  </header>
 
-  <main>
-    <section class="page-hero">
-      <div class="container narrow-container">
-        <p class="eyebrow">Get in touch</p>
-        <h1>Contact Us</h1>
-        <p class="hero-description">
-          Contact The Aegis Institute for more information, questions, or
-          assistance.
-        </p>
+  </section>
+
+
+  <section class="section contact-section">
+
+    <div class="container contact-grid">
+
+      <div class="contact-form-card">
+
+        <h2>
+          Send an enquiry
+        </h2>
+
+        <form id="contactForm">
+
+          <label>
+            Name
+            <input
+              type="text"
+              id="contactName"
+              placeholder="Your name"
+              required
+            >
+          </label>
+
+
+          <label>
+            Email
+            <input
+              type="email"
+              id="contactEmail"
+              placeholder="you@example.com"
+              required
+            >
+          </label>
+
+
+          <label>
+            Message
+            <textarea
+              id="contactMessage"
+              placeholder="Tell us what you need help with..."
+              required
+            ></textarea>
+          </label>
+
+
+          <button
+            type="submit"
+            class="button button-primary"
+          >
+            Send Enquiry
+          </button>
+
+        </form>
+
+        <p id="contactStatus" class="form-status"></p>
+
       </div>
-    </section>
 
-    <section class="content-section">
-      <div class="container">
-        <div class="contact-layout">
-          <div class="section-heading">
-            <p class="eyebrow">Contact Under Development</p>
-            <h2>Our contact system is currently being developed.</h2>
-            <p>
-              Please check back soon for the full contact form and additional
-              contact options.
-            </p>
-          </div>
 
-          <div class="content-card contact-notice">
-            <div class="card-icon" aria-hidden="true">!</div>
-            <h2>Contact Under Development</h2>
-            <p>
-              The contact page is not currently accepting requests. We are
-              working on improving this service and will make it available
-              shortly.
-            </p>
-            <a href="/" class="button button-primary">
-              Return Home
-            </a>
-          </div>
-        </div>
+      <div class="contact-side">
+
+        <article class="side-contact-card">
+
+          <span class="card-label">
+            CONSULTING
+          </span>
+
+          <h3>
+            Community support
+          </h3>
+
+          <p>
+            For audits, standards, systems and
+            staff-development projects.
+          </p>
+
+        </article>
+
+
+        <article class="side-contact-card">
+
+          <span class="card-label">
+            EDUCATION
+          </span>
+
+          <h3>
+            Training enquiries
+          </h3>
+
+          <p>
+            For individual learning or outsourced
+            server training.
+          </p>
+
+        </article>
+
+
+        <article class="side-contact-card">
+
+          <span class="card-label">
+            COMMUNITY
+          </span>
+
+          <h3>
+            General enquiries
+          </h3>
+
+          <p>
+            Have something else in mind?
+            Get in touch and we'll point you in the right direction.
+          </p>
+
+        </article>
+
       </div>
-    </section>
-  </main>
 
-  <footer class="site-footer">
-    <div class="container site-footer-inner">
-      <div class="footer-brand">
-        <strong data-content="site_name">The Aegis Institute</strong>
-        <p data-content="footer_text">
-          Professional education, guidance, and support.
-        </p>
-      </div>
-
-      <div class="footer-links">
-        <a href="/">Home</a>
-        <a href="/services.html">Services</a>
-        <a href="/work.html">Our Work</a>
-        <a href="/contact.html">Contact</a>
-      </div>
     </div>
-  </footer>
 
-  <script>
-    const mobileMenuButton = document.getElementById("mobileMenuButton");
-    const siteNavigation = document.getElementById("siteNavigation");
+  </section>
 
-    mobileMenuButton.addEventListener("click", () => {
-      const isOpen = siteNavigation.classList.toggle("open");
+</main>
 
-      mobileMenuButton.setAttribute("aria-expanded", String(isOpen));
-      mobileMenuButton.setAttribute(
-        "aria-label",
-        isOpen ? "Close navigation menu" : "Open navigation menu"
-      );
-    });
 
-    function setText(key, value) {
-      if (value === undefined || value === null || value === "") return;
+<footer class="site-footer">
 
-      document.querySelectorAll(`[data-content="${key}"]`).forEach((element) => {
-        element.textContent = value;
-      });
+  <div class="container footer-inner">
+    <span>© 2026 The Aegis Institute</span>
+    <span>Education · Consulting · Community</span>
+  </div>
+
+</footer>
+
+
+<script>
+  const contactForm = document.getElementById("contactForm");
+  const contactStatus = document.getElementById("contactStatus");
+
+  contactForm.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    const name = document.getElementById("contactName").value.trim();
+    const email = document.getElementById("contactEmail").value.trim();
+    const message = document.getElementById("contactMessage").value.trim();
+
+    if (!name || !email || !message) {
+      contactStatus.textContent = "Please complete all fields.";
+      return;
     }
 
-    function applyDesignVariables(content) {
-      const designVariables = {
-        design_primary: "--primary",
-        design_primary_dark: "--primary-dark",
-        design_accent: "--accent",
-        design_background: "--background",
-        design_surface: "--surface",
-        design_surface_alt: "--surface-alt",
-        design_text: "--text",
-        design_muted: "--muted",
-        design_border: "--border",
-        design_header_bg: "--header-bg",
-        design_footer_bg: "--footer-bg",
-        design_footer_text: "--footer-text",
-        design_font_family: "--font-family",
-        design_heading_weight: "--heading-weight",
-        design_body_size: "--body-size",
-        design_h1_size: "--h1-size",
-        design_h2_size: "--h2-size",
-        design_h3_size: "--h3-size",
-        design_line_height: "--line-height",
-        design_letter_spacing: "--letter-spacing",
-        design_content_width: "--content-width",
-        design_section_spacing: "--section-spacing",
-        design_card_gap: "--card-gap",
-        design_card_radius: "--card-radius",
-        design_button_radius: "--button-radius",
-        design_card_shadow: "--card-shadow",
-        design_header_height: "--header-height",
-        design_button_padding_x: "--button-padding-x",
-        design_button_padding_y: "--button-padding-y",
-        design_mobile_section_spacing: "--mobile-section-spacing",
-        design_mobile_body_size: "--mobile-body-size",
-        design_nav_text_size: "--nav-text-size",
-        design_hero_title_size: "--hero-title-size",
-        design_hero_text_size: "--hero-text-size"
-      };
+    const recipient = "technical@aegisinsitute.cc";
 
-      Object.entries(designVariables).forEach(([contentKey, cssVariable]) => {
-        if (
-          content[contentKey] !== undefined &&
-          content[contentKey] !== null &&
-          content[contentKey] !== ""
-        ) {
-          document.documentElement.style.setProperty(
-            cssVariable,
-            content[contentKey]
-          );
-        }
-      });
-    }
+    const subject = encodeURIComponent(
+      "New Enquiry — The Aegis Institute"
+    );
 
-    async function loadContent() {
-      try {
-        const response = await fetch("/api/content", {
-          headers: {
-            Accept: "application/json"
-          }
-        });
+    const body = encodeURIComponent(
+      "New enquiry received through The Aegis Institute website.\n\n" +
+      "Name: " + name + "\n" +
+      "Email: " + email + "\n\n" +
+      "Message:\n" +
+      message
+    );
 
-        if (!response.ok) {
-          throw new Error("Unable to load website content.");
-        }
+    const mailtoLink =
+      "mailto:" + recipient +
+      "?subject=" + subject +
+      "&body=" + body;
 
-        const result = await response.json();
-        const content = result.content || result || {};
+    window.location.href = mailtoLink;
 
-        Object.entries(content).forEach(([key, value]) => {
-          setText(key, value);
-        });
+    contactStatus.textContent =
+      "Opening your email application...";
+  });
+</script>
 
-        applyDesignVariables(content);
-      } catch (error) {
-        console.warn("Using default contact page content:", error);
-      }
-    }
-
-    loadContent();
-  </script>
 </body>
 </html>
+```
