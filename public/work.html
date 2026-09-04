@@ -1,278 +1,217 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Our work at The Aegis Institute.">
-  <title>Our Work | The Aegis Institute</title>
-  <link rel="stylesheet" href="/portal.css">
+
+  <title>Our Work — The Aegis Institute</title>
+
+  <link rel="stylesheet" href="/styles.css">
+
 </head>
 
 <body>
-  <header class="site-header">
-    <div class="container site-header-inner">
-      <a href="/" class="site-brand" aria-label="The Aegis Institute home">
-        <span class="site-brand-mark">A</span>
-        <span class="site-brand-text">
-          <strong data-content="site_name">The Aegis Institute</strong>
-          <small data-content="site_tagline">Knowledge. Preparation. Excellence.</small>
-        </span>
-      </a>
 
-      <button
-        class="mobile-menu-button"
-        id="mobileMenuButton"
-        type="button"
-        aria-label="Open navigation menu"
-        aria-expanded="false"
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+<header class="site-header">
 
-      <nav class="site-navigation" id="siteNavigation" aria-label="Main navigation">
-        <a href="/">Home</a>
-        <a href="/services.html">Services</a>
-        <a href="/work.html" class="active">Our Work</a>
-        <a href="/contact.html">Contact</a>
-        <a href="/staff-login.html" class="nav-login">Staff Login</a>
-      </nav>
+  <a href="/" class="brand">
+    <span class="brand-logo">A</span>
+
+    <span class="brand-text">
+      <strong>THE AEGIS INSTITUTE</strong>
+    </span>
+  </a>
+
+  <nav class="main-nav">
+    <a href="/">Home</a>
+    <a href="/services.html">Services</a>
+    <a href="/work.html" class="active">Our Work</a>
+    <a href="/contact.html">Contact</a>
+
+    <a href="/api/auth/discord" class="staff-login">
+      Staff Login
+    </a>
+  </nav>
+
+</header>
+
+
+<main>
+
+  <section class="page-hero">
+
+    <div class="container">
+
+      <span class="eyebrow">
+        OUR WORK
+      </span>
+
+      <h1>
+        Systems designed to make communities stronger.
+      </h1>
+
+      <p>
+        From staff development to standards and procedures,
+        Aegis helps communities turn good intentions into
+        consistent systems.
+      </p>
+
     </div>
-  </header>
 
-  <main>
-    <section class="page-hero">
-      <div class="container narrow-container">
-        <p class="eyebrow" data-content="work_kicker">Our Work</p>
-        <h1 data-content="work_title">What We Do</h1>
-        <p class="hero-description" data-content="work_intro">
-          Discover the approach, standards, and outcomes behind our work.
-        </p>
-      </div>
-    </section>
+  </section>
 
-    <section class="content-section">
-      <div class="container">
-        <div class="section-heading">
-          <p class="eyebrow">Our approach</p>
-          <h2>Built around people and progress</h2>
+
+  <section class="section">
+
+    <div class="container">
+
+      <div class="work-grid">
+
+        <article class="work-card">
+
+          <span class="card-label">
+            STAFF DEVELOPMENT
+          </span>
+
+          <h2>
+            Structured staff programmes
+          </h2>
+
           <p>
-            The Aegis Institute focuses on practical knowledge, clear
-            communication, and dependable support.
+            Clear pathways for trainees, moderators,
+            supervisors and leadership teams.
           </p>
-        </div>
 
-        <div class="content-card-grid">
-          <article class="content-card">
-            <div class="card-icon" aria-hidden="true">01</div>
-            <h3 data-content="work_project_one_title">Knowledge</h3>
-            <p data-content="work_project_one_text">
-              We make information easier to understand and apply through
-              clear, structured learning.
-            </p>
-          </article>
+          <div class="work-number">01</div>
 
-          <article class="content-card">
-            <div class="card-icon" aria-hidden="true">02</div>
-            <h3 data-content="work_project_two_title">Preparation</h3>
-            <p data-content="work_project_two_text">
-              We help people prepare for challenges with practical guidance,
-              planning, and useful resources.
-            </p>
-          </article>
+        </article>
 
-          <article class="content-card">
-            <div class="card-icon" aria-hidden="true">03</div>
-            <h3 data-content="work_project_three_title">Excellence</h3>
-            <p data-content="work_project_three_text">
-              We aim for high standards, continuous improvement, and positive
-              long-term outcomes.
-            </p>
-          </article>
-        </div>
-      </div>
-    </section>
 
-    <section class="content-section section-muted">
-      <div class="container">
-        <div class="section-heading">
-          <p class="eyebrow">How we work</p>
-          <h2 data-content="work_process_title">A clear and reliable process</h2>
-          <p data-content="work_process_text">
-            Every project begins with understanding the goal, identifying the
-            right approach, and delivering useful results.
+        <article class="work-card">
+
+          <span class="card-label">
+            STANDARDS
+          </span>
+
+          <h2>
+            Policies that people can actually use
+          </h2>
+
+          <p>
+            Practical policies, procedures and expectations
+            written around the way your community operates.
           </p>
-        </div>
 
-        <div class="content-card-grid">
-          <article class="content-card">
-            <div class="card-icon" aria-hidden="true">01</div>
-            <h3>Understand</h3>
-            <p>
-              We begin by listening carefully and understanding the needs,
-              priorities, and intended outcomes.
-            </p>
-          </article>
+          <div class="work-number">02</div>
 
-          <article class="content-card">
-            <div class="card-icon" aria-hidden="true">02</div>
-            <h3>Develop</h3>
-            <p>
-              We create a clear plan and develop the resources or support
-              required for the situation.
-            </p>
-          </article>
+        </article>
 
-          <article class="content-card">
-            <div class="card-icon" aria-hidden="true">03</div>
-            <h3>Deliver</h3>
-            <p>
-              We deliver the work professionally and remain focused on quality,
-              clarity, and practical value.
-            </p>
-          </article>
-        </div>
-      </div>
-    </section>
 
-    <section class="cta-section">
-      <div class="container">
-        <div class="cta-card">
-          <div>
-            <p class="eyebrow">Work with us</p>
-            <h2>Have a project or question?</h2>
-            <p>
-              Get in touch with The Aegis Institute to discuss how we can help.
-            </p>
-          </div>
+        <article class="work-card">
 
-          <a href="/contact.html" class="button button-primary">
-            Contact Us
-          </a>
-        </div>
-      </div>
-    </section>
-  </main>
+          <span class="card-label">
+            CONSULTING
+          </span>
 
-  <footer class="site-footer">
-    <div class="container site-footer-inner">
-      <div class="footer-brand">
-        <strong data-content="site_name">The Aegis Institute</strong>
-        <p data-content="footer_text">
-          Professional education, guidance, and support.
-        </p>
+          <h2>
+            An external perspective
+          </h2>
+
+          <p>
+            Honest feedback on systems, staff structures,
+            training and community operations.
+          </p>
+
+          <div class="work-number">03</div>
+
+        </article>
+
+
+        <article class="work-card">
+
+          <span class="card-label">
+            EDUCATION
+          </span>
+
+          <h2>
+            Training built around scenarios
+          </h2>
+
+          <p>
+            Learn through examples and situations that
+            staff can actually encounter.
+          </p>
+
+          <div class="work-number">04</div>
+
+        </article>
+
       </div>
 
-      <div class="footer-links">
-        <a href="/">Home</a>
-        <a href="/services.html">Services</a>
-        <a href="/work.html">Our Work</a>
-        <a href="/contact.html">Contact</a>
-      </div>
     </div>
-  </footer>
 
-  <script>
-    const mobileMenuButton = document.getElementById("mobileMenuButton");
-    const siteNavigation = document.getElementById("siteNavigation");
+  </section>
 
-    mobileMenuButton.addEventListener("click", () => {
-      const isOpen = siteNavigation.classList.toggle("open");
 
-      mobileMenuButton.setAttribute("aria-expanded", String(isOpen));
-      mobileMenuButton.setAttribute(
-        "aria-label",
-        isOpen ? "Close navigation menu" : "Open navigation menu"
-      );
-    });
+  <section class="section section-soft">
 
-    function setText(key, value) {
-      if (value === undefined || value === null || value === "") return;
+    <div class="container">
 
-      document.querySelectorAll(`[data-content="${key}"]`).forEach((element) => {
-        element.textContent = value;
-      });
-    }
+      <span class="eyebrow">
+        OUTCOMES
+      </span>
 
-    function applyDesignVariables(content) {
-      const designVariables = {
-        design_primary: "--primary",
-        design_primary_dark: "--primary-dark",
-        design_accent: "--accent",
-        design_background: "--background",
-        design_surface: "--surface",
-        design_surface_alt: "--surface-alt",
-        design_text: "--text",
-        design_muted: "--muted",
-        design_border: "--border",
-        design_header_bg: "--header-bg",
-        design_footer_bg: "--footer-bg",
-        design_footer_text: "--footer-text",
-        design_font_family: "--font-family",
-        design_heading_weight: "--heading-weight",
-        design_body_size: "--body-size",
-        design_h1_size: "--h1-size",
-        design_h2_size: "--h2-size",
-        design_h3_size: "--h3-size",
-        design_line_height: "--line-height",
-        design_letter_spacing: "--letter-spacing",
-        design_content_width: "--content-width",
-        design_section_spacing: "--section-spacing",
-        design_card_gap: "--card-gap",
-        design_card_radius: "--card-radius",
-        design_button_radius: "--button-radius",
-        design_card_shadow: "--card-shadow",
-        design_header_height: "--header-height",
-        design_button_padding_x: "--button-padding-x",
-        design_button_padding_y: "--button-padding-y",
-        design_mobile_section_spacing: "--mobile-section-spacing",
-        design_mobile_body_size: "--mobile-body-size",
-        design_nav_text_size: "--nav-text-size",
-        design_hero_title_size: "--hero-title-size",
-        design_hero_text_size: "--hero-text-size"
-      };
+      <h2 class="section-title">
+        Better systems. Better people. Better communities.
+      </h2>
 
-      Object.entries(designVariables).forEach(([contentKey, cssVariable]) => {
-        if (
-          content[contentKey] !== undefined &&
-          content[contentKey] !== null &&
-          content[contentKey] !== ""
-        ) {
-          document.documentElement.style.setProperty(
-            cssVariable,
-            content[contentKey]
-          );
-        }
-      });
-    }
+      <div class="three-grid">
 
-    async function loadContent() {
-      try {
-        const response = await fetch("/api/content", {
-          headers: {
-            Accept: "application/json"
-          }
-        });
+        <article class="info-card">
+          <span class="card-label">01</span>
+          <h3>Clarity</h3>
+          <p>
+            Everyone understands what is expected of them.
+          </p>
+        </article>
 
-        if (!response.ok) {
-          throw new Error("Unable to load website content.");
-        }
+        <article class="info-card">
+          <span class="card-label">02</span>
+          <h3>Consistency</h3>
+          <p>
+            Staff can make decisions using the same standards.
+          </p>
+        </article>
 
-        const result = await response.json();
-        const content = result.content || result || {};
+        <article class="info-card">
+          <span class="card-label">03</span>
+          <h3>Confidence</h3>
+          <p>
+            Teams are better prepared for real situations.
+          </p>
+        </article>
 
-        Object.entries(content).forEach(([key, value]) => {
-          setText(key, value);
-        });
+      </div>
 
-        applyDesignVariables(content);
-      } catch (error) {
-        console.warn("Using default work page content:", error);
-      }
-    }
+    </div>
 
-    loadContent();
-  </script>
+  </section>
+
+</main>
+
+
+<footer class="site-footer">
+
+  <div class="container footer-inner">
+    <span>© 2026 The Aegis Institute</span>
+    <span>Education · Consulting · Community</span>
+  </div>
+
+</footer>
+
+
+<script src="/app.js"></script>
+
 </body>
 </html>
