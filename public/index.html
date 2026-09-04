@@ -1,54 +1,254 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Aegis Portal</title>
-<link rel="stylesheet" href="styles.css">
-</head>
-<body>
-<div class="app-shell">
-<aside class="sidebar">
-  <a class="side-brand" href="index.html"><span class="logo">A</span><span><b>THE AEGIS</b><small>COMMUNITY PORTAL</small></span></a>
-  <div class="side-label">NAVIGATION</div>
-  <nav class="side-nav">
-    <a class="active" href="#home">◈ <span>Dashboard</span></a>
-    <a href="#departments">▦ <span>Departments</span></a>
-    <a href="#tags">◇ <span>Tags</span></a>
-    <a href="#about">○ <span>About</span></a>
-  </nav>
-  <div class="recent">
-    <div class="side-label">RECENTLY VIEWED</div>
-    <a href="#departments">Civilian Operations</a>
-    <a href="#departments">New South Wales Police Force</a>
-    <a href="#departments">Staff</a>
-  </div>
-  <div class="sidebar-bottom"><span id="authState">Public view</span></div>
-</aside>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<main class="main">
-<header class="topbar">
-  <div class="search"><span>⌕</span><input id="searchInput" placeholder="Search"></div>
-  <div class="top-actions"><a href="#departments">Departments</a><a href="#about">About</a><button id="accountBtn">Sign in with Discord</button></div>
+  <title>The Aegis Institute</title>
+  <link rel="icon" type="image/png" href="https://cdn.discordapp.com/emojis/1481802757005508700.png">
+
+  <meta name="description" content="The Aegis Institute — education, consulting and community support.">
+
+  <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+
+<header class="site-header">
+  <a href="/" class="brand">
+    <img
+      class="brand-logo"
+      src="https://cdn.discordapp.com/emojis/1481802757005508700.png"
+      alt="The Aegis Institute logo"
+    >
+
+    <span class="brand-text">
+      <strong>THE AEGIS INSTITUTE</strong>
+    </span>
+  </a>
+
+  <nav class="main-nav">
+    <a href="/" class="active">Home</a>
+    <a href="/services.html">Services</a>
+    <a href="/work.html">Our Work</a>
+    <a href="/contact.html">Contact</a>
+
+    <a href="/api/auth/discord" class="staff-login">
+      Staff Login
+    </a>
+  </nav>
 </header>
 
-<section id="home" class="page">
-  <div class="page-title"><div><span class="kicker">AEGIS KNOWLEDGE PORTAL</span><h1>Dashboard</h1><p>Browse community information, departments, standards and resources.</p></div><div id="editorBadge" class="badge hidden">EDITOR ACCESS</div></div>
-  <div class="hero-card"><div><span class="kicker">PUBLIC ACCESS</span><h2>Everything is visible.<br><em>Editing is authorised.</em></h2><p>Anyone can explore the portal. Staff with an approved Discord role can sign in and edit the information they are responsible for.</p><button class="primary" id="heroLogin">Continue with Discord</button></div><div class="orb"><span>A</span></div></div>
 
-  <div id="departments" class="section-anchor"></div>
-  <div class="section-head"><div><span class="kicker">DIRECTORY</span><h2>Departments</h2></div><div class="sort">Sort <b>Name</b> ↕</div></div>
-  <div id="departmentList" class="department-list"></div>
+<main>
 
-  <div id="tags" class="section-anchor"></div>
-  <section class="panel"><div class="section-head"><div><span class="kicker">REFERENCE</span><h2>Tags</h2></div></div><p>Tags can be used to organise content throughout the portal. Editors can add or change tags from the editor panel.</p><div id="tagList" class="tag-list"></div></section>
+  <!-- HERO -->
 
-  <div id="about" class="section-anchor"></div>
-  <section class="panel about"><span class="kicker">ABOUT</span><h2>The Aegis Institute</h2><p>A clean, central place for community documentation, staff education and operational standards.</p></section>
-</section>
+  <section class="hero">
+    <div class="container hero-grid">
+
+      <div class="hero-copy">
+
+        <span class="eyebrow">
+          EDUCATION · CONSULTANCY · COMMUNITY
+        </span>
+
+        <h1 id="heroTitle">
+          Training that sees the person behind every case.
+        </h1>
+
+        <p id="heroText">
+          The Aegis Institute supports Discord communities and individuals
+          through personalised consulting and structured education —
+          built around your rules, your people, and your goals.
+        </p>
+
+        <div class="hero-actions">
+          <a href="/services.html" class="button button-primary">
+            Explore Our Services
+          </a>
+
+          <a href="/contact.html" class="button button-secondary">
+            Get in Touch
+          </a>
+        </div>
+
+      </div>
+
+
+      <div class="hero-visual">
+
+        <div class="hero-block"></div>
+
+        <div class="hero-card">
+
+          <h3 id="heroCardTitle">
+            Two branches. One standard of care.
+          </h3>
+
+          <p id="heroCardText">
+            Consulting for communities that want clarity —
+            education for staff and aspiring moderators who want
+            to know where to start.
+          </p>
+
+          <div class="mini-tags" id="heroTags">
+            <span>CONSULTING</span>
+            <span>EDUCATION</span>
+            <span>STANDARDS</span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- EDUCATION INTRO -->
+
+  <section class="section section-soft">
+    <div class="container two-column-intro">
+
+      <div>
+        <span class="eyebrow">EDUCATION</span>
+
+        <h2>
+          Our education system is one of a kind
+        </h2>
+
+        <p>
+          Every learner and project is treated individually —
+          with practical guidance designed around real situations.
+        </p>
+      </div>
+
+
+      <div class="feature-grid">
+
+        <article class="feature-card">
+          <div class="feature-icon">◎</div>
+
+          <h3>Consulting</h3>
+
+          <p>
+            Personalised guidance, feedback and suggestions
+            from an external perspective to strengthen
+            community operations.
+          </p>
+        </article>
+
+
+        <article class="feature-card">
+          <div class="feature-icon">□</div>
+
+          <h3>Education</h3>
+
+          <p>
+            Structured training designed to equip staff with
+            practical skills for real situations.
+          </p>
+        </article>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- APPROACH -->
+
+  <section class="section">
+    <div class="container">
+
+      <span class="eyebrow">OUR APPROACH</span>
+
+      <h2 class="section-title">
+        People-first support, built around your community.
+      </h2>
+
+      <div class="three-grid" id="approachGrid">
+
+        <article class="info-card">
+          <span class="card-label">INDIVIDUAL</span>
+
+          <h3>Learn at your pace</h3>
+
+          <p>
+            Clear pathways, practical exercises and useful
+            feedback without unnecessary complexity.
+          </p>
+        </article>
+
+
+        <article class="info-card">
+          <span class="card-label">COMMUNITY</span>
+
+          <h3>Improve your standards</h3>
+
+          <p>
+            Review systems, procedures and staff development
+            so your community can grow with confidence.
+          </p>
+        </article>
+
+
+        <article class="info-card">
+          <span class="card-label">OUTCOMES</span>
+
+          <h3>Make progress visible</h3>
+
+          <p>
+            Turn training into practical outcomes your team
+            can use in real situations.
+          </p>
+        </article>
+
+      </div>
+
+
+      <div class="cta-banner">
+
+        <div>
+          <h3>
+            Have a challenge? Let Aegis help you solve it.
+          </h3>
+
+          <p>
+            Open a ticket or send a message —
+            training, standards, and consultancy.
+          </p>
+        </div>
+
+        <a href="/contact.html" class="button button-primary">
+          Get in Touch
+        </a>
+
+      </div>
+
+    </div>
+  </section>
+
 </main>
-</div>
-<div id="modal" class="modal hidden"><div class="modal-box"><button class="close" id="closeModal">×</button><div id="modalContent"></div></div></div>
-<script src="app.js"></script>
+
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+
+    <span>
+      © 2026 The Aegis Institute
+    </span>
+
+    <span>
+      Education · Consulting · Community
+    </span>
+
+  </div>
+</footer>
+
+
+<script src="/app.js"></script>
+
 </body>
 </html>
